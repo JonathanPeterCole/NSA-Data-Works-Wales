@@ -8,9 +8,13 @@ const cookieParser = require('cookie-parser')
 
 // Routers
 const indexRouter = require('./routes/index')
+const apiRouter = require('./routes/api')
 
 // Sockets
-const socketApi = require('./sockets/socket-api')
+const SocketApi = require('./sockets/socket-api')
+
+// Create socket object
+let socketApi = new SocketApi()
 
 // Prepare express
 const app = express()
@@ -29,9 +33,10 @@ app.use(express.static(path.join(__dirname, '../public')))
 
 // Routes
 app.use('/', indexRouter)
+app.use('/api', apiRouter)
 
 // Socket IO
-io.of('/api').on('connection', socketApi)
+io.of('/websocket').on('connection', socketApi.connect.bind(socketApi)) // change bind? weird javascript behaviour i cant explain, must be binding the sockets-io object as is overriding variables
 
 // Listen
 server.listen(3000 )

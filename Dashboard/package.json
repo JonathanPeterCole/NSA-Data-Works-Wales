@@ -5,7 +5,6 @@
   "main": "server/index.js",
   "scripts": {
     "start": "nodemon ./server/index.js",
-    "watch-express": "nodemon ./server/index.js",
     "watch": "webpack --mode development --watch --config ./config/webpack.config.js ",
     "build": "webpack --mode production --config ./config/webpack.config.js",
     "buildDev": "webpack --mode development --config ./config/webpack.dev.config.js",
