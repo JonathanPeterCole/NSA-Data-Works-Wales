@@ -34,7 +34,7 @@ app.use('/', indexRouter)
 io.of('/api').on('connection', socketApi)
 
 // Listen
-server.listen(3000)
+server.listen(3000 )
 server.on('listening', () => console.log('Example app listening on port 3000'))
 server.on('error', (error) => {
   // Check if the error was a listening error
