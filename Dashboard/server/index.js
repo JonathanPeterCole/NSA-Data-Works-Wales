@@ -5,6 +5,7 @@ const socketio = require('socket.io')
 const http = require('http')
 const path = require('path')
 const cookieParser = require('cookie-parser')
+const mongo = require('mongodb').MongoClient;
 
 // Routers
 const indexRouter = require('./routes/index')
@@ -13,8 +14,15 @@ const apiRouter = require('./routes/api')
 // Sockets
 const SocketApi = require('./sockets/socket-api')
 
-// Create socket object
+// Connect to database and create socket object
 let socketApi = new SocketApi()
+
+// let db = mongo.connect("mongodb://localhost:27017", {useNewUrlParser : true}).then((err, client) => {
+//   socketApi = new SocketApi(client)
+// }); // catch error
+
+// Create socket object
+
 
 // Prepare express
 const app = express()

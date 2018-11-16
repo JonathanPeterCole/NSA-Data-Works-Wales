@@ -8,7 +8,7 @@ class socketApi {
     this.clients.push(socket)
     socket.on('sensorReadings', (data) => {
       this.data.push(data);
-      this.broadcast([socket], data);
+      this.broadcast([socket], "sensorReadings" , {...data});
     })
     socket.on('disconnect', () => {
       this.removeClient(socket.id)
@@ -23,9 +23,9 @@ class socketApi {
     }
   }
 
-  broadcast(exceptions, data){
+  broadcast(exceptions, message, data){
     this.clients.filter(socket => !exceptions.includes(socket)).forEach(socket => {
-      socket.emit("sensorReadings", data)
+      socket.emit(message, data)
     }) 
   }
 }

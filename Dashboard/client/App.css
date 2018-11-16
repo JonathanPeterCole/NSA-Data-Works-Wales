@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    font-family: 'Open Sans';
+    padding: 0;
+}
+.sensors {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+}
+.sensor {
+    width: 20%;
+    padding: 10px;
+    height: auto;
+    box-sizing: border-box;
+}
+.sensor > .data {
+    box-shadow: 0 0 10px rgba(0,0,0,0.04);
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    border: 1px solid rgb(240, 240, 240);
+    color: rgb(43, 43, 43);
+    padding: 20px;
+    box-sizing: border-box;
+}
+.sensor > .data > h1 {
+    margin: 0px 0 5px 0;
+    font-weight: 300;
+    padding:0;
+    font-size:20px;
+}
+.sensor > .data > span {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgb(166, 166, 166);
+}

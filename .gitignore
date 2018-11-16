@@ -63,6 +63,3 @@ typings/
 
 # webpack processed files
 Dashboard/public
-
-# test arduino websocket client
-Dashboard/testclient/

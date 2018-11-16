@@ -7,8 +7,11 @@ export default class SensorContainer extends React.Component {
     }
     render(){
         return (
-            <div>
-                {this.props.data.temp}
+            <div className="sensor">
+                <div className="data">
+                    <h1>{this.props.data.readings[this.props.data.readings.length -1]}</h1>
+                    <span>{this.props.data.client}</span>
+                </div>
             </div>
         )
     }
