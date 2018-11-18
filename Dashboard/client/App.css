@@ -1,16 +1,26 @@
 body {
     margin: 0;
     font-family: 'Open Sans';
+    height: 100%;
     padding: 0;
 }
 .sensors {
     width: 50%;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    padding: 20px 0 0 20px;
+}
+.sensors > h1 {
+    width: 100%;
+    margin:0;
+    font-size:18px;
+    padding:0;
+    font-weight: 600;
 }
 .sensor {
     width: 20%;
-    padding: 10px;
+    padding: 10px 10px 0 0;
     height: auto;
     box-sizing: border-box;
 }
@@ -23,14 +33,124 @@ body {
     padding: 20px;
     box-sizing: border-box;
 }
-.sensor > .data > h1 {
-    margin: 0px 0 5px 0;
-    font-weight: 300;
-    padding:0;
-    font-size:20px;
+.sensor > .data > .header {
+
 }
-.sensor > .data > span {
+.sensor > .data > .header > h1 {
+    font-size: 14px;
+    font-weight: 600;
+    margin:0;
+    padding:0;
+}
+.sensor > .data > .content >  h1 {
     font-size: 16px;
     font-weight: 400;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sensor > .data > .content > button {
+    box-shadow: 0 0 10px rgba(0,0,0,0.04);
+    width: 100%;
+    color: rgb(98, 98, 98);
+    text-transform: uppercase;
+    border: 1px solid rgb(240, 240, 240);
+    box-sizing: border-box;
+    padding: 5px 0 5px 0;
+    font-size: 11px;
+    font-weight: 700;
+    margin: 10px 0 0 0;
+    font-family: 'Open Sans';
+    transition: box-shadow 0.2s, border-color 0.2s;
+    background-color: #fff;
+}
+.sensor > .data > .content > button:focus {
+    outline:none;
+}
+.sensor > .data > .content > button:hover {
+    cursor:pointer;
+    border-color: #f0f0f0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+
+}
+.sensor > .data > .content >  h2 {
+    font-size: 14px;
+    font-weight: 400;
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
     color: rgb(166, 166, 166);
+    margin: 0;
+    padding: 0;
+}
+.identify-prompt-wrapper{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top:0;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-backdrop-filter: blur(10px);
+}
+.identify-prompt {
+    width: auto;
+    height: auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.04);
+    background-color: #fff;
+    color: #2b2b2b;
+    border: 1px solid rgb(240, 240, 240);
+}
+.identify-prompt > h1 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+}
+.identify-prompt > .input > h1 {
+    font-size: 12px;
+    margin: 5px 0 5px 0;
+    font-weight: 400;
+    padding: 0;
+}
+.identify-prompt > .input > input {
+    width: 300px;
+    font-size: 11px;
+    padding: 8px;
+    box-sizing: border-box;
+    color: #898989;
+    border: 1px solid rgb(240, 240, 240);
+    box-shadow: 0 0 10px rgba(0,0,0,0.04);
+}
+.identify-prompt > .input > input:focus {
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+    color:#505050;
+    outline: none;
+}
+.identify-prompt  > button {
+    box-shadow: 0 0 10px rgba(0,0,0,0.04);
+    width: 100%;
+    color: rgb(98, 98, 98);
+    text-transform: uppercase;
+    border: 1px solid rgb(240, 240, 240);
+    box-sizing: border-box;
+    padding: 5px 0 5px 0;
+    font-size: 11px;
+    font-weight: 700;
+    margin: 10px 0 0 0;
+    font-family: 'Open Sans';
+    transition: box-shadow 0.2s, border-color 0.2s;
+    background-color: #fff;
+}
+.identify-prompt > button:focus {
+    outline:none;
+}
+.identify-prompt > button:hover {
+    cursor:pointer;
+    border-color: #f0f0f0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+
 }

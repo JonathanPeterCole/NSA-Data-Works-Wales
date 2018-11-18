@@ -5,6 +5,7 @@ export default class sensorLibrary {
     }
     addData(data){
         let client = this.addClient(data.id)
+        console.log(data)
         this.addReading(data.data, client)
     }
     getReadings(){

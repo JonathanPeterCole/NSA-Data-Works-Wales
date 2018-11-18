@@ -5,24 +5,20 @@ const socketio = require('socket.io')
 const http = require('http')
 const path = require('path')
 const cookieParser = require('cookie-parser')
-const mongo = require('mongodb').MongoClient;
+const Database = require('./src/database')
 
 // Routers
 const indexRouter = require('./routes/index')
 const apiRouter = require('./routes/api')
 
 // Sockets
-const SocketApi = require('./sockets/socket-api')
+const SocketApi = require('./src/socket-api')
 
+let socketApi;
+let database = new Database("mongodb://localhost:27017", "iot-app")
 // Connect to database and create socket object
-let socketApi = new SocketApi()
-
-// let db = mongo.connect("mongodb://localhost:27017", {useNewUrlParser : true}).then((err, client) => {
-//   socketApi = new SocketApi(client)
-// }); // catch error
 
 // Create socket object
-
 
 // Prepare express
 const app = express()
@@ -43,8 +39,10 @@ app.use(express.static(path.join(__dirname, '../public')))
 app.use('/', indexRouter)
 app.use('/api', apiRouter)
 
-// Socket IO
-io.of('/websocket').on('connection', socketApi.connect.bind(socketApi)) // change bind? weird javascript behaviour i cant explain, must be binding the sockets-io object as is overriding variables
+database.connect().then((client) => {
+  socketApi = new SocketApi(client);
+  io.of('/websocket').on('connection', socketApi.connect.bind(socketApi));
+});
 
 // Listen
 server.listen(3000 )
