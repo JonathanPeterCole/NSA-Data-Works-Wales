@@ -18,9 +18,9 @@ class socketApi {
       this.addSensorData(data);
     })
     socket.on("updateSettings", (data) => {
-      let newSensor = this.updateSensors(data.id, data.name)
-      this.broadcastAll("sensorReadings", this.lastReadings())
       this.saveSensor(data.id, data.name)
+      this.updateSensors(data.id, data.name)
+      this.broadcastAll("sensorReadings", this.lastReadings())
     });
     socket.on('disconnect', () => {
       this.removeClient(socket.id)
@@ -98,8 +98,10 @@ class socketApi {
   saveSensor(id, name){
     this.db.setCollection("sensors");
     if(this.hasSensor(id)){
+      console.log("okay")
       this.db.update("id", id, {name});
     } else {
+      console.log("ok")
       this.db.insert({id, name})
     }
   }

@@ -13,12 +13,12 @@ export default class KnownSensor extends React.Component {
                     </div>
                     <div className="content">
                         <h2>Reading : {this.props.data.data}</h2>
-                        <button onClick={() => {
-                            this.props.popup((popup) => {
-                                
-                            }, {name: this.props.data.name, id : this.props.data.id})
-                        }}>Edit</button>
                     </div>
+                    <button onClick={() => {
+                        this.props.popup((popup) => {
+                            
+                        }, {name: this.props.data.name, id : this.props.data.id})
+                    }}>Edit</button>
                 </div>
             </div>
         )

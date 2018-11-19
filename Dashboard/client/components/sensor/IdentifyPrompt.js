@@ -11,6 +11,7 @@ export default class IdentiyPrompt extends React.Component {
         return (
             <div className="identify-prompt-wrapper">
                 <div className="identify-prompt">
+                    <div onClick={() => this.props.close()} className="close"></div>
                     <h1>Sensor Details</h1>
                     <div className="input">
                         <h1>Sensor ID</h1>

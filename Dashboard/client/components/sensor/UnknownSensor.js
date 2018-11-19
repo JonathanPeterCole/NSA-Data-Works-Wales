@@ -15,12 +15,13 @@ export default class UnknownSensor extends React.Component {
                     <div className="content">
                         {/* <h1>{this.props.data.id}</h1> */}
                         <h2>Reading : <span>{this.props.data.data}</span></h2>
-                        <button onClick={() => {
-                            this.props.popup((element) => {
-                                
-                            }, {name: 'Unidentified sensor', id: this.props.data.id})
-                        }}>Identify</button>
+                        
                     </div>
+                    <button onClick={() => {
+                        this.props.popup((element) => {
+                            
+                        }, {name: 'Unidentified sensor', id: this.props.data.id})
+                    }}>Identify</button>
                 </div>
             </div>
         )

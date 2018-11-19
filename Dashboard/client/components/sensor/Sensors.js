@@ -30,6 +30,9 @@ export default class App extends React.Component {
         })
         this.setState({popup: !this.state.popup});
     }
+    closePopup(){
+        this.setState({popup: !this.state.popup});
+    }
     render(){
         return (
             <div>
@@ -46,7 +49,7 @@ export default class App extends React.Component {
                     })}
                 </div>
                 {this.state.popup ? 
-                    <IdentifyPrompt ref="prompt" updateSensor={this.updateSensor.bind(this)} data={this.state.popupinfo}></IdentifyPrompt>:null
+                    <IdentifyPrompt ref="prompt" close={this.closePopup.bind(this)} updateSensor={this.updateSensor.bind(this)} data={this.state.popupinfo}></IdentifyPrompt>:null
                 }
             </div>
         )

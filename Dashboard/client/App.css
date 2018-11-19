@@ -20,21 +20,23 @@ body {
 }
 .sensor {
     width: 20%;
-    padding: 10px 10px 0 0;
+    padding: 10px 20px 0 0;
     height: auto;
     box-sizing: border-box;
 }
 .sensor > .data {
-    box-shadow: 0 0 10px rgba(0,0,0,0.04);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
-    border: 1px solid rgb(240, 240, 240);
+    border: 1px solid #e6e6e6;
     color: rgb(43, 43, 43);
-    padding: 20px;
     box-sizing: border-box;
 }
 .sensor > .data > .header {
-
+    padding: 15px 20px 0 20px
+}
+.sensor > .data > .content {
+    padding: 0 20px 0 20px
 }
 .sensor > .data > .header > h1 {
     font-size: 14px;
@@ -51,14 +53,16 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.sensor > .data > .content > button {
-    box-shadow: 0 0 10px rgba(0,0,0,0.04);
+.sensor > .data >  button {
     width: 100%;
     color: rgb(98, 98, 98);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     text-transform: uppercase;
-    border: 1px solid rgb(240, 240, 240);
+    border: 0;
+    border-top: 1px solid #e6e6e6;
     box-sizing: border-box;
-    padding: 5px 0 5px 0;
+    padding: 8px 0 8px 0;
     font-size: 11px;
     font-weight: 700;
     margin: 10px 0 0 0;
@@ -66,13 +70,13 @@ body {
     transition: box-shadow 0.2s, border-color 0.2s;
     background-color: #fff;
 }
-.sensor > .data > .content > button:focus {
+.sensor > .data >  button:focus {
     outline:none;
 }
-.sensor > .data > .content > button:hover {
+.sensor > .data >  button:hover {
     cursor:pointer;
     border-color: #f0f0f0;
-    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+    box-shadow: 0 0 10px rgba(0,0,0,0.14);
 
 }
 .sensor > .data > .content >  h2 {
@@ -100,20 +104,59 @@ body {
     width: auto;
     height: auto;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.04);
+    box-shadow: 0 0 60px rgba(26, 26, 26, 0.3);
     background-color: #fff;
     color: #2b2b2b;
     border: 1px solid rgb(240, 240, 240);
+    position: relative;
 }
+.identify-prompt > .close {
+    position: absolute;
+    top:25px;
+    right:20px;
+    width:15px;
+    height:15px;
+}
+.identify-prompt > .close::before {
+    position: absolute;
+    content: '';
+    background-color: red;
+    width: 15px;
+    top: 5px;
+    transform: rotate(-45deg);
+    transition: transform 0.2s;
+    height:2px;
+}
+.identify-prompt > .close::after {
+    position: absolute;
+    content: '';
+    background-color: red;
+    transform: rotate(45deg);
+    top: 5px;
+    transition: transform 0.2s;
+    width: 15px;
+    height:2px;
+}
+.identify-prompt > .close:hover {
+    cursor:pointer;
+}
+.identify-prompt > .close:hover::after {
+    transform: rotate(135deg)
+}
+.identify-prompt > .close:hover::before {
+    transform: rotate(-135deg)
+}
+
+
 .identify-prompt > h1 {
     margin: 0;
     font-weight: 600;
     font-size: 14px;
 }
 .identify-prompt > .input > h1 {
-    font-size: 12px;
+    font-size: 11px;
     margin: 5px 0 5px 0;
-    font-weight: 400;
+    font-weight: 600;
     padding: 0;
 }
 .identify-prompt > .input > input {
@@ -122,20 +165,27 @@ body {
     padding: 8px;
     box-sizing: border-box;
     color: #898989;
-    border: 1px solid rgb(240, 240, 240);
-    box-shadow: 0 0 10px rgba(0,0,0,0.04);
+    
+    border: 1px solid #e6e6e6;
+    transition: border-color .5s, color .5s;
+    box-shadow: 0 0 10px rgba(0,0,0,0.12);
+}
+.identify-prompt > .input > input[disabled] {
+    background-color:#f8f8f8;
+    cursor: not-allowed;
 }
 .identify-prompt > .input > input:focus {
-    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+    box-shadow: 0 0 5px rgba(0,0,0,0.16);
+    border: 1px solid #d5d5d5;
     color:#505050;
     outline: none;
 }
 .identify-prompt  > button {
-    box-shadow: 0 0 10px rgba(0,0,0,0.04);
+    box-shadow: 0 0 5px rgba(0,0,0,0.12);
     width: 100%;
     color: rgb(98, 98, 98);
     text-transform: uppercase;
-    border: 1px solid rgb(240, 240, 240);
+    border: 1px solid #e6e6e6;
     box-sizing: border-box;
     padding: 5px 0 5px 0;
     font-size: 11px;
@@ -150,7 +200,7 @@ body {
 }
 .identify-prompt > button:hover {
     cursor:pointer;
-    border-color: #f0f0f0;
+    border: 1px solid #e6e6e6;
     box-shadow: 0 0 10px rgba(0,0,0,0.08);
 
 }
