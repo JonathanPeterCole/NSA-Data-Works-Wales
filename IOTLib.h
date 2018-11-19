@@ -5,7 +5,6 @@
 #ifndef IOTLib_h
 
 	#define IOTLib_h
-
 	#include "Arduino.h"
 
 	class IOTLib
@@ -14,45 +13,28 @@
 			IOTLib();
 			void connect();
 			void disconnect();
-			void disconnect();
+			
+			void sendOtherReading(String sensorID, String value)
+			void sendButtonReading(String sensorID, int value)
+			void sendTemperatureReading(String sensorID, float value)
+			void sendLightReading(String sensorID, float value)
+			void sendNoiseReading(String sensorID, float value)
+
+			
 		private:
 			IPAddress _serverIP;
 			String _serverIP;
 			String _username;
 			String _password;
 			
-		// Constructor
-		IOTLib::IOTLib() {
-			// Ensure a serial output is setup
-			if (!Serial) {
-				Serial.begin(9600);
-			}
-		}
-		
-		// Func to connect to the webserver
-		void IOTLib::connect(IPAddress serverIP, String username, String password) {
-			_serverIP = serverIP;
-			_username = username;
-			_password = password;
-			
-			delay(250);
-			Serial.print("Connecting...");
-		}
-		
-		// Terminate the connection with the server
-		void IOTLib::disconnect() {
-			Serial.print("Disconnected");
-		}
-		
-		// Function overloading to support all datatypes
-		void IOTLib::sendReading(String sensorName, String value) { sendReading(value) }
-		void IOTLib::sendReading(String sensorName, int value) { sendReading(value) }
-		void IOTLib::sendReading(String sensorName, long value) { sendReading(value) }
-		void IOTLib::sendReading(String sensorName, float value) { sendReading(value) }
-		
-		void IOTLib::sendReading(String sensorName) {
-			Serial.print("Sending reading");
-		}
+			enum ReadingType {
+				OTHER = 0,
+				BUTTON = 1,
+				TEMPERATURE = 2,
+				LIGHT = 3,
+				NOISE = 4,
+			};
+			void sendReading(String sensorID, String sensorValue, ReadingType readingType)
 	};
 	
 #endif
