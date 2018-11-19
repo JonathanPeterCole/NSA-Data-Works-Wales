@@ -23,7 +23,6 @@ export default class App extends React.Component {
         this.setState({popup: !this.state.popup, popupinfo}, () => cb(this.refs.prompt)); // in callback so element exists prior to calling.
     }
     updateSensor(id, name){
-        console.log(id + " _ " + name)
         this.socket.emit("updateSettings",{
             id: id,
             name: name

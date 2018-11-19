@@ -6,12 +6,18 @@ class socketApi {
     this.knownSensors = [];
     this.unknownSensors = [];
     this.db = db;
+    setInterval(() => {
+      if(this.clients.length !=0){
+        this.broadcastAll("sensorReadings", this.lastReadings())
+      }
+    }, 1500)
   }
   connect(socket){
     socket.id = this.clients.length;
     this.clients.push(socket)
     if(this.data.length != 0){
       let lastReadings = this.lastReadings
+      console.log("once")
       this.broadcastTo(socket, "sensorReadings", this.lastReadings())
     }
     socket.on('sensorReadings', (data) => {
@@ -25,9 +31,6 @@ class socketApi {
     socket.on('disconnect', () => {
       this.removeClient(socket.id)
     })
-    setInterval(() => {
-      this.broadcastAll("sensorReadings", this.lastReadings())
-    }, 1000)
   }
   updateSensors(id, name){
     for(let s in this.unknownSensors){
