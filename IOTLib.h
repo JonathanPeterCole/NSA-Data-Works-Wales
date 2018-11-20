@@ -12,7 +12,7 @@
 	class IOTLib
 	{
 		public:
-			IOTLib(const char *serverIP, const int &serverPort, const byte arduinoMacAddress[6], const int &ethernetPin);
+			IOTLib(const char *serverIP, const int &serverPort, uint8_t arduinoMacAddress[], const int &ethernetPin);
 			
 			void connect(const char *serverIP, int serverPort);
 			
@@ -29,7 +29,7 @@
 			WebSocketClient *socketClient; // Create pointer to WebSocketClient data type to allow it to be created later in the IOTLib constructor with server details after EthernetShield is initiated
 			
 			
-			void setupEthernetShield(const byte arduinoMacAddress[6], const int &ethernetPin);
+			void setupEthernetShield(uint8_t arduinoMacAddress[], const int &ethernetPin);
 			
 			enum ReadingType {
 				OTHER = 0,
@@ -39,11 +39,11 @@
 				NOISE = 4,
 				DIAL = 5,
 			};
-			static IOTLib::ReadingType IOTLib::readingType;
+			static IOTLib::ReadingType readingType;
 			
-			String sendSocketIOString(String eventName, String stringPayload);
+			String sendSocketIOString(const String &eventName, const String &stringPayload);
 			
-			void sendReading(String sensorID, String sensorValue, int readingType);
+			void sendReading(const String &sensorID, const String &sensorValue, const ReadingType &readingType);
 	};
 	
 #endif

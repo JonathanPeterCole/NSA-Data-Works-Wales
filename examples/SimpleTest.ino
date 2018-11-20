@@ -11,7 +11,6 @@ IOTLib iotLib("192.168.0.1", 81, mac, 10);
 
 
 const int dialPin = A0;
-int lastDialReading = 0;
 
 // Setup code here is ran once (before loop is called):
 void setup() { }

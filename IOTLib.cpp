@@ -8,7 +8,7 @@
 
 
 // Constructor
-IOTLib::IOTLib(const char *serverIP, const int &serverPort, const byte arduinoMacAddress[6], const int &ethernetPin) {
+IOTLib::IOTLib(const char *serverIP, const int &serverPort, uint8_t arduinoMacAddress[], const int &ethernetPin) {
 	// Ensure a serial output is setup (checking it's not already ready)
 	if (!Serial) {
 		Serial.begin(9600);
@@ -31,7 +31,7 @@ IOTLib::IOTLib(const char *serverIP, const int &serverPort, const byte arduinoMa
 
 
 // Credit: https://github.com/arduino-libraries/Ethernet/blob/master/examples/WebClient/WebClient.ino
-void IOTLib::setupEthernetShield(const byte arduinoMacAddress[6], const int &ethernetPin) {
+void IOTLib::setupEthernetShield(uint8_t arduinoMacAddress[], const int &ethernetPin) {
 	// Set the static IP address to use if the DHCP fails to assign
 	const IPAddress ip(192, 168, 0, 177);
 	const IPAddress myDns(192, 168, 0, 1);
@@ -69,8 +69,8 @@ void IOTLib::setupEthernetShield(const byte arduinoMacAddress[6], const int &eth
 }
 
 // Function to format the websocket JSON to force Socket.IO to read it
-String buildSocketIOString(String eventName, String stringPayload) {
-	return '42["' + eventName + '", ' + stringPayload + ']';
+String buildSocketIOString(const String &eventName, const String &stringPayload) {
+	return "42[\"" + eventName + "\", " + stringPayload + "]";
 }
 
 // Simple functions to auto-format readings
@@ -82,12 +82,16 @@ void IOTLib::sendLightReading(String sensorID, float value) { sendReading(sensor
 void IOTLib::sendNoiseReading(String sensorID, float value) { sendReading(sensorID, String(value), IOTLib::NOISE); }
 
 // Function to parse reading into JSON string and send to server
-void IOTLib::sendReading(String sensorID, String sensorValue, int readingType) {
+void IOTLib::sendReading(const String &sensorID, const String &sensorValue, const IOTLib::ReadingType &readingType) {
 	if (socketClient->connected()) {
 		Serial.print("Sending reading...");
 		
 		socketClient->beginMessage(TYPE_TEXT);
-		socketClient->print(buildSocketIOString("sensorReadings",    '"{"sensorID": "' + sensorID + '", "sensorValue": "' + sensorValue + '", "readingType": "' + readingType + '"}"')); // sprintf(buffer,"myNum=%d", myNum) has a HUGE overhead, concat this way is efficient
+			
+			// Why double quotes with escaped double quotes instead of surrounding strings with a single quote? Single quotes are for chars and will cause hidden compiler warnings
+			// ALSO: sprintf(buffer,"myNum=%d", myNum) has a HUGE overhead, concat this way is efficient
+			socketClient->print(buildSocketIOString("sensorReadings",    "\"{\"sensorID\": \"" + sensorID + "\", \"sensorValue\": \"" + sensorValue + "\", \"readingType\": \"" + readingType + "\"}\""));
+			
 		socketClient->endMessage();
 		
 	} else {
