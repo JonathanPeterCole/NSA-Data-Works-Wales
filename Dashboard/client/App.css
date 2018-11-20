@@ -89,6 +89,36 @@ body {
     margin: 0;
     padding: 0;
 }
+.sensor-popup-wrapper{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top:0;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-backdrop-filter: blur(10px);
+}
+.sensor-popup {
+    width: 50%;
+    height: auto;
+    padding: 20px;
+    box-shadow: 0 0 60px rgba(26, 26, 26, 0.3);
+    background-color: #fff;
+    color: #2b2b2b;
+    border: 1px solid rgb(240, 240, 240);
+    position: relative;
+}
+.sensor-popup > h1 {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .identify-prompt-wrapper{
     width: 100%;
     height: 100%;

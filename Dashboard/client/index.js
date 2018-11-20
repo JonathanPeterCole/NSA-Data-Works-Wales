@@ -4,10 +4,18 @@ import { render } from 'react-dom'
 import App from './components/App'
 import './App.css'
 
+// Redux
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import sensors from './reducers/sensors'
+const store = createStore(sensors)
+
+
 // Render
 render(
-  <div className='root'>
+  <Provider store={store}>
     <App></App>
-  </div>,
+  </Provider>,
   document.getElementById('root')
 )
+

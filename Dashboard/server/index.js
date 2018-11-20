@@ -6,6 +6,7 @@ const http = require('http')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const Database = require('./src/database')
+const Config = require('../config/config.json')
 
 // Routers
 const indexRouter = require('./routes/index')
