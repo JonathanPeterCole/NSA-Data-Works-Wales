@@ -1,11 +1,17 @@
 # IOTLib by TEAM 6
 A library to easily setup sensors with the IOT webserver by team 6.
 
+<br>
+
 ## Installation
 Clone or download (and unzip) this repository inside your `My Documents\Arduino\libraries\` folder
 
+<br>
+
 ## Examples
 Example uses of this library can be found inside the `examples` folder.
+
+<br>
 
 ## FAQ
 ### Deciding ethernet pin number
