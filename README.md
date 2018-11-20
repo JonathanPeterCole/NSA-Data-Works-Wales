@@ -19,5 +19,5 @@ Example uses of this library can be found inside the `examples` folder.
 | ESP32 with Adafruit Featherwing Ethernet   | 33              |
 
 ### Dependencies (future releases of dependencies may break compatibility)
-[Ethernet 2.0.0](https://github.com/arduino-libraries/Ethernet/releases/tag/2.0.0)
-[ArduinoHttpClient 0.3.1](https://github.com/arduino-libraries/ArduinoHttpClient/releases/tag/0.3.1)
+* [Ethernet 2.0.0](https://github.com/arduino-libraries/Ethernet/releases/tag/2.0.0)
+* [ArduinoHttpClient 0.3.1](https://github.com/arduino-libraries/ArduinoHttpClient/releases/tag/0.3.1)
