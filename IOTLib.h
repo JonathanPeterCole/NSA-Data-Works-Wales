@@ -6,18 +6,15 @@
 
 	#define IOTLib_h
 	#include "Arduino.h"
-	#include "WebSocketsClient.h"
-
-	
+	#include "Ethernet.h"
+	#include "ArduinoHttpClient.h"
 	
 	class IOTLib
 	{
 		public:
-			IOTLib();
+			IOTLib(const char *serverIP, const int &serverPort, const byte arduinoMacAddress[6], const int &ethernetPin);
 			
-			bool isConnected;
-			void loop(const char *serverIP, int serverPort, const char *username, const char *password);
-			void disconnect();
+			void connect(const char *serverIP, int serverPort);
 			
 			void sendOtherReading(String sensorID, String value);
 			void sendButtonReading(String sensorID, int value);
@@ -27,8 +24,12 @@
 			void sendDialReading(String sensorID, float value);
 
 			
-		private:			
-			WebSocketsClient webSocket;
+		private:
+			EthernetClient ethernetClient;
+			WebSocketClient *socketClient; // Create pointer to WebSocketClient data type to allow it to be created later in the IOTLib constructor with server details after EthernetShield is initiated
+			
+			
+			void setupEthernetShield(const byte arduinoMacAddress[6], const int &ethernetPin);
 			
 			enum ReadingType {
 				OTHER = 0,
@@ -40,7 +41,7 @@
 			};
 			static IOTLib::ReadingType IOTLib::readingType;
 			
-			void sendSocketIOString(String eventName, String stringPayload);
+			String sendSocketIOString(String eventName, String stringPayload);
 			
 			void sendReading(String sensorID, String sensorValue, int readingType);
 	};
