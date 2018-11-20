@@ -198,20 +198,20 @@ body {
     
     border: 1px solid #e6e6e6;
     transition: border-color .5s, color .5s;
-    box-shadow: 0 0 10px rgba(0,0,0,0.12);
+    box-shadow: 0 0 10px rgba(0,0,0,0.04);
 }
 .identify-prompt > .input > input[disabled] {
     background-color:#f8f8f8;
     cursor: not-allowed;
 }
 .identify-prompt > .input > input:focus {
-    box-shadow: 0 0 5px rgba(0,0,0,0.16);
+    box-shadow: 0 0 5px rgba(0,0,0,0.08);
     border: 1px solid #d5d5d5;
     color:#505050;
     outline: none;
 }
 .identify-prompt  > button {
-    box-shadow: 0 0 5px rgba(0,0,0,0.12);
+    box-shadow: 0 0 5px rgba(0,0,0,0.08);
     width: 100%;
     color: rgb(98, 98, 98);
     text-transform: uppercase;

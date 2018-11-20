@@ -1,5 +1,5 @@
 import React from 'react'
-import Sensors from './sensor/Sensors'
+import {Sensors} from '../containers/Sensors'
 export default class App extends React.Component {
     constructor(props){
         super(props)

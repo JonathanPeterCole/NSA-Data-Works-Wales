@@ -3,15 +3,13 @@ import React from 'react'
 export default class IdentiyPrompt extends React.Component {
     constructor(props){
         super(props)
-        this.state = {
-            name: props.data.name
-        }
+        console.log(props)
     }
     render(){
         return (
             <div className="identify-prompt-wrapper">
                 <div className="identify-prompt">
-                    <div onClick={() => this.props.close()} className="close"></div>
+                    <div onClick={() => this.props.dispatch({identify: false})} className="close"></div>
                     <h1>Sensor Details</h1>
                     <div className="input">
                         <h1>Sensor ID</h1>
@@ -23,6 +21,7 @@ export default class IdentiyPrompt extends React.Component {
                     </div>
                     <button onClick={() => {
                         this.props.updateSensor(this.props.data.id, this.state.name)
+                        this.props.dispatch({identify: false})
                     }}>Save</button>
                 </div>
             </div>

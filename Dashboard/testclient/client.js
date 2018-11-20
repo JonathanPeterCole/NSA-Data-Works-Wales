@@ -9,8 +9,8 @@ setInterval(() => {
     if(socket.connected == false){
         socket.connect();
     } else {
-        console.log(socket.connected)
         temp += Math.floor(Math.random() * 3)
+        console.log("Socket connected, sending: " + temp)
         socket.emit("sensorReadings", {data: temp, id})
         if(temp > 30){
             temp = 10

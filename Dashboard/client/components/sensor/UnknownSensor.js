@@ -3,7 +3,6 @@ import React from 'react'
 export default class UnknownSensor extends React.Component {
     constructor(props){
         super(props)
-        console.log(props)
     }
     render(){
         return (
@@ -18,9 +17,7 @@ export default class UnknownSensor extends React.Component {
                         
                     </div>
                     <button onClick={() => {
-                        this.props.popup((element) => {
-                            
-                        }, {name: 'Unidentified sensor', id: this.props.data.id})
+                        this.props.dispatch({id: this.props.data.id,  identify: true})
                     }}>Identify</button>
                 </div>
             </div>

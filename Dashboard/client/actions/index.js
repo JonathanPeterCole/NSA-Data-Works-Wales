@@ -1,7 +1,11 @@
 import * as types from '../constants/actionTypes'
 
-export const addData = (id, data) => ({
+export const addData = (data) => ({
     type: types.ADD_DATA,
-    id: id,
+    data: data,
+})
+
+export const activeSensor = (data) => ({
+    type: types.ACTIVE_SENSOR,
     data: data
 })
