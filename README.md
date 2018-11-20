@@ -10,7 +10,7 @@ Example uses of this library can be found inside the `examples` folder.
 ## FAQ
 ### Deciding ethernet pin number
 |   Arduino board                            | Recommended pin |
-| :----------------------------------------: | :-------------: |
+| ------------------------------------------ | --------------- |
 | Most Arduino shields                       | 10              |
 | MKR ETH shield                             | 5               |
 | Teensy 2.0                                 | 0               |
