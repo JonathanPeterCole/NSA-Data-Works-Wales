@@ -1,0 +1,12 @@
+{
+  "name": "IOTLib",
+  "keywords": "",
+  "description": "DataWorks lib.",
+  "repository":
+  {
+    "type": "git",
+    "url": ""
+  },
+  "frameworks": "arduino",
+  "platforms": "*"
+}
