@@ -6,7 +6,6 @@
 
 
 
-
 // Constructor
 IOTLib::IOTLib(const char *serverIP, const int &serverPort, uint8_t arduinoMacAddress[], const int &ethernetPin) {
 	// Ensure a serial output is setup (checking it's not already ready)
