@@ -1,32 +1,109 @@
-class graph {
-    constructor(canvas, parent, padding={top: 4, right: 4, bottom: 4, left: 4}){
+import canvasLibrary from './canvasLibrary'
+export default class graph {
+    constructor(canvas, parent, options ={}){
         this.canvas = canvas;
         this.ctx = canvas.getContext("2d");
+        this.lib = new canvasLibrary(this.ctx, this.canvas)
         this.height = this.canvas.height;
+        this.options = this.defaultSettings(options);
         this.crest, this.trough = 0;
         this.parent = parent;
         this.data = [];
-        this.padding = padding;
+        this.padding = this.options.padding;
         this.datapoints = [];
-        this.fontsize = 14;
         this.setWidth()
+        this.features()
+        this.canvas.addEventListener("mousemove", (e) => {
+            this.updateHoverLine(e);
+        })
+    }
+    features(){
+        this.features = [
+            {key: 'withShadow', cb: this.withShadow.bind(this)},
+            {key: 'withBackground', cb: this.withBackground.bind(this)},
+            {key: 'withCircles', cb: this.withCircles.bind(this)},
+            {key: 'withInfo', cb: this.withInfo.bind(this)},
+            {key: 'withLabels', cb: this.withLabels.bind(this)},
+            {key: 'withLine', cb: this.withLine.bind(this)},
+            {key: 'withGridLines', cb: this.withGridLines.bind(this)},
+            {key: 'withSideShade', cb: this.withSideShade.bind(this)},
+            {key: 'withHoverLine', cb: this.withHoverLine.bind(this)},
+            {key: 'withLastUpdated', cb: this.withLastUpdated.bind(this)},
+            {key: 'withActive', cb: this.withActive.bind(this)},
+        ]
+    }
+    updateHoverLine(e){
+        this.hoverLine = e.offsetX;
+        this.draw()
+    }
+    runFeature(key){
+        for(let k in this.features){
+            if(this.features[k].key === key){
+                this.features[k].cb();
+                break;
+            }
+        }
     }
     addData(reading){
-        console.log(this.data)
-        if(this.data.length >= 10){
-            this.data.shift();
-        }
         this.data.push(reading)
         this.update()
-        if(this.data.length > 1){
-
-            this.draw()
-        }
+        this.draw()
+    }
+    setData(data){
+        this.data = data;
+        this.update()
+        this.draw()
     }
     resize(e){
         // this.height = this.parent.getBoundingClientRect().height
         this.setWidth()
         this.draw();
+    }
+    defaultSettings(options){
+        let aesthetics = {
+            line: { width: 2, colour: "rgba(57, 57, 57, 0.8)"},
+            info: {colour: "#fff"},
+            background: {colour: "#141414"},
+            hoverLine: {lineColour: "#090909", width: 2, textboxBackground: "#090909", textboxFontSize: 11, textboxTextColour: "#999999", boxWidth: 14, boxHeight: 7, radius: 3},
+            lastUpdated: {fontsize: 11},
+            active: {activeColour: "rgba(33, 218, 42, .8)", inactiveColour: "#f21212", border: "rgba(38, 38, 38, .8)"},
+            sideShade: {gradient: [
+                {stop: 0, colour: "rgba(22,22,22, 1)"},
+                {stop: 0.3, colour: "rgba(22,22,22, 0.7)"},
+                {stop: 1, colour: "rgba(0,0,0,0)"}
+            ]},
+            circles: {colour: "#fff"},
+            gridLines: {width: 2, colour: "#202020"},
+            shadow: {gradient: [
+                {stop: 0, colour: "#3498db"},
+                {stop: 1, colour: "rgba(255, 255, 255,0)"},
+            ]},
+            fullShadow: {colour: "#60caca"},
+            labels: {colour: "#656565", fontsize: 11}
+        }
+        if(options.aesthetics){
+            for(let o in options.aesthetics){
+                aesthetics[o] = {...aesthetics[o], ...options.aesthetics[o]}
+            }
+        }
+        return {
+            padding: {top: 4, bottom: 4, left: 4, right: 4},
+            build: ['withBackground', 'withGridLines', 'withLine', 'withInfo'],
+            fontsize: 14,
+            font: 'Open Sans',
+            name: 'Temperature sensor',
+            active: false,
+            lines: {horizontal: 4, vertical:9},
+            ...options,
+            aesthetics: aesthetics
+        }
+        
+    }
+    keyExists(obj, key){
+        if(typeof obj[key] !== "undefined"){
+            return true
+        }
+        return false;
     }
     setWidth(){
         let left = parseInt(window.getComputedStyle(this.parent).getPropertyValue("padding-right").replace(" px", ""));
@@ -35,185 +112,207 @@ class graph {
         this.drawableWidth = this.width - (this.padding.left + this.padding.right);
         this.drawableHeight = this.height - (this.padding.top + this.padding.bottom);
         this.canvas.width = this.width;
-
-        this.scaleCanvas(this.canvas, this.ctx, this.width, this.height)
+        this.lib.scaleCanvas(this.canvas, this.ctx, this.width, this.height)
     }
 
-    scaleCanvas(canvas, context, width, height) {
-        // assume the device pixel ratio is 1 if the browser doesn't specify it
-        const devicePixelRatio = window.devicePixelRatio || 1;
-      
-        // determine the 'backing store ratio' of the canvas context
-        const backingStoreRatio = (
-          context.webkitBackingStorePixelRatio ||
-          context.mozBackingStorePixelRatio ||
-          context.msBackingStorePixelRatio ||
-          context.oBackingStorePixelRatio ||
-          context.backingStorePixelRatio || 1
-        );
-      
-        // determine the actual ratio we want to draw at
-        const ratio = devicePixelRatio / backingStoreRatio;
-      
-        if (devicePixelRatio !== backingStoreRatio) {
-          // set the 'real' canvas size to the higher width/height
-          canvas.width = width * ratio;
-          canvas.height = height * ratio;
-      
-          // ...then scale it back down with CSS
-          canvas.style.width = width + 'px';
-          canvas.style.height = height + 'px';
-        }
-        else {
-          // this is a normal 1:1 device; just scale it simply
-          canvas.width = width;
-          canvas.height = height;
-          canvas.style.width = '';
-          canvas.style.height = '';
-        }
-      
-        // scale the drawing context so everything will work at the higher ratio
-        context.scale(ratio, ratio);
-      }
     update(){
         let data = this.data;
         let trough, crest;
         for(let d in data){
+            let reading = data[d].reading
             if(trough === undefined){
-                trough = data[d]; 
+                trough = reading; 
             }
             if(crest === undefined){
-                crest = data[d];
+                crest = reading;
             }
-            if(data[d] > crest){
-                crest = data[d]
+            if(reading > crest){
+                crest = reading
             }
-            if(data[d] < trough){
-                trough = data[d]
+            if(reading < trough){
+                trough = reading
             }
         }
         this.trough = trough
         this.drawableTrough = trough - this.padding.bottom;
-        this.crest = crest + this.padding.top;
+        this.crest = crest;
         this.drawableCrest = crest + this.padding.top;
         this.updateDatapoints();
     }
     updateDatapoints(){
         this.datapoints = [];
-        let data = this.data;
-        let diff = this.drawableCrest-this.drawableTrough;
-        if(this.drawableCrest == this.drawableTrough){
+        let data = this.data; 
+        let diff = this.crest-this.trough;
+        if(this.crest == this.trough){
             this.diff = 1;
         }
         for(let d in data){
-            this.datapoints.push({x: (Math.round(this.drawableWidth / 9  * d) + this.padding.left) , y: Math.round((this.height / diff) * (this.drawableCrest - data[d]))})
+            let reading = data[d].reading
+            //i* Math.round(this.drawableWidth / vertical) + this.padding.left
+            this.datapoints.push({reading: reading, x: (Math.round(this.drawableWidth / (data.length-1) * d ) + this.padding.left)  , y: Math.round((this.drawableHeight / diff) * (this.crest - parseInt(reading))) + this.padding.top})
         }
     }
     draw(){
-        this.ctx.clearRect(0, 0, this.width, this.height)
+        this.lib.clear()
         if(this.datapoints.length == 0){
             return false;
         }
-        this.withGridLines().withShadow().withLine().withLabels().withCircles();
-        // this.withLine();
+        for(let i in this.options.build){
+            this.runFeature(this.options.build[i])
+        }
+    }
+    setName(name){
+        this.options.name = name;
+    }
+    setLastUpdated(date){
+        this.lastUpdated = date;
+        this.update()
+        this.draw()
+    }
+    withLastUpdated(){
+        this.lib.setTextBaseline("top")
+        this.lib.setFont(this.options.font, this.options.aesthetics.lastUpdated.fontsize, 600)
+        this.lib.drawText("Last updated: " + this.lastUpdated, this.options.padding.left, this.drawableHeight + this.padding.top );
+    }
+    withHoverLine(){
+        let split = (this.drawableWidth/this.options.lines.vertical)/2;
+        let options =this.options.aesthetics.hoverLine
+        for(let i in this.datapoints){
+            if(Math.abs(this.hoverLine - this.datapoints[i].x) < split){
+                let x = this.datapoints[i].x;
+                let y = this.datapoints[i].y;
+                
+                //Hover line
+                this.lib.setLineWidth(options.width)
+                this.lib.setStrokeStyle(options.lineColour)
+                this.lib.drawLine(x, this.options.padding.top, x, this.options.padding.top + this.drawableHeight);
+                this.lib.stroke();
+
+                //Hover line text box
+                this.lib.drawRoundedRectangle(x, y, options.boxWidth, options.boxHeight, options.radius)
+                this.lib.setFillStyle(options.textboxBackground)
+                this.lib.fill();
+
+                //Hover line text
+                this.lib.setTextBaseline("middle")
+                this.lib.setTextAlign("center")
+                this.lib.setFont(this.font, options.textboxFontSize, 600)
+                this.lib.setFillStyle(options.textboxTextColour)
+                this.lib.drawText(this.datapoints[i].reading, x, y) 
+
+                //break to stop waste of loop
+                break;
+            }
+        }
+    }
+
+    withInfo(){
+        //Text aligns and style
+        this.lib.setTextAlign("left")
+        this.lib.setTextBaseline("alphabetic")
+        this.lib.setFillStyle(this.options.aesthetics.info.colour)
+
+        //Draw name of sensor
+        this.lib.setFont(this.options.font, this.options.fontsize, 600)
+        this.lib.drawText(this.options.name, 15, 25);
+        
+        //Draw current reading of sensor
+        this.lib.setFont(this.options.font, this.options.fontsize-2, 400)
+        this.lib.drawText(this.data[this.data.length-1].reading + "° C", 15, 45);
+
+        return this;
+    }
+    withSideShade() {
+        let gradient = this.lib.createLinearGradient(0,0,this.width, 0, this.options.aesthetics.sideShade.gradient);
+        this.lib.setFillStyle(gradient);
+        this.lib.fillRectangle(0, 0, this.width, this.height);
+        return this;
+    }
+    withActive(){
+        this.lib.setStrokeStyle(this.options.aesthetics.active.border)
+        if(this.options.active){
+            this.lib.setFillStyle(this.options.aesthetics.active.activeColour)
+        } else {  
+            this.lib.setFillStyle(this.options.aesthetics.active.inactiveColour)
+        }
+        this.lib.drawCircle(this.width - 15, 16,5,0,2*Math.PI)
+        this.lib.fill();
+        this.lib.stroke();
+        return this
+    }
+    withBackground(){
+        this.lib.setFillStyle(this.options.aesthetics.background.colour)
+        this.lib.fillRectangle(0,0,this.width, this.height);
+        return this;
     }
     withCircles(){
 
         this.datapoints.forEach(d => {
-            this.ctx.beginPath();
-            this.ctx.arc(d.x,d.y,5,0,2*Math.PI);
-            this.ctx.fillStyle = "#fff"
-            this.ctx.fill()
-            this.ctx.stroke();
-            this.ctx.closePath()
+            this.lib.setFillStyle(this.options.aesthetics.circles.colour)
+            this.lib.drawCircle(d.x,d.y,5,0,2*Math.PI)
+            this.lib.fill()
+            this.lib.stroke();
         })
         return this
     }
     withGridLines(){
-        let horizontal = 5
-        let vertical = 5
-        this.ctx.lineWidth = 1
-        let width = this.drawableWidth / 9
+        let horizontal = this.options.lines.horizontal
+        let vertical = this.options.lines.vertical
+        this.lib.setLineWidth(this.options.aesthetics.gridLines.width)
+        this.lib.setStrokeStyle(this.options.aesthetics.gridLines.colour)
+        
         for(let i=0; i<= vertical; i++){
-            this.ctx.strokeStyle = "rgb(230, 230, 230)"
-            this.ctx.beginPath()
-            this.ctx.moveTo(i* (this.drawableWidth / vertical) + this.padding.left + .5, this.padding.top +.5);
-            this.ctx.lineTo(i* (this.drawableWidth / vertical)+ this.padding.left + .5, this.height - this.padding.bottom + .5);
-            this.ctx.stroke();
-            this.ctx.closePath()
+            this.lib.drawLine( Math.round(this.drawableWidth / vertical * i) + this.padding.left , this.padding.top,
+                            Math.round(this.drawableWidth / vertical * i)+ this.padding.left , this.height - this.padding.bottom )
+            this.lib.stroke();
         }
         for(let i =0; i<= 1; i++){
-            this.ctx.strokeStyle = "rgb(230, 230, 230)"
-            this.ctx.beginPath()
-            this.ctx.moveTo(this.padding.left , this.padding.top + (i*this.drawableHeight));
-            this.ctx.lineTo(this.padding.left + this.drawableWidth , this.padding.top + (i*this.drawableHeight));
-            this.ctx.stroke();
-            this.ctx.closePath()
+            this.lib.drawLine(this.padding.left , this.padding.top +  Math.round(i*this.drawableHeight),
+                            this.padding.left + this.drawableWidth , this.padding.top +  Math.round(i*this.drawableHeight));
+            this.lib.stroke();
         }
         for(let i =0; i<= horizontal; i++){
-            this.ctx.strokeStyle = "rgb(230, 230, 230)"
-            this.ctx.beginPath()
-            this.ctx.moveTo(this.padding.left , this.padding.top +((this.drawableHeight/horizontal ) * i));
-            this.ctx.lineTo(this.padding.left + this.drawableWidth ,this.padding.top +((this.drawableHeight/horizontal ) * i));
-            this.ctx.stroke();
-            this.ctx.closePath()
+            this.lib.drawLine(this.padding.left , this.padding.top +( Math.round(this.drawableHeight/horizontal ) * i),
+                            this.padding.left + this.drawableWidth -1 ,this.padding.top +( Math.round(this.drawableHeight/horizontal ) * i));
+            this.lib.stroke();
         }
         return this
     }
     withShadow(){
         let data = this.datapoints; 
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.padding.left + .5, data[0].y);
-        this.ctx.lineTo(this.padding.left, data[0].y)
-        for(let d in data){
-            if(d==0){
-                this.ctx.lineTo(data[0].x + .5, data[0].y + .5)
-            } else {
-                let x =data[d-1].x + ( data[d].x -  data[d-1].x)/2;
-                let y = data[d].y + ( data[d].y - data[d-1].y)/2;
-                this.ctx.quadraticCurveTo(x, y, data[d].x, data[d].y)
-            }
-        }
-        this.ctx.lineTo(data[data.length-1].x, this.height - this.padding.bottom);
-        this.ctx.lineTo(this.padding.left, this.height - this.padding.bottom);
-
-        var grd=this.ctx.createLinearGradient(0,0,0 , (this.height*1.2));
-        grd.addColorStop(0,"#3498db");
-        grd.addColorStop(1,"rgba(255, 255, 255,0)");
-        this.ctx.fillStyle = grd;
-        this.ctx.fill();
-        this.ctx.closePath()
+        this.lib.drawPolygon([{x: this.padding.left, y: data[0].y},
+             ...data, {x: data[data.length-1].x, y: this.height - this.padding.bottom}, {x:this.padding.left, y: this.height - this.padding.bottom}]);
+        let gradient = this.lib.createLinearGradient(0,0,0 , (this.height*1.2),this.options.aesthetics.shadow.gradient)
+        this.lib.setFillStyle(gradient);
+        this.lib.fill();
+        return this;
+    }
+    withFullShadow(){
+        let data = this.datapoints; 
+        this.lib.drawPolygon([{x: this.padding.left, y: data[0].y},
+             ...data, {x: data[data.length-1].x, y: this.height - this.padding.bottom}, {x:this.padding.left, y: this.height - this.padding.bottom}]);
+        this.lib.setFillStyle(this.options.aesthetics.fullShadow.colour);
+        this.lib.fill();
         return this;
     }
     withLine(){
-        let data = this.datapoints; 
-        this.ctx.beginPath();
-        this.ctx.lineWidth = 3
-        this.ctx.moveTo(this.padding.left + .5, data[0].y + .5);
-        for(let d in data){
-            if(d==0){
-                this.ctx.quadraticCurveTo(this.padding.left + .5, data[d].y,data[d].x + .5, data[d].y + .5)
-            } else {
-                let x =data[d-1].x + ( data[d].x -  data[d-1].x)/2;
-                let y = data[d].y + ( data[d].y - data[d-1].y)/2;
-                this.ctx.quadraticCurveTo(x, y, data[d].x, data[d].y)
-            }
-        }
-        this.ctx.strokeStyle = "#5A60F9"
-        this.ctx.stroke();
-        this.ctx.closePath()
+        let data = this.datapoints;
+        this.lib.setLineWidth(this.options.aesthetics.line.width)
+        this.lib.drawLines([{x: this.padding.left, y: data[0].y} , ...data])
+        this.lib.setStrokeStyle(this.options.aesthetics.line.colour)
+        this.lib.stroke();
         return this;
     }
     withLabels(){
-        this.ctx.fillStyle = "#000"
-        this.ctx.font=this.fontsize + "px Arial"
-        this.ctx.textAlign = "left"
-        this.ctx.textBaseline = "middle"
-        this.ctx.fillText(this.crest, this.padding.left - this.ctx.measureText(this.crest).width - 5 , this.padding.top )
+        this.lib.setFillStyle(this.options.aesthetics.labels.colour)
+        this.lib.setFont(this.options.aesthetics.font, this.options.aesthetics.labels.fontsize, 600)
+        this.lib.setTextAlign("left")
+        this.lib.setTextBaseline("middle")
+        this.lib.drawText(this.crest, this.padding.left + this.drawableWidth + 3  , this.padding.top )
         
-        this.ctx.textAlign = "left"
-        this.ctx.textBaseline = "middle"
-        this.ctx.fillText(this.trough, this.padding.left - this.ctx.measureText(this.trough).width - 5   , this.padding.top+ this.drawableHeight)
+        this.lib.setTextAlign("left")
+        this.lib.setTextBaseline("middle")
+        this.lib.drawText(this.trough, this.padding.left  + this.drawableWidth+ 3 , this.drawableHeight + this.padding.top)
         return this
     }
 }

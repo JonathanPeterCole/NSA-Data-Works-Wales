@@ -1,5 +1,4 @@
 const sensors = (state = [], action) => {
-    console.log(state)
     switch(action.type){
         case 'ADD_DATA':
             return (
@@ -20,7 +19,11 @@ const sensors = (state = [], action) => {
                 }
             }
         )
-    break;
+        break;
+        case 'REMOVE_LAST':
+        return (
+            {}
+        )
         default:
             return state
     }

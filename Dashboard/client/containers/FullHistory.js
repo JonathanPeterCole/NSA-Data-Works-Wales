@@ -1,6 +1,6 @@
 
 import { connect } from 'react-redux'
-import SensorsComponent from '../components/pages/Sensors'
+import FullHistoryComponent from '../components/pages/FullHistory'
 import { addData } from '../actions'
 
 const mapDispatchToProps = dispatch => ({
@@ -13,4 +13,4 @@ const mapStateToProps = state => ({
   sensors: state.sensors
 })
 
-export const Sensors = connect(mapStateToProps  , mapDispatchToProps)(SensorsComponent)
+export const FullHistory = connect(mapStateToProps  , mapDispatchToProps)(FullHistoryComponent)

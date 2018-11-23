@@ -1,5 +1,7 @@
 import React from 'react'
 import socketio from 'socket.io-client'
+
+import {Loading} from '../Loading'
 import {UnknownSensor} from '../../containers/UnknownSensor'
 import {KnownSensor} from '../../containers/KnownSensor'
 import {IdentifyPrompt} from '../../containers/IdentifyPrompt'
@@ -10,21 +12,15 @@ export default class App extends React.Component {
     constructor(props){
         super(props)
         this.socket = socketio.connect("http://"+Config.IP+":3000/websocket")
-        // console.log(props)
+        this.state = {
+            loading: true,
+            sensorpopup: false
+        }
         this.socket.on("sensorReadings", (data) => {
-            // console.log(data)
-            // data.known.forEach(k=> console.log(k) )
-            // console.log(data)
             this.props.dispatch(data)
-            // data.unknown.forEach(k => k.forEach(r => this.props.dispatch(r.id, r)))
-            // this.props.dispatch(data.id, data.data)
-            // this.setState({
-            //     sensorReadings: data
-            // })
+            this.setState({loading: false})
+            console.log(data)
         })
-    }
-    showIdentifyPrompt(){
-        this.setState({popup: !this.state.identifyprompt}); // in callback so element exists prior to calling.
     }
     updateSensor(id, name){
         this.socket.emit("updateSettings",{
@@ -32,14 +28,14 @@ export default class App extends React.Component {
             name: name
         })
     }
-    identifyPromptTrigger(){
-        this.setState({identifyprompt: !this.state.identifyprompt});
-    }
     showSensorPopup(sensorpopupinfo){
         this.setState({sensorpopup: !this.state.sensorpopup, sensorpopupinfo})
     }
     render(){
         return (
+            this.state.loading? 
+            <Loading></Loading>
+            :
             <div>
                 <div className="sensors">
                     <h1>Known sensors</h1>
@@ -54,8 +50,7 @@ export default class App extends React.Component {
                     })}
                 </div>
                 {this.props.sensors.active.identify ? 
-    
-                    <IdentifyPrompt ref="prompt" close={this.identifyPromptTrigger.bind(this)} updateSensor={this.updateSensor.bind(this)} ></IdentifyPrompt>:null
+                    <IdentifyPrompt ref="prompt" updateSensor={this.updateSensor.bind(this)} ></IdentifyPrompt>:null
                 }
                 {this.props.sensors.active.popup ? 
                     <SensorPopup ></SensorPopup>:null}

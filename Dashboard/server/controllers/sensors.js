@@ -1,9 +1,12 @@
+
 class sensors {
-    cosntructor(){
-        console.log("oks")
+    constructor(db){ 
+        this.db = db;
     }
-    getSensors(){
-        return {kek: '123'}
+    async getSensor(id){
+        this.db.setCollection("sensors")
+        let data = await this.db.findDocument("id", id);
+        return data;
     }
 }
 

@@ -37,8 +37,8 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '../public')))
 
 // Routes
-app.use('/', indexRouter)
 app.use('/api', apiRouter)
+app.use('/', indexRouter)
 
 database.connect().then((client) => {
   socketApi = new SocketApi(client);

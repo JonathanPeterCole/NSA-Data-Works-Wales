@@ -3,7 +3,12 @@ import React from 'react'
 export default class IdentiyPrompt extends React.Component {
     constructor(props){
         super(props)
-        console.log(props)
+        document.addEventListener("click", (e) => {
+            if(e.target.className === "identify-prompt-wrapper"){
+                
+                this.props.dispatch({identify: false})
+            }
+        })
     }
     render(){
         return (
@@ -17,7 +22,12 @@ export default class IdentiyPrompt extends React.Component {
                     </div>
                     <div className="input">
                         <h1>Sensor Name</h1>
-                        <input type="text" defaultValue={this.props.data.name} onChange={e => this.setState({name: e.target.value})}/>
+                        <input type="text" defaultValue={this.props.data.name ? this.props.data.name : "unidentified"} onChange={e => this.setState({name: e.target.value})} onKeyPress={(e) => {
+                            if(e.key === 'Enter'){
+                                this.props.updateSensor(this.props.data.id, this.state.name)
+                                this.props.dispatch({identify: false})
+                            }
+                        }}/>
                     </div>
                     <button onClick={() => {
                         this.props.updateSensor(this.props.data.id, this.state.name)

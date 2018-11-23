@@ -29,10 +29,13 @@ class database {
             console.log(err)
         })
     }
-    findDocument(key, name, callback){
-        this.db.collection(this.collection).findOne({[key]: name},(err, result) => {
-            callback(result)
-        });
+    insertMany(data){
+        this.db.collection(this.collection).insertMany(data, (err) => {
+            console.log(err)
+        })
+    }
+    async findDocument(key, name){
+        return await this.db.collection(this.collection).findOne({[key]: name});
     }
 }
 module.exports = database;

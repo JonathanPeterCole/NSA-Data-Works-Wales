@@ -6,17 +6,20 @@ export default class Temperature extends React.Component {
         super(props)
     }
     componentDidMount(){
-        this.graph = new Graph(this.refs.graph, this.refs.parent, {top: 4, bottom: 4, left: 10, right: 10});
+        this.graph = new Graph(this.refs.graph, this.refs.parent, this.props.options);
         window.addEventListener("resize", e => this.graph.resize(e))
+        this.graph.setData(this.props.data.data)
+        this.graph.setLastUpdated(this.props.data.lastUpdate)
     }
     componentDidUpdate(){
-        this.graph.addData(this.props.data.data)
+        this.graph.setName(this.props.data.name ? this.props.data.name: this.props.options.name)
+        this.graph.setData(this.props.data.data)
+        this.graph.setLastUpdated(this.props.data.lastUpdate)
     }
     render(){
         return (
             <div className="content" ref="parent">
-                <h2>Reading : {this.props.data.data}</h2>
-                <canvas width="100%" ref="graph" height={this.props.height}></canvas>
+                <canvas width="100%" ref="graph" height={this.props.height} onClick={this.props.onClick ? () => {this.props.onClick()} : null}></canvas>
             </div>
         )
     }

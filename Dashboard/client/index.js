@@ -4,7 +4,10 @@ import { render } from 'react-dom'
 import App from './components/App'
 import './App.css'
 
+// React Router
+import { Router } from 'react-router-dom'
 
+import history from "./History"
 
 // Redux
 import { Provider } from 'react-redux'
@@ -28,7 +31,9 @@ const store = createStore(sensors, initialState)
 // Render
 render(
   <Provider store={store}>
-    <App></App>
+    <Router history={history}>
+      <App></App>
+    </Router>
   </Provider>,
   document.getElementById('root')
 )
