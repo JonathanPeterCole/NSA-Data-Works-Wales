@@ -35,7 +35,8 @@ class database {
         })
     }
     async findDocument(key, name){
-        return await this.db.collection(this.collection).findOne({[key]: name});
+        let data = await this.db.collection(this.collection).findOne({[key]: name})
+        return  data
     }
 }
 module.exports = database;

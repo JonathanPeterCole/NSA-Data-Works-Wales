@@ -72,9 +72,9 @@ class socketApi {
   }
   saveReadings(){
     for(let reading in this.knownSensors){
-      if(this.knownSensors[reading].data.length >= 40){
-        let saveData = this.knownSensors[reading].data.splice(0, 10);
-        this.db.findDocument("id", this.knownSensors[reading].id, (data) => {
+      if(this.knownSensors[reading].data.length >= 5){
+        let saveData = this.knownSensors[reading].data.splice(0, 3);
+        this.db.findDocument("id", this.knownSensors[reading].id).then((data, result) => {
           data.sensors = data.sensors ? data.sensors.concat(saveData) : saveData;
           data.sensors = data.sensors.length >= 500 ? data.sensors.splice(10, data.sensors.length-1): data.sensors;
           this.db.update("id", this.knownSensors[reading].id, data)
