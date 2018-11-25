@@ -1,7 +1,6 @@
 import React from 'react'
 import SensorHistory from '../sensor/SensorHistory'
 import axios from 'axios'
-const Config = require('../../../config/config.json')
 import history from '../../History';
 
 import {Loading} from '../Loading'
@@ -18,7 +17,7 @@ export default class FullHistory extends React.Component {
     componentDidMount(){
         console.log("mounted")
         let sensorid = this.props.location.pathname.split("/")[2];
-        axios.get("http://" + Config.IP + ":3000/api/history/" + sensorid).then(res => {
+        axios.get("/api/history/" + sensorid).then(res => {
             console.log(res)
             this.setState({loading: false, data: res.data.sensors})
         })

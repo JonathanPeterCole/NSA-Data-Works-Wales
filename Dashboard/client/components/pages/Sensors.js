@@ -1,17 +1,16 @@
 import React from 'react'
-import socketio from 'socket.io-client'
+import io from 'socket.io-client'
 
 import {Loading} from '../Loading'
 import {UnknownSensor} from '../../containers/UnknownSensor'
 import {KnownSensor} from '../../containers/KnownSensor'
 import {IdentifyPrompt} from '../../containers/IdentifyPrompt'
 import {SensorPopup} from '../../containers/SensorPopup'
-const Config = require('../../../config/config.json')
 
 export default class App extends React.Component {
     constructor(props){
         super(props)
-        this.socket = socketio.connect("http://"+Config.IP+":3000/websocket")
+        this.socket = io('/websocket')
         this.state = {
             loading: true,
             sensorpopup: false
