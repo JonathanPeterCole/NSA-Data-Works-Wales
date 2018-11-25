@@ -9,5 +9,4 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-
-export const KnownSensor = connect( () => ({})  ,mapDispatchToProps)(KnownSensorComponent)
+export const KnownSensor = connect(() => ({}), mapDispatchToProps)(KnownSensorComponent)
