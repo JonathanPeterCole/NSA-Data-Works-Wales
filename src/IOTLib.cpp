@@ -6,8 +6,40 @@
 
 
 
-// Constructor
+// Ethernet constructor
 IOTLib::IOTLib(const char *serverIP, const int &serverPort, uint8_t arduinoMacAddress[], const int &ethernetPin) {
+	initializeLib();
+	
+	setupEthernetShield(arduinoMacAddress, ethernetPin);
+	
+	Serial.println("Connecting to server...");
+	socketClient = &WebSocketClient(ethernetClient, serverIP, serverPort);
+	socketClient->begin();
+}
+// WiFi constructor
+/*
+IOTLib::IOTLib(const char *serverIP, const int &serverPort, const char *wifiSSID, const char *wifiPassword) {
+	initializeLib();
+	
+	// Setup wifi client
+	WiFi.begin(wifiSSID, wifiPassword);
+
+	Serial.println("Connecting to server...");
+	socketClient = &WebSocketClient(wifiClient, serverIP, serverPort);
+	socketClient->begin();
+	
+	// Print the SSID of the network you're connected to:
+	Serial.print("SSID: ");
+	Serial.println(WiFi.SSID());
+
+	// Print your WiFi shield's IP address:
+	IPAddress ip = WiFi.localIP();
+	Serial.print("IP Address: ");
+	Serial.println(ip);
+}
+*/
+
+void IOTLib::initializeLib() {	
 	// Ensure a serial output is setup (checking it's not already ready)
 	if (!Serial) {
 		Serial.begin(9600);
@@ -16,16 +48,6 @@ IOTLib::IOTLib(const char *serverIP, const int &serverPort, uint8_t arduinoMacAd
 		}
 	}
 	
-	setupEthernetShield(arduinoMacAddress, ethernetPin);
-	
-	// Initialize the Ethernet client library
-	// with the IP address and port of the server
-	// that you want to connect to (port 80 is default for HTTP):
-	EthernetClient ethernetClient;
-	
-	Serial.println("Connecting to server...");
-	socketClient = &WebSocketClient(ethernetClient, serverIP, serverPort);
-	socketClient->begin();
 }
 
 

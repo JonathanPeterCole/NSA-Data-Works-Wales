@@ -7,15 +7,15 @@
 	#define IOTLib_h
 	#include "Arduino.h"
 	#include "Ethernet.h"
+	// #include "WiFi101.h"
 	#include "ArduinoHttpClient.h"
 	
 	class IOTLib
 	{
 		public:
 			IOTLib(const char *serverIP, const int &serverPort, uint8_t arduinoMacAddress[], const int &ethernetPin);
-			
-			void connect(const char *serverIP, int serverPort);
-			
+			// IOTLib(const char *serverIP, const int &serverPort, const char *wifiSSID, const char *wifiPassword);
+
 			void sendOtherReading(String sensorID, String value);
 			void sendButtonReading(String sensorID, int value);
 			void sendTemperatureReading(String sensorID, float value);
@@ -25,9 +25,11 @@
 
 			
 		private:
-			EthernetClient ethernetClient;
+			EthernetClient ethernetClient; // Initialize the Ethernet client library
+			// WiFiClient wifiClient; // Initialize the WiFi client library
 			WebSocketClient *socketClient; // Create pointer to WebSocketClient data type to allow it to be created later in the IOTLib constructor with server details after EthernetShield is initiated
 			
+			void initializeLib();
 			
 			void setupEthernetShield(uint8_t arduinoMacAddress[], const int &ethernetPin);
 			
