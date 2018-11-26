@@ -6,7 +6,9 @@ This project consists of two parts, the Arduino code, and the web dashboard code
 
 ### Quick Start
 
-1. Open a terminal to the Dashboard directory.
+1. Install and start MongoDB
+
+1. Open a terminal to the Dashboard directory
 
 1. Install the npm packages  
   `npm install`
@@ -44,3 +46,19 @@ This project consists of two parts, the Arduino code, and the web dashboard code
 * **Start**  
   Runs the application on port 3000.  
   `npm run start`
+
+### Database
+
+To run this project, you will need a MongoDB server running on your machine. 
+
+[**Download MongoDB**](https://www.mongodb.com/download-center/community)
+
+On NSA laptops, MongoDB is already installed, but needs to be configured. To do this, follow these steps:
+
+1. Open a command line window
+
+1. Set the data directory  
+  `"C:\mongodb\bin\mongod.exe" --dbpath "C:\mongodb\data"`
+
+1. Check that the database is running  
+  `mongo --shell`
