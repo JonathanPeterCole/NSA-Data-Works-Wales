@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import io from 'socket.io-client'
 
-import { Loading } from '../Loading'
+import { Loading } from '../loading'
 import { UnknownSensor } from '../../containers/UnknownSensor'
 import { KnownSensor } from '../../containers/KnownSensor'
 import { IdentifyPrompt } from '../../containers/IdentifyPrompt'

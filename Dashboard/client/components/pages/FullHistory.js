@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import SensorHistory from '../sensor/SensorHistory'
 import axios from 'axios'
-import history from '../../History'
+import history from '../../history'
 
-import { Loading } from '../Loading'
+import { Loading } from '../loading'
 
 export default class FullHistory extends React.Component {
   constructor (props) {
