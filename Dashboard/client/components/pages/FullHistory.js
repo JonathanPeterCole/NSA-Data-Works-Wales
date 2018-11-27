@@ -29,7 +29,6 @@ export default class FullHistory extends React.Component {
                 {this.state.loading? 
                 <Loading></Loading>
                 :(
-                    
                 <div>
                 <button className="basic" onClick={() => {history.push("/")}}>Go back</button>
                 <SensorHistory data={this.state.data}></SensorHistory>

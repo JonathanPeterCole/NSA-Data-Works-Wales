@@ -133,9 +133,15 @@ export default class graph {
                 trough = reading
             }
         }
+        
+
         this.trough = trough
-        this.drawableTrough = trough - this.padding.bottom;
         this.crest = crest;
+        if(this.crest == this.trough || this.crest - this.trough <= 3){
+            this.crest +=3
+            this.trough -=3
+        }
+        this.drawableTrough = trough - this.padding.bottom;
         this.drawableCrest = crest + this.padding.top;
         this.updateDatapoints();
     }
@@ -143,9 +149,6 @@ export default class graph {
         this.datapoints = [];
         let data = this.data; 
         let diff = this.crest-this.trough;
-        if(this.crest == this.trough){
-            this.diff = 1;
-        }
         for(let d in data){
             let reading = data[d].reading
             //i* Math.round(this.drawableWidth / vertical) + this.padding.left
@@ -160,6 +163,10 @@ export default class graph {
         for(let i in this.options.build){
             this.runFeature(this.options.build[i])
         }
+    }
+    setActive(active){
+        console.log(active)
+        this.options.active = active;
     }
     setName(name){
         this.options.name = name;
