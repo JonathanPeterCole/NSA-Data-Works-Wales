@@ -6,6 +6,7 @@ class socketApi {
     this.knownSensors = [];
     this.unknownSensors = [];
     this.db = db;
+    this.populateKnownSensors()
     setInterval(() => {
       if(this.clients.length !=0){
         this.broadcastAll("sensorReadings", this.lastReadings(), this.sensors)
@@ -15,11 +16,8 @@ class socketApi {
   }
 
   connect(socket){
-    console.log('huh')
     socket.id = this.clients.length;
       this.clients.push(socket) 
-      console.log('h')
-    console.log(this.clients.length)
     if(this.data.length != 0){
       this.broadcastTo(socket, "sensorReadings", this.lastReadings(), this.sensors)
     }
@@ -92,13 +90,25 @@ class socketApi {
     }
     return readings;
   }
+  populateKnownSensors(){
+    this.db.setCollection("sensors");
+    this.db.findAll().then((data) => {
+      data.forEach(arr => {
+        if(arr.data.length >= 10){
+          arr.data = arr.data.splice(-10, 10)
+        }
+      })
+      this.knownSensors = data;
+    })
+  }
   saveReadings(){
     for(let reading in this.knownSensors){
       if(this.knownSensors[reading].data.length >= 40){
         let saveData = this.knownSensors[reading].data.splice(0, 10);
-        this.db.findDocument("id", this.knownSensors[reading].id, (data) => {
-          data.sensors = data.sensors ? data.sensors.concat(saveData) : saveData;
-          data.sensors = data.sensors.length >= 500 ? data.sensors.splice(10, data.sensors.length-1): data.sensors;
+        this.db.findDocument("id", this.knownSensors[reading].id).then((data) => {
+          data.data = data.data ? data.data.concat(saveData) : saveData;
+          data.data = data.data.length >= 500 ? data.sensors.splice(10, data.data.length-1): data.data;
+          data.lastUpdate = saveData[saveData.length-1].time;
           this.db.update("id", this.knownSensors[reading].id, data)
         })
       }
@@ -136,7 +146,7 @@ class socketApi {
       this.db.findDocument("id", data.id).then(result => {
         if(result === null && !this.socketExists(data, this.unknownSensors)){
           this.unknownSensors.push({id: data.id, type, data: [{reading: data.data, time: data,id: id}], active: data.active});
-        } else if(result !== null) { 
+        } else if(result !== null  && !this.socketExists(data, this.knownSensors)) { 
           this.knownSensors.push({id: data.id,type, data: [{reading: data.data, time: date, id:id}], name:result.name, active: data.active})
         }
       })

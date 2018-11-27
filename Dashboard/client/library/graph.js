@@ -17,6 +17,20 @@ export default class graph {
             this.updateHoverLine(e);
         })
     }
+
+    //COLORBLND
+    //COLORBLND
+    //COLORBLND
+    //COLORBLND
+    //COLORBLND
+    //COLORBLND
+    //COLORBLND
+    //COLORBLND
+    //COLORBLND
+    //COLORBLND
+    //COLORBLND
+    //COLORBLND
+    //COLORBLND
     features(){
         this.features = [
             {key: 'withShadow', cb: this.withShadow.bind(this)},
@@ -165,7 +179,6 @@ export default class graph {
         }
     }
     setActive(active){
-        console.log(active)
         this.options.active = active;
     }
     setName(name){
@@ -225,7 +238,7 @@ export default class graph {
         
         //Draw current reading of sensor
         this.lib.setFont(this.options.font, this.options.fontsize-2, 400)
-        this.lib.drawText(this.data[this.data.length-1].reading + "° C", 15, 45);
+        this.lib.drawText(this.data[0].reading + "° C", 15, 45);
 
         return this;
     }

@@ -35,7 +35,11 @@ class database {
         })
     }
     async findDocument(key, name){
-        return await this.db.collection(this.collection).findOne({[key]: name});
+        return await this.db.collection(this.collection).findOne({});
+    }
+    async findAll(){
+        return await this.db.collection(this.collection).find({}).toArray();
     }
 }
 module.exports = database;
+
