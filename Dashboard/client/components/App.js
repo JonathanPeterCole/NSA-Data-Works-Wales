@@ -1,7 +1,7 @@
 import React from 'react'
 import { Sensors } from '../containers/Sensors'
 import { FullHistory } from '../containers/FullHistory'
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 
 import Header from './header/header'
 
@@ -16,7 +16,8 @@ export default class App extends React.Component {
       <div>
         <Header />
         <div className='container'>
-          <Route path='/' exact component={Sensors} />
+          <Redirect from='/' to='/arduinos' />
+          <Route path='/arduinos' exact component={Sensors} />
           <Route path='/history/:id' exact component={FullHistory} />
         </div>
       </div>
