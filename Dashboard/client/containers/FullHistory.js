@@ -5,7 +5,7 @@ import { addData } from '../actions'
 
 const mapDispatchToProps = dispatch => ({
   dispatch: (data) => {
-    dispatch(addData( data))
+    dispatch(addData(data))
   }
 })
 
@@ -13,4 +13,4 @@ const mapStateToProps = state => ({
   sensors: state.sensors
 })
 
-export const FullHistory = connect(mapStateToProps  , mapDispatchToProps)(FullHistoryComponent)
+export const FullHistory = connect(mapStateToProps, mapDispatchToProps)(FullHistoryComponent)

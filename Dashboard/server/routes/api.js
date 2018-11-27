@@ -1,13 +1,13 @@
 const express = require('express')
 const router = express.Router()
-const sensors = require("./../controllers/sensors")
+const Sensors = require('./../controllers/sensors')
 
 const Database = require('../src/database')
-const database = new Database("mongodb://localhost:27017", "iot-app")
-let sensorController;
+const database = new Database('mongodb://localhost:27017', 'iot-app')
+let sensorController
 database.connect().then((client) => {
-  sensorController = new sensors(client)
-});
+  sensorController = new Sensors(client)
+})
 
 // ^ MOVE THIS TO MAIN FILE, PREFERABLY USE ONE DB CONNECT OBJECT
 
@@ -20,11 +20,11 @@ database.connect().then((client) => {
 // })
 
 router.get('/history/:id', (req, res, next) => {
-  res.setHeader('Content-Type', 'application/json');
-  sensorController.getSensor(req.params.id).then(r =>{
+  res.setHeader('Content-Type', 'application/json')
+  sensorController.getSensor(req.params.id).then(r => {
     res.send(r)
   })
 })
 module.exports = router
 
-//ALLOW RENDERING AFTER DB CONNETS
+// ALLOW RENDERING AFTER DB CONNETS

@@ -1,25 +1,23 @@
 class socketApi {
-  constructor(db){
-    this.clients = [];
-    this.data = [];
-    this.sensors = [];
-    this.knownSensors = [];
-    this.unknownSensors = [];
-    this.db = db;
-    this.populateKnownSensors()
+  constructor (db) {
+    this.clients = []
+    this.data = []
+    this.sensors = []
+    this.knownSensors = []
+    this.unknownSensors = []
+    this.db = db
     setInterval(() => {
-      if(this.clients.length !=0){
-        this.broadcastAll("sensorReadings", this.lastReadings(), this.sensors)
+      if (this.clients.length !== 0) {
+        this.broadcastAll('sensorReadings', this.lastReadings(), this.sensors)
       }
     }, 1500)
     setInterval(() => this.checkDisconnected(), 1000)
   }
-
-  connect(socket){
-    socket.id = this.clients.length;
-      this.clients.push(socket) 
-    if(this.data.length != 0){
-      this.broadcastTo(socket, "sensorReadings", this.lastReadings(), this.sensors)
+  connect (socket) {
+    socket.id = this.clients.length
+    this.clients.push(socket)
+    if (this.data.length !== 0) {
+      this.broadcastTo(socket, 'sensorReadings', this.lastReadings(), this.sensors)
     }
     socket.on('setType', (data) => {
       socket.type = data.type;
@@ -32,11 +30,11 @@ class socketApi {
       this.addSensorData(data, socket.type);
       this.saveReadings();
     })
-    socket.on("updateSettings", (data) => {
+    socket.on('updateSettings', (data) => {
       this.saveSensor(data.id, data.name)
       this.updateSensors(data.id, data.name)
-      this.broadcastAll("sensorReadings", this.lastReadings(), this.sensors)
-    });
+      this.broadcastAll('sensorReadings', this.lastReadings(), this.sensors)
+    })
     socket.on('disconnect', () => {
       this.removeClient(socket.id)
     })
@@ -54,43 +52,43 @@ class socketApi {
       }
     })
   }
-  socketExists(socket, array){
+  socketExists (socket, array){
     for(let i in array){
       if(array[i].id == socket.id)
         return true;
     }
   }
-  updateSensors(id, name){
-    for(let s in this.unknownSensors){
-      if(this.unknownSensors[s].id === id){
+  updateSensors (id, name) {
+    for (let s in this.unknownSensors) {
+      if (this.unknownSensors[s].id === id) {
         this.unknownSensors[s].name = name
         this.knownSensors.push(this.unknownSensors[s])
-        this.unknownSensors.splice(s, 1);
+        this.unknownSensors.splice(s, 1)
       }
     }
-    for(let s in this.knownSensors){
-      if(this.knownSensors[s].id === id){
+    for (let s in this.knownSensors) {
+      if (this.knownSensors[s].id === id) {
         this.knownSensors[s].name = name
       }
     }
   }
-  lastReadings(){
-    let readings = {known: [], unknown: []};
-    for(let reading in this.knownSensors){
-      let last = this.knownSensors[reading].data.length <= 10 ?
-       this.knownSensors[reading].data.slice(0, this.knownSensors[reading].data.length-1) : 
-       this.knownSensors[reading].data.slice(this.knownSensors[reading].data.length -11 , this.knownSensors[reading].data.length-1)
-      readings.known.push({...this.knownSensors[reading], data: last})
+  lastReadings () {
+    let readings = { known: [], unknown: [] }
+    for (let reading in this.knownSensors) {
+      let last = this.knownSensors[reading].data.length <= 10
+        ? this.knownSensors[reading].data.slice(0, this.knownSensors[reading].data.length - 1)
+        : this.knownSensors[reading].data.slice(this.knownSensors[reading].data.length - 11, this.knownSensors[reading].data.length - 1)
+      readings.known.push({ ...this.knownSensors[reading], data: last })
     }
-    for(let reading in this.unknownSensors){
-      let last = this.unknownSensors[reading].data.length <= 10 ?
-       this.unknownSensors[reading].data.slice(0, this.unknownSensors[reading].data.length-1) : 
-       this.unknownSensors[reading].data.slice(this.unknownSensors[reading].data.length -11 , this.unknownSensors[reading].data.length-1);
-      readings.unknown.push({...this.unknownSensors[reading], data: last})  ;
+    for (let reading in this.unknownSensors) {
+      let last = this.unknownSensors[reading].data.length <= 10
+        ? this.unknownSensors[reading].data.slice(0, this.unknownSensors[reading].data.length - 1)
+        : this.unknownSensors[reading].data.slice(this.unknownSensors[reading].data.length - 11, this.unknownSensors[reading].data.length - 1)
+      readings.unknown.push({ ...this.unknownSensors[reading], data: last })
     }
-    return readings;
+    return readings
   }
-  populateKnownSensors(){
+  populateKnownSensors (){
     this.db.setCollection("sensors");
     this.db.findAll().then((data) => {
       data.forEach(arr => {
@@ -101,7 +99,7 @@ class socketApi {
       this.knownSensors = data;
     })
   }
-  saveReadings(){
+  saveReadings (){
     for(let reading in this.knownSensors){
       if(this.knownSensors[reading].data.length >= 40){
         let saveData = this.knownSensors[reading].data.splice(0, 10);
@@ -114,7 +112,7 @@ class socketApi {
       }
     }
   }
-  addSensorData(data, type){
+  addSensorData (data, type){
     switch(type){
       case 'temp':
         data.data = parseInt(data.data)
@@ -124,10 +122,9 @@ class socketApi {
     let added = false;
     let date =  new Date().toUTCString();
     let id = Math.random().toString(13).replace('0.', '')
-    let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"];
-    for(let d in this.unknownSensors){
-      if(this.unknownSensors[d].id == data.id){
-        this.unknownSensors[d].data.push({reading: data.data, time: date, id:id});
+    for (let d in this.unknownSensors) {
+      if (this.unknownSensors[d].id === data.id) {
+        this.unknownSensors[d].data.push({ reading: data.data, time: date, id: id })
         this.unknownSensors[d].lastUpdate = date
         this.unknownSensors[d].active = data.active;
         added = true;
@@ -152,43 +149,43 @@ class socketApi {
       })
     }
   }
-  hasSensor(id){
-    for(let d in this.knownSensors){
-      if(this.knownSensors[d].id == id){
+  hasSensor (id) {
+    for (let d in this.knownSensors) {
+      if (this.knownSensors[d].id === id) {
         return true
       }
     }
-    return false;
+    return false
   }
-  removeClient(id){
-    for(let client in this.clients){
-      if(this.clients[client].id === id){
+  removeClient (id) {
+    for (let client in this.clients) {
+      if (this.clients[client].id === id) {
         this.clients.splice(client, 1)
       }
     }
-  } 
-  saveSensor(id, name){
-    this.db.setCollection("sensors");
-    if(this.hasSensor(id)){
-      this.db.update("id", id, {name});
+  }
+  saveSensor (id, name) {
+    this.db.setCollection('sensors')
+    if (this.hasSensor(id)) {
+      this.db.update('id', id, { name })
     } else {
-      this.db.insert({id, name})
+      this.db.insert({ id, name })
     }
   }
-  findSensor(id){
-    this.db.setCollection("sensors");
-    this.db.findDocument("id", id, (result) => {
-    }); 
+  findSensor (id) {
+    this.db.setCollection('sensors')
+    this.db.findDocument('id', id, (result) => {
+    })
   }
-  broadcastAll( message, data, exceptions = []){
+  broadcastAll (message, data, exceptions = []) {
     this.clients.filter(socket => !exceptions.includes(socket)).forEach(socket => {
       socket.emit(message, data)
-    }) 
-  } 
-  broadcastTo(socket, message, data){
-    this.clients.filter(s => s===socket).forEach(socket => {
+    })
+  }
+  broadcastTo (socket, message, data) {
+    this.clients.filter(s => s === socket).forEach(socket => {
       socket.emit(message, data)
-    }) 
+    })
   }
 }
 

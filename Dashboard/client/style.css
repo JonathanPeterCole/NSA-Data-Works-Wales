@@ -1,0 +1,420 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
+
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #191919;
+    color: #fff;
+    font-family: 'Quicksand', sans-serif;
+}
+.container {
+    margin: auto;
+    padding: 0 15px;
+    max-width: 1170px;
+    display: flex;
+    flex-direction: column;
+}
+.loading {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: #fff;
+}
+.sensors {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 20px 0 0 20px;
+}
+.sensors > h1 {
+    width: 100%;
+    margin:0;
+    font-size:18px;
+    padding:0;
+    font-weight: 600;
+}
+.sensor {
+    width: 20%;
+    padding: 10px 20px 0 0;
+    box-sizing: border-box;
+}
+.sensor > .data {
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    overflow:hidden;
+    color: rgb(43, 43, 43);
+    box-sizing: border-box;
+}
+.sensor > .data > .header {
+    padding: 15px 20px 0 20px
+}
+.sensor > .data > .content {
+    height: 100%;
+}
+.sensor > .data > .header > h1 {
+    font-size: 14px;
+    font-weight: 600;
+    margin:0;
+    padding:0;
+}
+.sensor > .data > .content >  h1 {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sensor > .data >  button {
+    width: 100%;
+    color: rgb(98, 98, 98);
+    text-transform: uppercase;
+    border: 0;
+    border-top: 1px solid #e6e6e6;
+    box-sizing: border-box;
+    padding: 8px 0 8px 0;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'Open Sans';
+    transition: box-shadow 0.2s, border-color 0.2s;
+    background-color: #fff;
+}
+.sensor > .data > button:last-of-type {
+    
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.sensor > .data >  button:focus {
+    outline:none;
+}
+.sensor > .data >  button:hover {
+    cursor:pointer;
+    border-color: #f0f0f0;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
+
+}
+.sensor > .data > .content >  h2 {
+    font-size: 14px;
+    font-weight: 400;
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    color: rgb(166, 166, 166);
+    margin: 0;
+    padding: 0;
+}
+.sensor-history {
+    border-collapse: collapse;
+    width: 100%;
+}
+.sensor-history > thead > tr>  th {
+    text-align: left;
+}
+.sensor-history > thead > tr>  th {
+    padding: 10px 0 10px 5px;
+    color: rgb(131, 131, 131);
+    border-top: 1px solid rgb(203, 203, 203);
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 400;
+    border-bottom: 1px solid rgb(203, 203, 203);
+}
+.sensor-history > tbody > tr > td{
+    padding: 5px;
+    color: rgb(61, 61, 61);
+    border-top: 1px solid rgb(203, 203, 203);
+    font-size: 11px;
+    font-weight: 600;
+    border-bottom: 1px solid rgb(203, 203, 203);
+}
+.sensor-popup-wrapper{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top:0;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: inset 0 0 250px rgba(0,0,0,0.5);
+}
+.sensor-popup {
+    width: 50%;
+    height: auto;
+    padding: 20px;
+    box-shadow: 0 0 60px rgba(26, 26, 26, 0.3);
+    background-color: #fff;
+    color: #2b2b2b;
+    border: 1px solid rgb(240, 240, 240);
+    position: relative;
+}
+.sensor-popup > h1 {
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 10px 0 10px 0;
+    padding: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sensor-popup > h1:first-of-type {
+    margin: 0 0 10px 0;
+}
+button.basic {
+    padding: 8px;
+    background-color :#fff;
+    margin: 10px 0 10px 0;
+    border: 2px solid rgb(203, 203, 203);
+    font-family: 'Open Sans';
+    color: rgb(37, 37, 37);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+button.basic:hover {
+    cursor: pointer;
+}
+button.basic:focus {
+    outline: none;
+}
+
+.full-history {
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.identify-prompt-wrapper{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top:0;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: inset 0 0 250px rgba(0,0,0,0.5);
+}
+.identify-prompt {
+    width: auto;
+    height: auto;
+    padding: 20px;
+    box-shadow: 0 0 60px rgba(26, 26, 26, 0.3);
+    background-color: #fff;
+    color: #2b2b2b;
+    border: 1px solid rgb(240, 240, 240);
+    position: relative;
+}
+.identify-prompt > .close {
+    position: absolute;
+    top:23px;   
+    right:20px;
+    width:15px;
+    height:15px;
+}
+.identify-prompt > .close::before {
+    position: absolute;
+    content: '';
+    background-color: red;
+    width: 15px;
+    top: 5px;
+    transform: rotate(-45deg);
+    transition: transform 0.2s;
+    height:2px;
+}
+.identify-prompt > .close::after {
+    position: absolute;
+    content: '';
+    background-color: red;
+    transform: rotate(45deg);
+    top: 5px;
+    transition: transform 0.2s;
+    width: 15px;
+    height:2px;
+}
+.identify-prompt > .close:hover {
+    cursor:pointer;
+}
+.identify-prompt > .close:hover::after {
+    transform: rotate(135deg)
+}
+.identify-prompt > .close:hover::before {
+    transform: rotate(-135deg)
+}
+
+.sensor-popup > .close {
+    position: absolute;
+    top:23px;   
+    right:20px;
+    width:15px;
+    height:15px;
+}
+
+.sensor-popup > .close::before {
+    position: absolute;
+    content: '';
+    background-color: red;
+    width: 15px;
+    top: 5px;
+    transform: rotate(-45deg);
+    transition: transform 0.2s;
+    height:2px;
+}
+
+.sensor-popup > .close::after {
+    position: absolute;
+    content: '';
+    background-color: red;
+    transform: rotate(45deg);
+    top: 5px;
+    transition: transform 0.2s;
+    width: 15px;
+    height:2px;
+}
+
+.sensor-popup > .close:hover {
+    cursor:pointer;
+}
+
+.sensor-popup  > .close:hover::after {
+    transform: rotate(135deg)
+}
+.sensor-popup > .close:hover::before {
+    transform: rotate(-135deg)
+}
+.identify-prompt > h1 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+}
+.identify-prompt > .input > h1 {
+    font-size: 11px;
+    margin: 5px 0 5px 0;
+    font-weight: 600;
+    padding: 0;
+}
+.identify-prompt > .input > input {
+    width: 300px;
+    font-size: 11px;
+    padding: 8px;
+    box-sizing: border-box;
+    color: #898989;
+    
+    border: 1px solid #e6e6e6;
+    transition: border-color .5s, color .5s;
+    box-shadow: 0 0 10px rgba(0,0,0,0.04);
+}
+.identify-prompt > .input > input[disabled] {
+    background-color:#f8f8f8;
+    cursor: not-allowed;
+}
+.identify-prompt > .input > input:focus {
+    box-shadow: 0 0 5px rgba(0,0,0,0.08);
+    border: 1px solid #d5d5d5;
+    color:#505050;
+    outline: none;
+}
+.identify-prompt  > button {
+    box-shadow: 0 0 5px rgba(0,0,0,0.08);
+    width: 100%;
+    color: rgb(98, 98, 98);
+    text-transform: uppercase;
+    border: 1px solid #e6e6e6;
+    box-sizing: border-box;
+    padding: 5px 0 5px 0;
+    font-size: 11px;
+    font-weight: 700;
+    margin: 10px 0 0 0;
+    font-family: 'Open Sans';
+    transition: box-shadow 0.2s, border-color 0.2s;
+    background-color: #fff;
+}
+.identify-prompt > button:focus {
+    outline:none;
+}
+.identify-prompt > button:hover {
+    cursor:pointer;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+.content > canvas {
+    display:block;
+}
+
+
+
+/* ANIMATIONS */
+
+.sensor > .data.flashing {
+    
+    -webkit-animation: flash 2.0s infinite ease-in-out;
+    animation: flash 2.0s infinite ease-in-out;
+}
+
+
+@keyframes flash {
+    0%, 100% { 
+        box-shadow: 0 0 10px rgba(0,0,0,0.08); }
+    50% { 
+        box-shadow: 0 0 45px rgba(0,0,0,.6); }
+}
+
+/* Spinner http://tobiasahlin.com/spinkit/ */
+.spinner-wrapper {
+    display: flex;
+    justify-content: center;
+    top:0;
+    left:0;
+    align-items: center;
+    position:absolute;
+    height: 100%;
+    width: 100%;
+}
+.spinner {
+    width: 40px;
+    height: 40px;
+  
+    position: relative;
+    margin: 100px auto;
+  }
+  
+  .double-bounce1, .double-bounce2 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #333;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+    animation: sk-bounce 2.0s infinite ease-in-out;
+  }
+  
+  .double-bounce2 {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+  }
+  
+  @-webkit-keyframes sk-bounce {
+    0%, 100% { -webkit-transform: scale(0.0) }
+    50% { -webkit-transform: scale(1.0) }
+  }
+  
+  @keyframes sk-bounce {
+    0%, 100% { 
+      transform: scale(0.0);
+      -webkit-transform: scale(0.0);
+    } 50% { 
+      transform: scale(1.0);
+      -webkit-transform: scale(1.0);
+    }
+  }

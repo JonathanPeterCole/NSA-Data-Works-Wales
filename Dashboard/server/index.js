@@ -6,7 +6,6 @@ const http = require('http')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const Database = require('./src/database')
-const Config = require('../config/config.json')
 
 // Routers
 const indexRouter = require('./routes/index')
@@ -15,8 +14,8 @@ const apiRouter = require('./routes/api')
 // Sockets
 const SocketApi = require('./src/socket-api')
 
-let socketApi;
-let database = new Database("mongodb://localhost:27017", "iot-app")
+let socketApi
+let database = new Database('mongodb://localhost:27017', 'iot-app')
 // Connect to database and create socket object
 
 // Create socket object
@@ -41,12 +40,12 @@ app.use('/api', apiRouter)
 app.use('/', indexRouter)
 
 database.connect().then((client) => {
-  socketApi = new SocketApi(client);
-  io.of('/websocket').on('connection', socketApi.connect.bind(socketApi));
-});
+  socketApi = new SocketApi(client)
+  io.of('/websocket').on('connection', socketApi.connect.bind(socketApi))
+})
 
 // Listen
-server.listen(3000 )
+server.listen(3000)
 server.on('listening', () => console.log('Example app listening on port 3000'))
 server.on('error', (error) => {
   // Check if the error was a listening error
