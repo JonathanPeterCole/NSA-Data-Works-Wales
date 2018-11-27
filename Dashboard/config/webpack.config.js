@@ -1,4 +1,5 @@
 const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: './client/index',
@@ -24,5 +25,14 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: './client/favicon',
+        to: '',
+        toType: 'dir'
+      }
+    ])
+  ],
   target: 'web'
 }

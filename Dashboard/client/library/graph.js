@@ -90,7 +90,7 @@ export default class graph {
       padding: { top: 4, bottom: 4, left: 4, right: 4 },
       build: ['withBackground', 'withGridLines', 'withLine', 'withInfo'],
       fontsize: 14,
-      font: 'Open Sans',
+      font: 'Quicksand',
       name: 'Temperature sensor',
       active: false,
       lines: { horizontal: 4, vertical: 9 },
