@@ -43,7 +43,6 @@ class socketApi {
   checkDisconnected(){
     for(let i in this.knownSensors){
       let curTime = this.knownSensors[i].lastUpdate;
-      console.log(new Date() - new Date(curTime) > 5000)
       if(new Date() - new Date(curTime) > 5000){
         this.knownSensors[i].active = false
       }
@@ -77,26 +76,37 @@ class socketApi {
   lastReadings () {
     let readings = { known: [], unknown: [] }
     for (let reading in this.knownSensors) {
-      let last = this.knownSensors[reading].data.length <= 10
-        ? this.knownSensors[reading].data.slice(0, this.knownSensors[reading].data.length - 1)
-        : this.knownSensors[reading].data.slice(this.knownSensors[reading].data.length - 11, this.knownSensors[reading].data.length - 1)
-      readings.known.push({ ...this.knownSensors[reading], data: last })
+      let currentSensor = this.knownSensors[reading];
+      if(currentSensor.data){
+        let last = currentSensor.data.length <= 10
+          ? currentSensor.data.slice(0, currentSensor.data.length - 1)
+          : currentSensor.data.slice(currentSensor.data.length - 11, currentSensor.data.length - 1)
+        readings.known.push({ ...currentSensor, data: last })
+      } else {
+        readings.known.push({ ...currentSensor, data: []})
+      }
     }
     for (let reading in this.unknownSensors) {
-      let last = this.unknownSensors[reading].data.length <= 10
-        ? this.unknownSensors[reading].data.slice(0, this.unknownSensors[reading].data.length - 1)
-        : this.unknownSensors[reading].data.slice(this.unknownSensors[reading].data.length - 11, this.unknownSensors[reading].data.length - 1)
-      readings.unknown.push({ ...this.unknownSensors[reading], data: last })
+      let currentSensor = this.unknownSensors[reading];
+      if(currentSensor.data){
+        let last = currentSensor.data.length <= 10
+          ? currentSensor.data.slice(0, currentSensor.data.length - 1)
+          : currentSensor.data.slice(currentSensor.data.length - 11, currentSensor.data.length - 1)
+        readings.known.push({ ...currentSensor, data: last })
+      } else {
+        readings.known.push({ ...currentSensor, data: []})
+      }
     }
     return readings
   }
   populateKnownSensors (){
     this.db.setCollection("sensors");
     this.db.findAll().then((data) => {
-      console.log(data)
       data.forEach(arr => {
-        if(arr.data.length >= 10){
-          arr.data = arr.data.splice(-10, 10)
+        if(arr.data){
+          if(arr.data.length >= 10){
+            arr.data = arr.data.splice(-10, 10)
+          }
         }
       })
       this.knownSensors = data;
