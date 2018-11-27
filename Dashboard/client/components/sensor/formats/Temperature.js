@@ -11,6 +11,8 @@ export default class Temperature extends React.Component {
         window.addEventListener("resize", e => this.graph.resize(e))
         this.graph.setData(this.props.data.data)
         this.graph.setLastUpdated(this.props.data.lastUpdate)
+        this.graph.setActive(this.props.data.active)
+        console.log(this.props.data.active)
     }
     componentDidUpdate (){
         this.graph.setName(this.props.data.name ? this.props.data.name: this.props.options.name)

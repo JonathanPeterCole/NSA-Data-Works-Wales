@@ -161,9 +161,11 @@ export default class graph {
     }
     setActive(active){
         this.options.active = active;
+        this.draw()
     }
     setName(name){
         this.options.name = name;
+        this.draw()
     }
   draw () {
     this.lib.clear()

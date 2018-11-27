@@ -6,6 +6,7 @@ class socketApi {
     this.knownSensors = []
     this.unknownSensors = []
     this.db = db
+    this.populateKnownSensors()
     setInterval(() => {
       if (this.clients.length !== 0) {
         this.broadcastAll('sensorReadings', this.lastReadings(), this.sensors)
@@ -42,6 +43,7 @@ class socketApi {
   checkDisconnected(){
     for(let i in this.knownSensors){
       let curTime = this.knownSensors[i].lastUpdate;
+      console.log(new Date() - new Date(curTime) > 5000)
       if(new Date() - new Date(curTime) > 5000){
         this.knownSensors[i].active = false
       }
@@ -91,6 +93,7 @@ class socketApi {
   populateKnownSensors (){
     this.db.setCollection("sensors");
     this.db.findAll().then((data) => {
+      console.log(data)
       data.forEach(arr => {
         if(arr.data.length >= 10){
           arr.data = arr.data.splice(-10, 10)
