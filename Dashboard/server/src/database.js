@@ -10,12 +10,12 @@ class database {
     this.dbname = dbname
   }
   connect () {
-    return new Promise((res, rej) => {
+    return new Promise((resolve, reject) => {
       mongo.connect(this.url, { useNewUrlParser: true })
         .then((client) => {
           this.mongo = client
           this.db = client.db(this.dbname)
-          res(this)
+          resolve(this)
         })
         .catch(err => {
           if (err instanceof MongoNetworkError) {
@@ -45,10 +45,10 @@ class database {
     })
   }
   async findDocument (key, name) {
-    return await this.db.collection(this.collection).findOne({})
+    return this.db.collection(this.collection).findOne({})
   }
   async findAll () {
-    return await this.db.collection(this.collection).find({}).toArray()
+    return this.db.collection(this.collection).find({}).toArray()
   }
 }
 module.exports = database
