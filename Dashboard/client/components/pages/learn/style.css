@@ -1,0 +1,9 @@
+.highlight-container {
+    margin: -15px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.articles-container {
+    display: flex;
+    flex-direction: column;
+}

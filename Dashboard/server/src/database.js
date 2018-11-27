@@ -1,4 +1,6 @@
 const mongo = require('mongodb').MongoClient
+const MongoNetworkError = require('mongodb').MongoNetworkError
+
 class database {
   constructor (url, dbname) {
     this.url = url
@@ -9,11 +11,20 @@ class database {
   }
   connect () {
     return new Promise((resolve, reject) => {
-      mongo.connect(this.url, { useNewUrlParser: true }).then((client) => {
-        this.mongo = client
-        this.db = client.db(this.dbname)
-        resolve(this)
-      })
+      mongo.connect(this.url, { useNewUrlParser: true })
+        .then((client) => {
+          this.mongo = client
+          this.db = client.db(this.dbname)
+          resolve(this)
+        })
+        .catch(err => {
+          if (err instanceof MongoNetworkError) {
+            console.error('Failed to connect to Mongo DB sensor server, please check the DataWorks README to install Mongo.')
+
+            // console.error(err.stack)
+            process.exit(1)
+          }
+        })
     })
   }
   setCollection (collection) {
@@ -34,8 +45,10 @@ class database {
     })
   }
   async findDocument (key, name) {
-    let data = await this.db.collection(this.collection).findOne({ [key]: name })
-    return data
+    return this.db.collection(this.collection).findOne({})
+  }
+  async findAll () {
+    return this.db.collection(this.collection).find({}).toArray()
   }
 }
 module.exports = database

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Temperature from './formats/Temperature'
 import SensorHistory from './SensorHistory'
-import history from '../../History'
+import history from '../../history'
 
 export default class SensorPopup extends React.Component {
   constructor (props) {

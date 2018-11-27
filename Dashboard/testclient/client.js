@@ -13,7 +13,7 @@ for (let i = 0; i < 5; i++) {
     } else {
       temp += Math.floor(Math.random() * 3)
       console.log('Socket connected, sending: ' + temp)
-      socket.emit('sensorReadings', { data: temp, id })
+      socket.emit('sensorReadings', { data: temp, id, active: true })
       if (temp > 30) {
         temp = 10
       }

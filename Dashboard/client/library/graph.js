@@ -90,7 +90,7 @@ export default class graph {
       padding: { top: 4, bottom: 4, left: 4, right: 4 },
       build: ['withBackground', 'withGridLines', 'withLine', 'withInfo'],
       fontsize: 14,
-      font: 'Open Sans',
+      font: 'Quicksand',
       name: 'Temperature sensor',
       active: false,
       lines: { horizontal: 4, vertical: 9 },
@@ -132,12 +132,18 @@ export default class graph {
         trough = reading
       }
     }
+
     this.trough = trough
-    this.drawableTrough = trough - this.padding.bottom
     this.crest = crest
+    if (this.crest === this.trough || this.crest - this.trough <= 3) {
+      this.crest += 3
+      this.trough -= 3
+    }
+    this.drawableTrough = trough - this.padding.bottom
     this.drawableCrest = crest + this.padding.top
     this.updateDatapoints()
   }
+
   updateDatapoints () {
     this.datapoints = []
     let data = this.data
@@ -151,6 +157,12 @@ export default class graph {
       this.datapoints.push({ reading: reading, x: (Math.round(this.drawableWidth / (data.length - 1) * d) + this.padding.left), y: Math.round((this.drawableHeight / diff) * (this.crest - parseInt(reading))) + this.padding.top })
     }
   }
+  setActive (active) {
+    this.options.active = active
+  }
+  setName (name) {
+    this.options.name = name
+  }
   draw () {
     this.lib.clear()
     if (this.datapoints.length === 0) {
@@ -159,9 +171,6 @@ export default class graph {
     for (let i in this.options.build) {
       this.runFeature(this.options.build[i])
     }
-  }
-  setName (name) {
-    this.options.name = name
   }
   setLastUpdated (date) {
     this.lastUpdated = date

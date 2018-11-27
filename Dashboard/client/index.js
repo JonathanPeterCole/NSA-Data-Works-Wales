@@ -1,13 +1,13 @@
 // React
 import React from 'react'
 import { render } from 'react-dom'
-import App from './components/App'
-import './App.css'
+import App from './components/app'
+import './style.css'
 
 // React Router
 import { Router } from 'react-router-dom'
 
-import history from './History'
+import history from './history'
 
 // Redux
 import { Provider } from 'react-redux'
