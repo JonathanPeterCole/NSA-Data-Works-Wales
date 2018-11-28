@@ -2,6 +2,7 @@ import React from 'react'
 
 import SearchBar from './searchbar/searchbar'
 import NavBar from './navbar/navbar'
+import IconButton from '../buttons/icon-button/icon-button'
 
 import './style.css'
 
@@ -18,9 +19,7 @@ export default class Header extends React.Component {
               <img src={Logo} />
             </a>
             <div className='actions'>
-              <a className='btn-settings'>
-                <img src={SettingsIcon} />
-              </a>
+              <IconButton image={SettingsIcon} hover='rotate' />
             </div>
           </div>
           <div className='row bottom'>
