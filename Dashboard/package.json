@@ -4,11 +4,12 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "start": "nodemon ./server/index.js",
+    "start": "node ./server/index.js",
+    "startDev": "concurrently \"npm:watch\" \"npm:start\"",
     "client": "nodemon ./testclient/client.js",
-    "watch": "webpack --mode development --watch --config ./config/webpack.config.js ",
     "build": "webpack --mode production --config ./config/webpack.config.js",
-    "buildDev": "webpack --mode development --config ./config/webpack.dev.config.js",
+    "buildDev": "webpack --mode development --config ./config/webpack.config.dev.js",
+    "watch": "webpack --mode development --watch --config ./config/webpack.config.dev.js ",
     "lint": "eslint . --ext .js,.jsx",
     "lintFix": "eslint . --ext .js,.jsx --fix",
     "test": "jest"
@@ -27,6 +28,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
+    "concurrently": "^4.1.0",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^1.0.1",
     "enzyme": "^3.7.0",
