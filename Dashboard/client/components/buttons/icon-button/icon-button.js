@@ -8,29 +8,28 @@ export default class IconButton extends React.Component {
     super(props)
 
     // Bindings
-    this.getHoverEffect = this.getHoverEffect.bind(this)
+    this.getClassName = this.getClassName.bind(this)
   }
 
-  getHoverEffect () {
-    console.log(this.props.hover)
-    switch (this.props.hover) {
-      case 'rotate':
-        return 'icon-button rotate'
-      default:
-        return 'icon-button'
-    }
+  getClassName () {
+    let className = 'icon-button'
+    if (this.props.hover) className += ' ' + this.props.hover
+    if (this.props.className) className += ' ' + this.props.className
+    return className
   }
 
   render () {
     return (
-      <a className={this.getHoverEffect()}>
+      <button className={this.getClassName()} onClick={this.props.onClick}>
         <img src={this.props.image} />
-      </a>
+      </button>
     )
   }
 }
 
 IconButton.propTypes = {
+  className: PropTypes.string,
   image: PropTypes.string,
-  hover: PropTypes.string
+  hover: PropTypes.string,
+  onClick: PropTypes.func
 }

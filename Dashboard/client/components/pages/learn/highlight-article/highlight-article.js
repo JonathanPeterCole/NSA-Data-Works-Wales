@@ -7,7 +7,7 @@ export default class HighlightArticle extends React.Component {
   render () {
     return (
       <div className='highlight-article'>
-        <div className='box'>
+        <div className='box' onClick={this.props.onClick}>
           <img src={this.props.image} />
           <div className='title'>{this.props.title}</div>
           <div className='body'>{this.props.body}</div>
@@ -20,5 +20,6 @@ export default class HighlightArticle extends React.Component {
 HighlightArticle.propTypes = {
   image: PropTypes.string,
   title: PropTypes.string,
-  body: PropTypes.string
+  body: PropTypes.string,
+  onClick: PropTypes.func
 }

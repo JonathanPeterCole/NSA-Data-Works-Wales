@@ -7,6 +7,9 @@
   border-radius: 100%;
   background: rgba(255, 255, 255, 0);
   transition: background 200ms;
+  cursor: pointer;
+  border: none;
+  outline: none;
 }
 .icon-button:hover {
   background: rgba(255, 255, 255, 0.1);
@@ -18,4 +21,15 @@
 /* Hover Effects */
 .icon-button.rotate:hover img {
   transform: rotate(90deg);
+}
+.icon-button.shrink:hover img {
+  transform: scale(0.9);
+}
+.icon-button.spin:hover img {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { 
+  100% { 
+    transform:rotate(360deg); 
+  } 
 }
