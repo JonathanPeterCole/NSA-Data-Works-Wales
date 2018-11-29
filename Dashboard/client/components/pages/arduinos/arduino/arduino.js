@@ -18,7 +18,7 @@ export default class Arduino extends React.Component {
   render () {
     return (
       <div className='arduino'>
-        <div className={this.getBoxClassName()}>
+        <div className={this.getBoxClassName()} onClick={this.props.onClick}>
           <div className='arduino-header'>
             <div className='title'>
               Placeholder Name
@@ -37,5 +37,6 @@ export default class Arduino extends React.Component {
 }
 
 Arduino.propTypes = {
-  colour: PropTypes.string
+  colour: PropTypes.string,
+  onClick: PropTypes.func
 }
