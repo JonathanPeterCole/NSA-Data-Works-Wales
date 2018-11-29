@@ -7,7 +7,7 @@ import ModalContent from '../modal/modal-content/modal-content'
 
 import './style.css'
 
-export default class ArduinoDetails extends React.Component {
+export default class ArduinoDetailsModal extends React.Component {
   render () {
     return (
       <Modal className='arduino-details' show={this.props.show} close={this.props.close}>
@@ -22,7 +22,7 @@ export default class ArduinoDetails extends React.Component {
   }
 }
 
-ArduinoDetails.propTypes = {
+ArduinoDetailsModal.propTypes = {
   show: PropTypes.bool,
   close: PropTypes.close
 }

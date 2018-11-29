@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Arduino from './arduino/arduino'
-import ArduinoDetails from '../../modals/arduino-details/arduino-details'
+import ArduinoDetailsModal from '../../modals/arduino-details-modal/arduino-details-modal'
 
 import './style.css'
 
@@ -44,7 +44,7 @@ export default class Arduinos extends React.Component {
               onClick={this.showModal} />
           ))}
         </div>
-        <ArduinoDetails show={this.state.showModal} close={this.hideModal} />
+        <ArduinoDetailsModal show={this.state.showModal} close={this.hideModal} />
       </div>
     )
   }
