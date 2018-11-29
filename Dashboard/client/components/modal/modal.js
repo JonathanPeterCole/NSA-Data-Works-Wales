@@ -9,6 +9,19 @@ import './style.css'
 import CloseIcon from './img/close.svg'
 
 export default class Modal extends React.Component {
+  constructor (props) {
+    super(props)
+    // Bindings
+    this.overlayClick = this.overlayClick.bind(this)
+  }
+
+  overlayClick (event) {
+    // Check that the click event has not been triggered on a child element
+    if (event.target === event.currentTarget) {
+      this.props.close()
+    }
+  }
+
   render () {
     return (
       <div className='modal'>
@@ -17,7 +30,7 @@ export default class Modal extends React.Component {
           classNames='modal-animation'
           timeout={300}
           unmountOnExit>
-          <div className='modal-overlay'>
+          <div className='modal-overlay' onClick={this.overlayClick}>
             <div className='modal-container'>
               <IconButton className='close-btn' image={CloseIcon} hover='shrink' onClick={this.props.close} />
               {this.props.children}
