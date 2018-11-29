@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { CSSTransition } from 'react-transition-group'
 
 import IconButton from '../buttons/icon-button/icon-button'
 
@@ -11,14 +12,18 @@ export default class Modal extends React.Component {
   render () {
     return (
       <div className='modal'>
-        {this.props.show && (
+        <CSSTransition
+          in={this.props.show}
+          classNames='modal-animation'
+          timeout={300}
+          unmountOnExit>
           <div className='modal-overlay'>
             <div className='modal-container'>
               <IconButton className='close-btn' image={CloseIcon} hover='shrink' onClick={this.props.close} />
               {this.props.children}
             </div>
           </div>
-        )}
+        </CSSTransition>
       </div>
     )
   }
