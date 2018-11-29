@@ -22,7 +22,7 @@ export default class App extends React.Component {
               <CSSTransition
                 key={location.key}
                 classNames='router-animation'
-                timeout={{ enter: 100, exit: 0 }}>
+                timeout={{ enter: 150, exit: 0 }}>
                 <Switch location={location}>
                   <Redirect exact from='/' to='/arduinos' />
                   <Route path='/arduinos' exact component={Arduinos} />
