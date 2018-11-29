@@ -1,0 +1,18 @@
+.arduino-colour {
+  height: 5px;
+  background: #44464b;
+}
+
+/* Colours */
+.arduino-colour.blue {
+  background: linear-gradient(40deg, #3366ff 0%,#3399ff 100%);
+}
+.arduino-colour.green {
+  background: linear-gradient(40deg, #00CC66 0%,#66CC66 100%);
+}
+.arduino-colour.orange {
+  background: linear-gradient(40deg, #FF3300 0%,#FF6600 100%);
+}
+.arduino-colour.red {
+  background: linear-gradient(40deg, #FF0033 0%,#FF3333 100%);
+}

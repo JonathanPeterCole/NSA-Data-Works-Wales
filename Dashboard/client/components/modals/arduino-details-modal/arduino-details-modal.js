@@ -12,6 +12,7 @@ export default class ArduinoDetailsModal extends React.Component {
   render () {
     return (
       <Modal className='arduino-details' show={this.props.show} close={this.props.close}>
+        <div className='arduino-colour blue' />
         <ModalHeader close={this.props.close}>
           <h1>Arduino Details</h1>
           <StatusIndicator online />
