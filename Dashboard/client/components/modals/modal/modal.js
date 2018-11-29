@@ -2,17 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransition } from 'react-transition-group'
 
-import IconButton from '../../buttons/icon-button/icon-button'
-
 import './style.css'
-
-import CloseIcon from './img/close.svg'
 
 export default class Modal extends React.Component {
   constructor (props) {
     super(props)
     // Bindings
+    this.getClassName = this.getClassName.bind(this)
     this.overlayClick = this.overlayClick.bind(this)
+  }
+
+  getClassName () {
+    if (this.props.className) {
+      return 'modal ' + this.props.className
+    } else {
+      return 'modal'
+    }
   }
 
   overlayClick (event) {
@@ -24,7 +29,7 @@ export default class Modal extends React.Component {
 
   render () {
     return (
-      <div className='modal'>
+      <div className={this.getClassName}>
         <CSSTransition
           in={this.props.show}
           classNames='modal-animation'
@@ -32,7 +37,6 @@ export default class Modal extends React.Component {
           unmountOnExit>
           <div className='modal-overlay' onClick={this.overlayClick}>
             <div className='modal-container'>
-              <IconButton className='close-btn' image={CloseIcon} hover='shrink' onClick={this.props.close} />
               {this.props.children}
             </div>
           </div>
@@ -43,6 +47,7 @@ export default class Modal extends React.Component {
 }
 
 Modal.propTypes = {
+  className: PropTypes.string,
   show: PropTypes.bool,
   close: PropTypes.func,
   children: PropTypes.element

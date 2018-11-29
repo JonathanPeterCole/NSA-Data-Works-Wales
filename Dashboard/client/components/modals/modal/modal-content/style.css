@@ -22,7 +22,6 @@
   overflow: scroll;
 }
 .modal-content .modal-content-container {
-  height: fit-content;
   padding: 0 50px 50px 50px;
   display: flex;
   flex-direction: column;
