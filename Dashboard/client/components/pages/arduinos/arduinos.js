@@ -1,5 +1,9 @@
 import React from 'react'
 
+import Arduino from './arduino/arduino'
+
+import './style.css'
+
 export default class Arduinos extends React.Component {
   constructor (props) {
     super(props)
@@ -10,7 +14,13 @@ export default class Arduinos extends React.Component {
   render () {
     return (
       <div className='arduinos'>
-        Arduinos will appear here
+        <h1>Your Arduino's</h1>
+        <div className='arduinos-container'>
+          <Arduino colour='blue' />
+          <Arduino colour='green' />
+          <Arduino colour='orange' />
+          <Arduino colour='red' />
+        </div>
       </div>
     )
   }
