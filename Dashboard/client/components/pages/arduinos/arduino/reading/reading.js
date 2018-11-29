@@ -62,5 +62,5 @@ export default class Reading extends React.Component {
 
 Reading.propTypes = {
   type: PropTypes.string,
-  reading: PropTypes.string
+  reading: PropTypes.number
 }

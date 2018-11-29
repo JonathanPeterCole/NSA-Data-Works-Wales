@@ -21,14 +21,17 @@ export default class Arduino extends React.Component {
         <div className={this.getBoxClassName()} onClick={this.props.onClick}>
           <div className='arduino-header'>
             <div className='title'>
-              Placeholder Name
+              {this.props.name}
             </div>
-            <StatusIndicator online={false} lastConnection={new Date()} />
+            <StatusIndicator online={this.props.online} lastConnection={new Date(this.props.lastConnection)} />
           </div>
           <div className='arduino-readings'>
-            <Reading type='temperature' reading='4' />
-            <Reading type='light' reading='24' />
-            <Reading type='moisture' reading='43' />
+            {this.props.sensors.map((sensor) => (
+              <Reading
+                key={sensor.id}
+                type={sensor.type}
+                reading={sensor.reading} />
+            ))}
           </div>
         </div>
       </div>
@@ -37,6 +40,10 @@ export default class Arduino extends React.Component {
 }
 
 Arduino.propTypes = {
+  name: PropTypes.string,
   colour: PropTypes.string,
+  online: PropTypes.bool,
+  lastConnection: PropTypes.number,
+  sensors: PropTypes.array,
   onClick: PropTypes.func
 }

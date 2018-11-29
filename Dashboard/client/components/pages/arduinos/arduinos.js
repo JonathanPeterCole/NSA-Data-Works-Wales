@@ -5,6 +5,8 @@ import Modal from '../../modal/modal'
 
 import './style.css'
 
+import arduinoData from './mock-data.json'
+
 export default class Arduinos extends React.Component {
   constructor (props) {
     super(props)
@@ -30,10 +32,16 @@ export default class Arduinos extends React.Component {
       <div className='arduinos'>
         <h1>Your Arduino's</h1>
         <div className='arduinos-container'>
-          <Arduino colour='blue' onClick={this.showModal} />
-          <Arduino colour='green' onClick={this.showModal} />
-          <Arduino colour='orange' onClick={this.showModal} />
-          <Arduino colour='red' onClick={this.showModal} />
+          {arduinoData.map((arduino) => (
+            <Arduino
+              key={arduino.id}
+              name={arduino.name}
+              colour={arduino.colour}
+              online={arduino.online}
+              lastConnection={arduino.lastConnection}
+              sensors={arduino.sensors}
+              onClick={this.showModal} />
+          ))}
         </div>
         <Modal show={this.state.showModal} close={this.hideModal} />
       </div>
