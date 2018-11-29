@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransition } from 'react-transition-group'
 
-import IconButton from '../buttons/icon-button/icon-button'
+import IconButton from '../../buttons/icon-button/icon-button'
 
 import './style.css'
 

@@ -1,0 +1,6 @@
+.modal-header {
+  height: 40px;
+  padding: 45px 90px 30px 50px;
+  display: flex;
+  align-items: center;
+}

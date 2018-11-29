@@ -2,7 +2,7 @@ import React from 'react'
 
 import HighlightArticle from './highlight-article/highlight-article'
 import Article from './article/article'
-import Modal from '../../modal/modal'
+import Modal from '../../modals/modal/modal'
 
 import ImgArticle1 from './img/1.png'
 import ImgArticle2 from './img/2.png'

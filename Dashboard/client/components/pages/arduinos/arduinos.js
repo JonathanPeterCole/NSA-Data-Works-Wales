@@ -1,7 +1,8 @@
 import React from 'react'
 
 import Arduino from './arduino/arduino'
-import Modal from '../../modal/modal'
+import Modal from '../../modals/modal/modal'
+import ArduinoDetails from '../../modals/arduino-details/arduino-details'
 
 import './style.css'
 
@@ -11,7 +12,8 @@ export default class Arduinos extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      arduinos: {}
+      arduinos: arduinoData,
+      showModal: false
     }
     // Bindings
     this.showModal = this.showModal.bind(this)
@@ -32,7 +34,7 @@ export default class Arduinos extends React.Component {
       <div className='arduinos'>
         <h1>Your Arduino's</h1>
         <div className='arduinos-container'>
-          {arduinoData.map((arduino) => (
+          {this.state.arduinos.map((arduino) => (
             <Arduino
               key={arduino.id}
               name={arduino.name}
@@ -43,7 +45,9 @@ export default class Arduinos extends React.Component {
               onClick={this.showModal} />
           ))}
         </div>
-        <Modal show={this.state.showModal} close={this.hideModal} />
+        <Modal show={this.state.showModal} close={this.hideModal}>
+          <ArduinoDetails />
+        </Modal>
       </div>
     )
   }
