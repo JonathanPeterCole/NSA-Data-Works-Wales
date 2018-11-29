@@ -23,7 +23,7 @@ export default class Arduino extends React.Component {
             <div className='title'>
               Placeholder Name
             </div>
-            <StatusIndicator online={false} />
+            <StatusIndicator online={false} lastConnection={new Date(2018, 10, 29)} />
           </div>
           <div className='arduino-readings'>
             <Reading type='temperature' reading='4' />

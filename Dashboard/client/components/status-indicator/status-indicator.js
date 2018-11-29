@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import timeago from 'timeago.js'
 
 import './style.css'
 
@@ -14,7 +15,7 @@ export default class StatusIndicator extends React.Component {
     if (this.props.online) {
       return 'Online'
     } else {
-      return 'Offline'
+      return 'Last online ' + timeago().format(this.props.lastConnection)
     }
   }
   getStatusLightClass () {
@@ -35,5 +36,6 @@ export default class StatusIndicator extends React.Component {
 }
 
 StatusIndicator.propTypes = {
-  online: PropTypes.bool
+  online: PropTypes.bool,
+  lastConnection: PropTypes.instanceOf(Date)
 }
