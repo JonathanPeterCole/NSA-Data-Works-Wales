@@ -1,0 +1,75 @@
+[
+  {
+    "id": 0,
+    "name": "Fridge",
+    "colour": "blue",
+    "online": false,
+    "lastConnection": 1543363200000,
+    "sensors": [
+      {
+        "id": 0,
+        "type": "temperature",
+        "reading": 4
+      },
+      {
+        "id": 1,
+        "type": "light",
+        "reading": 100
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Garden",
+    "colour": "green",
+    "online": true,
+    "sensors": [
+      {
+        "id": 3,
+        "type": "moisture",
+        "reading": 24
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Oven",
+    "colour": "orange",
+    "online": true,
+    "sensors": [
+      {
+        "id": 4,
+        "type": "temperature",
+        "reading": 214
+      },
+      {
+        "id": 5,
+        "type": "light",
+        "reading": 23
+      },
+      {
+        "id": 6,
+        "type": "moisture",
+        "reading": 32
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Hallway",
+    "colour": "red",
+    "online": true,
+    "sensors": [
+      {
+        "id": 7,
+        "type": "temperature",
+        "reading": 19
+      },
+      {
+        "id": 8,
+        "type": "light",
+        "reading": 62
+      }
+    ]
+  }
+]

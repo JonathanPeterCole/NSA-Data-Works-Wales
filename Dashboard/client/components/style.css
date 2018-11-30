@@ -1,0 +1,11 @@
+/* Router Animation */
+.router-animation-enter {
+  opacity: 0.01;
+}
+.router-animation-enter-active {
+  opacity: 1;
+  transition: all 150ms;
+}
+.router-animation-exit {
+  display: none;
+}

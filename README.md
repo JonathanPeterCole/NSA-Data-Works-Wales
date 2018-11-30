@@ -23,6 +23,14 @@ This project consists of two parts, the Arduino code, and the web dashboard code
 
 ### Commands
 
+* **Start**  
+  Runs the application on port 3000.  
+  `npm run start`
+
+* **Start Development**  
+  Builds and runs the application on port 3000, listenting for changes.  
+  `npm run startDev`
+
 * **Build**  
   Runs webpack to build the client-side Javascript.  
   `npm run build`  
@@ -30,6 +38,10 @@ This project consists of two parts, the Arduino code, and the web dashboard code
 * **Build Development**  
   Runs webpack to build the client-side Javascript with sourcemaps for easier debugging.  
   `npm run buildDev` 
+
+* **Watch**
+  Runs webpack to build the client-side Javascript and listens for changes.  
+  `npm run watch`
 
 * **Test**  
   Runs Jest to test the code.  
@@ -42,10 +54,6 @@ This project consists of two parts, the Arduino code, and the web dashboard code
 * **Linting Fix**  
   Runs ESLint with --fix to lint the code and attempt to automatically apply fixes.  
   `npm run lintFix`
-
-* **Start**  
-  Runs the application on port 3000.  
-  `npm run start`
 
 ### Database
 
@@ -62,3 +70,7 @@ On NSA laptops, MongoDB is already installed, but needs to be configured. To do 
 
 1. Check that the database is running  
   `mongo --shell`
+
+### Linting
+
+This project is linted with ESlint standard. Commits with linting issues will be blocked. You can lint manually with `npm run lint`, and automatically fix some issues with `npm run lintFix`.

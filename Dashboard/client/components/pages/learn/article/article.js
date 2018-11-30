@@ -7,7 +7,7 @@ export default class Article extends React.Component {
   render () {
     return (
       <div className='article'>
-        <div className='box'>
+        <div className='box' onClick={this.props.onClick}>
           <img src={this.props.image} />
           <div className='info'>
             <div className='title'>{this.props.title}</div>
@@ -22,5 +22,6 @@ export default class Article extends React.Component {
 Article.propTypes = {
   image: PropTypes.string,
   title: PropTypes.string,
-  body: PropTypes.string
+  body: PropTypes.string,
+  onClick: PropTypes.func
 }
