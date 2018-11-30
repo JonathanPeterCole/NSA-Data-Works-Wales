@@ -46,6 +46,11 @@ build/Release
 Dashboard/node_modules/
 jspm_packages/
 
+# Split node modules for users using two command prompts (using unix subsystem for general operations and windows msdos for committing)
+# need different node modules for different architectures
+Dashboard/node_modules_windows/
+Dashboard/node_modules_hyper/
+
 # TypeScript v1 declaration files
 typings/
 
