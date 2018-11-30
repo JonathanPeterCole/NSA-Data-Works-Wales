@@ -15,7 +15,6 @@ class socketApi {
     setInterval(() => this.checkDisconnected(), 1000)
   }
   connect (socket) {
-    socket.id = this.clients.length
     this.clients.push(socket)
     if (this.data.length !== 0) {
       this.broadcastTo(socket, 'sensorReadings', this.lastReadings(), this.sensors)
@@ -25,6 +24,7 @@ class socketApi {
     })
     socket.on('sensorReadings', (data) => {
       socket.lastSent = new Date();
+      socket.id = data.id 
       if(!this.socketExists(socket, this.sensors)){
         this.sensors.push(socket);
       }
@@ -41,10 +41,20 @@ class socketApi {
     })
   }
   checkDisconnected(){
-    for(let i in this.knownSensors){
-      let curTime = this.knownSensors[i].lastUpdate;
+    this.knownSensors.forEach(sensor => {
+        if(!sensor.active){
+          return false;
+        }
+        let curTime = sensor.lastUpdate;
+        if(new Date() - new Date(curTime) > 5000 && sensor.active == true){
+          this.saveSingleSensor(sensor);
+          sensor.active = false
+        }
+    });
+    for(let i in this.unknownSensors){
+      let curTime = this.unknownSensors[i].lastUpdate;
       if(new Date() - new Date(curTime) > 5000){
-        this.knownSensors[i].active = false
+        this.unknownSensors.splice(i, 1)
       }
     }
     this.sensors.forEach((e, idx) => {
@@ -58,10 +68,11 @@ class socketApi {
       if(array[i].id == socket.id)
         return true;
     }
+    return false;
   }
   updateSensors (id, name) {
     for (let s in this.unknownSensors) {
-      if (this.unknownSensors[s].id === id) {
+      if (this.unknownSensors[s]. id === id) {
         this.unknownSensors[s].name = name
         this.knownSensors.push(this.unknownSensors[s])
         this.unknownSensors.splice(s, 1)
@@ -92,9 +103,9 @@ class socketApi {
         let last = currentSensor.data.length <= 10
           ? currentSensor.data.slice(0, currentSensor.data.length - 1)
           : currentSensor.data.slice(currentSensor.data.length - 11, currentSensor.data.length - 1)
-        readings.known.push({ ...currentSensor, data: last })
+        readings.unknown.push({ ...currentSensor, data: last })
       } else {
-        readings.known.push({ ...currentSensor, data: []})
+        readings.unknown.push({ ...currentSensor, data: []})
       }
     }
     return readings
@@ -107,30 +118,43 @@ class socketApi {
           if(arr.data.length >= 10){
             arr.data = arr.data.splice(-10, 10)
           }
+        } else {
+          arr.data = []
         }
       })
       this.knownSensors = data;
     })
   }
-  saveReadings (){
-    for(let reading in this.knownSensors){
-      if(this.knownSensors[reading].data.length >= 40){
-        let saveData = this.knownSensors[reading].data.splice(0, 10);
-        this.db.findDocument("id", this.knownSensors[reading].id).then((data) => {
-          data.data = data.data ? data.data.concat(saveData) : saveData;
-          data.data = data.data.length >= 500 ? data.sensors.splice(10, data.data.length-1): data.data;
-          data.lastUpdate = saveData[saveData.length-1].time;
-          this.db.update("id", this.knownSensors[reading].id, data)
-        })
-      }
+  saveSingleSensor(sensor){
+    if(!sensor.data){
+      return false;
     }
+    this.db.findDocument('id', sensor.id).then((data) => {
+      let saveData = sensor.data;
+      data.data = data.data ? data.data.concat(saveData) : saveData;
+      data.data = data.data.length  >= 500 ? data.data.splice(0, (500)-(data.data.length - 500)): data.data;
+      data.lastUpdate = saveData[saveData.length-1].time;
+      this.db.update("id", sensor.id, data)
+    });
+  }
+  saveReadings (){
+    this.knownSensors.filter(e => e.data !== undefined).forEach(sensor => {
+      if(sensor.data.length >= 40){
+        let saveData = sensor.data.splice(0, 10);
+        this.db.findDocument("id", sensor.id).then((data) => {
+          data.data = data.data ? data.data.concat(saveData) : saveData;
+          data.data.length >= 500 ? data.data.splice(0, 10): null;
+          data.lastUpdate = saveData[saveData.length-1].time;
+          this.db.update("id", sensor.id, data)
+        })
+      }    
+    })
   }
   addSensorData (data, type){
     switch(type){
       case 'temp':
         data.data = parseInt(data.data)
         break;
-
     }
     let added = false;
     let date =  new Date().toUTCString();
@@ -155,8 +179,10 @@ class socketApi {
       this.db.setCollection("sensors");
       this.db.findDocument("id", data.id).then(result => {
         if(result === null && !this.socketExists(data, this.unknownSensors)){
+          console.log('what')
           this.unknownSensors.push({id: data.id, type, data: [{reading: data.data, time: data,id: id}], active: data.active});
-        } else if(result !== null  && !this.socketExists(data, this.knownSensors)) { 
+        } else if(result !== null  && !this.socketExists(result, this.knownSensors)) { 
+          console.log('hey')
           this.knownSensors.push({id: data.id,type, data: [{reading: data.data, time: date, id:id}], name:result.name, active: data.active})
         }
       })
