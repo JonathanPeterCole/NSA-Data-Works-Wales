@@ -45,7 +45,7 @@ class database {
     })
   }
   async findDocument (key, name) {
-    return this.db.collection(this.collection).findOne({[key]: name})
+    return this.db.collection(this.collection).findOne({ [key]: name })
   }
   async findAll () {
     return this.db.collection(this.collection).find({}).toArray()

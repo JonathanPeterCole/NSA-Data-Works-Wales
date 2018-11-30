@@ -98,9 +98,9 @@ export default class graph {
       aesthetics: aesthetics
     }
   }
-  
-  withFunctions(){
-    
+
+  withFunctions () {
+
   }
   keyExists (obj, key) {
     if (typeof obj[key] !== 'undefined') {
