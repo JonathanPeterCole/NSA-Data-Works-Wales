@@ -39,7 +39,6 @@ export default class ModalContent extends React.Component {
     )
   }
 }
-
-ModalContent.propTypes = {  
+ModalContent.propTypes = {
   children: PropTypes.node
 }
