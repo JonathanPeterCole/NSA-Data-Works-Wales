@@ -1,1 +1,1 @@
-export const temperature = {name: 'temp', unit: '°C'}
+export const temperature = { name: 'temp', unit: '°C' }

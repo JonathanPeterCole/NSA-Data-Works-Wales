@@ -20,16 +20,16 @@ class socketApi {
       this.broadcastTo(socket, 'sensorReadings', this.lastReadings(), this.sensors)
     }
     socket.on('setType', (data) => {
-      socket.type = data.type;
+      socket.type = data.type
     })
     socket.on('sensorReadings', (data) => {
-      socket.lastSent = new Date();
+      socket.lastSent = new Date()
       socket.id = data.id 
-      if(!this.socketExists(socket, this.sensors)){
+      if (!this.socketExists(socket, this.sensors)){
         this.sensors.push(socket);
       }
-      this.addSensorData(data, socket.type);
-      this.saveReadings();
+      this.addSensorData(data, socket.type)
+      this.saveReadings()
     })
     socket.on('updateSettings', (data) => {
       this.saveSensor(data.id, data.name)
@@ -43,30 +43,29 @@ class socketApi {
   checkDisconnected(){
     this.knownSensors.forEach(sensor => {
         if(!sensor.active){
-          return false;
+          return false
         }
-        let curTime = sensor.lastUpdate;
-        if(new Date() - new Date(curTime) > 5000 && sensor.active == true){
-          this.saveSingleSensor(sensor);
+        let curTime = sensor.lastUpdate
+        if (new Date() - new Date(curTime) > 5000 && sensor.active == true){
+          this.saveSingleSensor(sensor)
           sensor.active = false
         }
     });
-    for(let i in this.unknownSensors){
+    for (let i in this.unknownSensors){
       let curTime = this.unknownSensors[i].lastUpdate;
-      if(new Date() - new Date(curTime) > 5000){
+      if (new Date() - new Date(curTime) > 5000){
         this.unknownSensors.splice(i, 1)
       }
     }
     this.sensors.forEach((e, idx) => {
-      if(e.connected == false){
-        this.sensors.splice(idx, 1);
+      if (e.connected === false) {
+        this.sensors.splice(idx, 1)
       }
     })
   }
-  socketExists (socket, array){
-    for(let i in array){
-      if(array[i].id == socket.id)
-        return true;
+  socketExists (socket, array) {
+    for (let i in array) {
+      if (array[i].id === socket.id) { return true }
     }
     return false;
   }
@@ -110,19 +109,19 @@ class socketApi {
     }
     return readings
   }
-  populateKnownSensors (){
-    this.db.setCollection("sensors");
+  populateKnownSensors () {
+    this.db.setCollection('sensors')
     this.db.findAll().then((data) => {
       data.forEach(arr => {
-        if(arr.data){
-          if(arr.data.length >= 10){
+        if (arr.data){
+          if (arr.data.length >= 10){
             arr.data = arr.data.splice(-10, 10)
           }
         } else {
           arr.data = []
         }
       })
-      this.knownSensors = data;
+      this.knownSensors = data
     })
   }
   saveSingleSensor(sensor){
@@ -150,29 +149,29 @@ class socketApi {
       }    
     })
   }
-  addSensorData (data, type){
-    switch(type){
+  addSensorData (data, type) {
+    switch (type) {
       case 'temp':
         data.data = parseInt(data.data)
-        break;
+        break
     }
-    let added = false;
-    let date =  new Date().toUTCString();
+    let added = false
+    let date = new Date().toUTCString()
     let id = Math.random().toString(13).replace('0.', '')
     for (let d in this.unknownSensors) {
       if (this.unknownSensors[d].id === data.id) {
         this.unknownSensors[d].data.push({ reading: data.data, time: date, id: id })
         this.unknownSensors[d].lastUpdate = date
-        this.unknownSensors[d].active = data.active;
-        added = true;
+        this.unknownSensors[d].active = data.active
+        added = true
       }
     }
-    for(let d in this.knownSensors){
-      if(this.knownSensors[d].id == data.id){
-        this.knownSensors[d].data.push({reading: data.data, time: date, id:id, type});
+    for (let d in this.knownSensors) {
+      if (this.knownSensors[d].id === data.id) {
+        this.knownSensors[d].data.push({ reading: data.data, time: date, id: id, type })
         this.knownSensors[d].lastUpdate = date
-        this.knownSensors[d].active = data.active;
-        added = true;
+        this.knownSensors[d].active = data.active
+        added = true
       }
     }
     if(added == false){

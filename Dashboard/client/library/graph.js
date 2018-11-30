@@ -118,38 +118,36 @@ export default class graph {
     this.lib.scaleCanvas(this.canvas, this.ctx, this.width, this.height)
   }
 
-    update(){
-        let data = this.data;
-        let trough, crest;
-        for(let d in data){
-            let reading = data[d].reading
-            if(trough === undefined){
-                trough = reading; 
-            }
-            if(crest === undefined){
-                crest = reading;
-            }
-            if(reading > crest){
-                crest = reading
-            }
-            if(reading < trough){
-                trough = reading
-            }
-        }
-        
-
-        this.trough = trough
-        this.crest = crest;
-        if(this.crest == this.trough || this.crest - this.trough <= 3){
-            this.crest +=3
-            this.trough -=3
-        }
-        this.drawableTrough = trough - this.padding.bottom;
-        this.drawableCrest = crest + this.padding.top;
-        this.updateDatapoints();
-        
+  update () {
+    let data = this.data
+    let trough, crest
+    for (let d in data) {
+      let reading = data[d].reading
+      if (trough === undefined) {
+        trough = reading
+      }
+      if (crest === undefined) {
+        crest = reading
+      }
+      if (reading > crest) {
+        crest = reading
+      }
+      if (reading < trough) {
+        trough = reading
+      }
     }
-  
+
+    this.trough = trough
+    this.crest = crest
+    if (this.crest === this.trough || this.crest - this.trough <= 3) {
+      this.crest += 3
+      this.trough -= 3
+    }
+    this.drawableTrough = trough - this.padding.bottom
+    this.drawableCrest = crest + this.padding.top
+    this.updateDatapoints()
+  }
+
   updateDatapoints () {
     this.datapoints = []
     let data = this.data
@@ -158,19 +156,17 @@ export default class graph {
       this.diff = 1
     }
     for (let d in data) {
-        let reading = data[d].reading
-        // i* Math.round(this.drawableWidth / vertical) + this.padding.left
-        this.datapoints.push({ reading: reading, x: (Math.round(this.drawableWidth / (data.length - 1) * d) + this.padding.left), y: Math.round((this.drawableHeight / diff) * (this.crest - parseInt(reading))) + this.padding.top })
-      }
+      let reading = data[d].reading
+      // i* Math.round(this.drawableWidth / vertical) + this.padding.left
+      this.datapoints.push({ reading: reading, x: (Math.round(this.drawableWidth / (data.length - 1) * d) + this.padding.left), y: Math.round((this.drawableHeight / diff) * (this.crest - parseInt(reading))) + this.padding.top })
     }
-    setActive(active){
-        this.options.active = active;
-        this.draw()
-    }
-    setName(name){
-        this.options.name = name;
-        this.draw()
-    }
+  }
+  setActive (active) {
+    this.options.active = active
+  }
+  setName (name) {
+    this.options.name = name
+  }
   draw () {
     this.lib.clear()
     if (this.datapoints.length === 0) {
@@ -179,9 +175,6 @@ export default class graph {
     for (let i in this.options.build) {
       this.runFeature(this.options.build[i])
     }
-  }
-  setName (name) {
-    this.options.name = name
   }
   setLastUpdated (date) {
     this.lastUpdated = date
