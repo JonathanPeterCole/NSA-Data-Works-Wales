@@ -21,6 +21,6 @@ export default class ModalHeader extends React.Component {
 }
 
 ModalHeader.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.node,
   close: PropTypes.func
 }

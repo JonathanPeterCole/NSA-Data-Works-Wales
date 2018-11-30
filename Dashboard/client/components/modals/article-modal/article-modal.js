@@ -24,5 +24,5 @@ export default class ArticleModal extends React.Component {
 
 ArticleModal.propTypes = {
   show: PropTypes.bool,
-  close: PropTypes.close
+  close: PropTypes.func
 }

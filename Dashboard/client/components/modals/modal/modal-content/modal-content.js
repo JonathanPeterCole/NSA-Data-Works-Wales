@@ -6,6 +6,7 @@ import './style.css'
 export default class ModalContent extends React.Component {
   constructor (props) {
     super(props)
+    console.log(props)
     this.state = {
       showFader: false
     }
@@ -26,6 +27,12 @@ export default class ModalContent extends React.Component {
         <div className='scroll-area' onScroll={this.onScroll}>
           <div className='modal-content-container'>
             {this.props.children}
+            {/* {this.props.children.map((c) => {
+              console.log(c)
+              return (
+                <div></div>
+              )
+            })} */}
           </div>
         </div>
       </div>
@@ -33,6 +40,6 @@ export default class ModalContent extends React.Component {
   }
 }
 
-ModalContent.propTypes = {
-  children: PropTypes.element
+ModalContent.propTypes = {  
+  children: PropTypes.node
 }

@@ -27,5 +27,5 @@ export default class ArduinoDetailsModal extends React.Component {
 
 ArduinoDetailsModal.propTypes = {
   show: PropTypes.bool,
-  close: PropTypes.close
+  close: PropTypes.func
 }
