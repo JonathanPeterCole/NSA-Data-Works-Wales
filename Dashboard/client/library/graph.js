@@ -11,7 +11,7 @@ export default class graph {
     this.data = []
     this.padding = this.options.padding
     this.datapoints = []
-    this.setWidth()
+    this.setSize()
     this.features()
     this.canvas.addEventListener('mousemove', (e) => {
       this.updateHoverLine(e)
@@ -45,18 +45,25 @@ export default class graph {
     }
   }
   addData (reading) {
-    this.data.push(reading)
+    this.data.push({reading: reading})
+    if(this.data.length > 20){
+      this.data.splice(0, 10);
+    }
+    console.log(reading)
     this.update()
     this.draw()
   }
   setData (data) {
-    this.data = data
+    console.log('ok')
+    console.log(data)
+    // this.data = data.map(e => {return({reading: e})})
+    console.log(this.data)
     this.update()
     this.draw()
   }
   resize (e) {
     // this.height = this.parent.getBoundingClientRect().height
-    this.setWidth()
+    this.setSize()
     this.draw()
   }
   defaultSettings (options) {
@@ -108,13 +115,17 @@ export default class graph {
     }
     return false
   }
-  setWidth () {
+  setSize () {
     let left = parseInt(window.getComputedStyle(this.parent).getPropertyValue('padding-right').replace(' px', ''))
     let right = parseInt(window.getComputedStyle(this.parent).getPropertyValue('padding-left').replace(' px', ''))
+    let top = parseInt(window.getComputedStyle(this.parent).getPropertyValue('padding-top').replace(' px', ''))
+    let bottom = parseInt(window.getComputedStyle(this.parent).getPropertyValue('padding-bottom').replace(' px', ''))
     this.width = (this.parent.offsetWidth - left - right)
+    this.height = (this.parent.offsetHeight - top - bottom)
     this.drawableWidth = this.width - (this.padding.left + this.padding.right)
     this.drawableHeight = this.height - (this.padding.top + this.padding.bottom)
     this.canvas.width = this.width
+    this.canvas.height = this.height
     this.lib.scaleCanvas(this.canvas, this.ctx, this.width, this.height)
   }
 
@@ -160,6 +171,7 @@ export default class graph {
       // i* Math.round(this.drawableWidth / vertical) + this.padding.left
       this.datapoints.push({ reading: reading, x: (Math.round(this.drawableWidth / (data.length - 1) * d) + this.padding.left), y: Math.round((this.drawableHeight / diff) * (this.crest - parseInt(reading))) + this.padding.top })
     }
+    console.log('')
   }
   setActive (active) {
     this.options.active = active
@@ -307,6 +319,8 @@ export default class graph {
     return this
   }
   withLine () {
+    console.log(this.datapoints)
+    console.log('huh')
     let data = this.datapoints
     this.lib.setLineWidth(this.options.aesthetics.line.width)
     this.lib.drawLines([{ x: this.padding.left, y: data[0].y }, ...data])

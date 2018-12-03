@@ -1,4 +1,5 @@
 const mongo = require('mongodb').MongoClient
+const objectID = require('mongodb').ObjectID
 const MongoNetworkError = require('mongodb').MongoNetworkError
 
 class database {
@@ -50,5 +51,48 @@ class database {
   async findAll () {
     return this.db.collection(this.collection).find({}).toArray()
   }
+  async lookup (from, local, foreign, asData){
+    console.log(this.collection)
+    return this.db.collection(this.collection).aggregate([
+      { $lookup:
+        {
+          from: from,
+          localField: local,
+          foreignField: foreign,
+          as: asData
+        }
+      }]).toArray()
+  }
+  async lookupSingle (from, local, foreign, asData, key, match){
+    console.log(" key " + key + " - " + match)
+    return this.db.collection(this.collection).aggregate([
+      { $match: { [key]: match}},
+      { $lookup:
+        {
+          from: from,
+          localField: local,
+          foreignField: foreign,
+          as: asData
+        }
+      }
+    ]).toArray()
+  }
+  async raw(cb){
+    return await cb(this.db, this.collection);
+  }
+  getObjectID(id){
+    return new objectID(id);
+  }
+  // async test(){
+  //   return this.db.collection(this.collection).findOne({ [key]: name }).aggregate([
+  //     { $lookup:
+  //       {
+  //         from: from,
+  //         localField: local,
+  //         foreignField: foreign,
+  //         as: asData
+  //       }
+  //     }]).toArray()
+  // }
 }
 module.exports = database

@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "start": "node ./server/index.js",
+    "start": "nodemon ./server/index.js",
     "startDev": "concurrently \"npm:watch\" \"npm:start\"",
     "client": "nodemon ./testclient/client.js",
     "build": "webpack --mode production --config ./config/webpack.config.js",

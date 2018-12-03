@@ -15,6 +15,9 @@ export default class Arduino extends React.Component {
   getBoxClassName () {
     return 'box ' + this.props.colour
   }
+  componentDidUpdate(){
+    
+  }
   render () {
     return (
       <div className='arduino'>
@@ -30,7 +33,7 @@ export default class Arduino extends React.Component {
               <Reading
                 key={sensor.id}
                 type={sensor.type}
-                reading={sensor.reading} />
+                reading={sensor.newdata ? sensor.newdata[sensor.newdata.length-1].reading: sensor.data[sensor.data.length-1].reading} />
             ))}
           </div>
         </div>

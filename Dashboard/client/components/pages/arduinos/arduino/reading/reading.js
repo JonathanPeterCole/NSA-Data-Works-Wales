@@ -7,16 +7,27 @@ import LightIcon from './img/light.svg'
 import MoistureIcon from './img/moisture.svg'
 import TemperatureIcon from './img/temperature.svg'
 
+import Temperature from './types/Temperature'
+
+
 export default class Reading extends React.Component {
   constructor (props) {
     super(props)
     // Bindings
+    console.log(props)
     this.getIcon = this.getIcon.bind(this)
     this.getName = this.getName.bind(this)
     this.getFormattedReading = this.getFormattedReading.bind(this)
+    this.options = {
+      build: ['withBackground', 'withLine', 'withSideShade', 'withInfo', 'withActive'],
+      padding: { top: 8, bottom: 8, right: 0, left: 0 },
+      fontsize: 14,
+      active: true
+    }
   }
   getIcon () {
-    switch (this.props.type) {
+    let type = this.props.type.toLowerCase();
+    switch (type) {
       case 'temperature':
         return TemperatureIcon
       case 'light':
@@ -55,6 +66,9 @@ export default class Reading extends React.Component {
         <div className='current-reading'>
           {this.getFormattedReading()}
         </div>
+        <Temperature options={this.options}
+            data={this.props}
+            onClick={this.onClick} />
       </div>
     )
   }
