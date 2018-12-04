@@ -1,0 +1,70 @@
+
+
+#feedWrapper {
+    width: 300px;
+    height: auto;
+    margin-left: -212px;
+    margin-top: 40px;
+    z-index: 2; /* Show in front of search bar */
+    position: absolute;
+    transform: translateZ(0); /* Turn wrapper into a viewport, enabling the position: fixed notificationTitle to float in the feed without floating around the whole page */
+}
+
+#notificationsContainer {
+    background: #72797c;
+    padding: 12px;
+    border-radius: 7px;
+    overflow-y: scroll;
+    height: 250px;
+    padding-top: 50px;
+    margin-top: -24px; /* Padding for fixed title */
+}
+
+#feedWrapper:before {
+    content: '';
+    width: 0;
+    max-height: 0;
+    border-style: solid;
+    border-width: 14px 20px 14px 0;
+    border-color: transparent #72797c transparent transparent;
+    display: block;
+    transform: rotate(90deg);
+    position: relative;
+    top: -10px;
+    left: 226px;
+}
+#feedTitle {
+    display: block;
+    margin-bottom: 13px;
+    font-weight: bold;
+    font-size: 18px;
+    position: fixed;
+    z-index: 2;
+    margin-top: -46px;
+    background: #72797c;
+    width: 272px;
+    height: 28px;
+    padding-top: 10px;
+}
+
+.notification {
+    background: #64696b;
+    border-radius: 5px;
+    padding: 5px;
+    position: relative;
+    margin-bottom: 3px;
+    font-size: 14px;
+}
+.notificationIcon {
+    vertical-align: middle;
+    padding-right: 4px;
+}
+.notificationDate {
+    position: absolute;
+    right: 0;
+    top: -2px;
+    color: #000;
+    font-size: 82%;
+    padding: 3px;
+}
+
