@@ -75,3 +75,6 @@ Dashboard/public
 
 #config
 Dashboard/config/config.json
+
+# Electron Builder
+dist/

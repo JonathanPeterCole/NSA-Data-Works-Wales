@@ -1,9 +1,11 @@
 {
   "name": "data-works-usb-link",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Connect an Arduino to Data Works with USB.",
+  "main": "main.js",
   "scripts": {
+    "start": "electron .",
+    "build": "build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -12,6 +14,8 @@
     "serialport": "^7.1.0"
   },
   "devDependencies": {
+    "electron": "^3.0.10",
+    "electron-builder": "^20.38.2",
     "eslint": "^5.9.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
@@ -30,5 +34,13 @@
     "extends": [
       "standard"
     ]
-  }
+  },
+  "build": {
+    "appId": "com.dataworks.link",
+    "productName": "Data Works USB Link",
+    "win": {
+      "target": "portable"
+    }
+  },
+  "postinstall": "electron-builder install-app-deps"
 }
