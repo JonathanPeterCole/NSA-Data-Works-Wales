@@ -1,6 +1,18 @@
-// Require the serialport node module
-const SerialPort = require('serialport')
-const Readline = require('@serialport/parser-readline')
+// React
+import React from 'react'
+import { render } from 'react-dom'
+
+// Serial Port
+import SerialPort from 'serialport'
+import Readline from '@serialport/parser-readline'
+
+// Components
+import App from './components/app'
+
+render(
+  <App />,
+  document.getElementById('root')
+)
 
 // Get the Arduinos
 let findArduinos = new Promise((resolve, reject) => {
@@ -9,7 +21,7 @@ let findArduinos = new Promise((resolve, reject) => {
       console.log('Working')
       resolve(result)
     } else {
-      reject()
+      reject(new Error('No Arduino\'s found'))
     }
   })
 })

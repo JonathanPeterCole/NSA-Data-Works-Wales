@@ -78,3 +78,9 @@ Dashboard/config/config.json
 
 # Electron Builder
 dist/
+
+# Babel
+out/
+
+# IntelliJ
+.idea/
