@@ -9,12 +9,12 @@ function createWindow () {
   win = new BrowserWindow({
     width: 800,
     height: 500,
-    backgroundColor: '#fff'
+    backgroundColor: '#191919'
   })
   win.setMenu(null)
 
   // and load the index.html of the app.
-  win.loadFile('out/index.html')
+  win.loadFile('./index.html')
 
   // Open the DevTools.
   win.webContents.openDevTools()

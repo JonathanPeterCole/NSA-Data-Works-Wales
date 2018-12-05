@@ -1,5 +1,8 @@
 import React from 'react'
 
+import './style.css'
+import 'typeface-quicksand'
+
 export default class App extends React.Component {
   render () {
     return (

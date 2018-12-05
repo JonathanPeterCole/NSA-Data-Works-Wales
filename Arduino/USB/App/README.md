@@ -26,8 +26,12 @@ This app connects to an Arduino using the USB library to send readings to the Da
   `npm run startDev`
 
 * **Build**  
-  Runs babel to convert ES6 code.  
-  `npm run build`
+  Runs webpack to build the React Javascript.  
+  `npm run build`  
+
+* **Build Development**  
+  Runs webpack to build the React Javascript with sourcemaps for easier debugging.  
+  `npm run buildDev` 
 
 * **Package**  
   Packages the app for distribution.  
