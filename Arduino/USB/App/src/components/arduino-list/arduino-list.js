@@ -19,5 +19,5 @@ export default class ArduinoList extends React.Component {
 }
 
 ArduinoList.propTypes = {
-  arduinos: PropTypes.list
+  arduinos: PropTypes.array
 }
