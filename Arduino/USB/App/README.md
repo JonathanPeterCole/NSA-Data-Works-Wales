@@ -9,11 +9,8 @@ This app connects to an Arduino using the USB library to send readings to the Da
 1. Install the npm packages  
   `npm install`
 
-1. Build the application  
-  `npm run build`
-
-1. Run the application  
-  `npm run start`
+1. Build and run the application  
+  `npm run buildRun`
 
 ### Commands
 
@@ -32,6 +29,10 @@ This app connects to an Arduino using the USB library to send readings to the Da
 * **Build Development**  
   Runs webpack to build the React Javascript with sourcemaps for easier debugging.  
   `npm run buildDev` 
+
+* **Build Run**  
+  Builds and starts the application.
+  `npm run buildRun` 
 
 * **Package**  
   Packages the app for distribution.  

@@ -7,6 +7,7 @@
     "start": "electron .",
     "build": "webpack --mode production --config ./config/webpack.config.js",
     "buildDev": "webpack --mode development --config ./config/webpack.config.dev.js",
+    "buildRun": "npm run buildDev && npm run start",
     "pack": "build",
     "lint": "eslint . --ext .js,.jsx",
     "lintFix": "eslint . --ext .js,.jsx --fix",
