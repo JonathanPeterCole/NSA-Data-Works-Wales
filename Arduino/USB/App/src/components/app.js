@@ -2,11 +2,13 @@ import React from 'react'
 
 import SerialPort from 'serialport'
 
+import Titlebar from './titlebar/titlebar'
 import Searching from './searching/searching'
 import ArduinoList from './arduino-list/arduino-list'
 
 import './style.css'
 import 'typeface-quicksand'
+import AppIcon from './icon.svg'
 
 export default class App extends React.Component {
   constructor (props) {
@@ -36,12 +38,15 @@ export default class App extends React.Component {
   render () {
     return (
       <div className='main'>
-        { this.state.arduinos.length === 0 &&
-          <Searching />
-        }
-        { this.state.arduinos.length > 0 &&
-          <ArduinoList arduinos={this.state.arduinos} />
-        }
+        <Titlebar title='Data Works USB Link' icon={AppIcon} />
+        <div className='container'>
+          { this.state.arduinos.length === 0 &&
+            <Searching />
+          }
+          { this.state.arduinos.length > 0 &&
+            <ArduinoList arduinos={this.state.arduinos} />
+          }
+        </div>
       </div>
     )
   }

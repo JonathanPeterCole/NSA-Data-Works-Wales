@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron')
+const os = require('os')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -6,11 +7,24 @@ let win
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({
-    width: 800,
-    height: 475,
-    backgroundColor: '#191919'
-  })
+  if (os.platform() === 'win32') {
+    // On windows, hide the frame
+    win = new BrowserWindow({
+      width: 800,
+      height: 475,
+      backgroundColor: '#191919',
+      frame: false
+    })
+  } else {
+    // On other OS's, change the titlebar style
+    win = new BrowserWindow({
+      width: 800,
+      height: 475,
+      backgroundColor: '#191919',
+      titleBarStyle: 'hiddenInset'
+    })
+  }
+
   win.setMenu(null)
 
   // and load the index.html of the app.

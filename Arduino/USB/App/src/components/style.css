@@ -8,6 +8,7 @@ body {
   background: #191919;
   color: #fff;
   font-family: 'Quicksand', sans-serif;
+  user-select: none;
 }
 #root {
   height: 100%;
@@ -18,5 +19,6 @@ body {
   flex-direction: column;
 }
 .container {
+  display: flex;
   flex-grow: 1;
 }

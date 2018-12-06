@@ -6,7 +6,8 @@ module.exports = {
   entry: './src/renderer',
   output: {
     filename: 'renderer.js',
-    path: path.resolve(__dirname, '../out')
+    path: path.resolve(__dirname, '../out'),
+    publicPath: './out/'
   },
   module: {
     rules: [

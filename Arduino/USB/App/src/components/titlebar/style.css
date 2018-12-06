@@ -1,0 +1,43 @@
+.titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 29px;
+  padding: 0;
+  -webkit-app-region: drag;
+}
+.titlebar-icon {
+  height: 16px;
+  margin-left: 8px;
+  margin-right: 111px;
+}
+.titlebar-text {
+  font-family: "Segoe UI", sans-serif;
+  font-size: 12px;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.titlebar-controls {
+  display: flex;
+  height: 100%;
+  -webkit-app-region: no-drag;
+}
+.titlebar-btn {
+  width: 45px;
+  height: 100%;
+  text-align: center;
+  line-height: 29px;
+  transition: background-color 200ms;
+}
+.titlebar-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.titlebar-btn.close:hover {
+  background-color: rgb(212, 18, 35);
+}
+.titlebar-btn svg {
+  width: 10px;
+  height: 10px;
+  shape-rendering: crispEdges;
+}
