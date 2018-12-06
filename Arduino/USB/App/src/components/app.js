@@ -2,7 +2,8 @@ import React from 'react'
 
 import SerialPort from 'serialport'
 
-import Arduino from './arduino/arduino'
+import Searching from './searching/searching'
+import ArduinoList from './arduino-list/arduino-list'
 
 import './style.css'
 import 'typeface-quicksand'
@@ -34,13 +35,13 @@ export default class App extends React.Component {
 
   render () {
     return (
-      <div>
-        <h2>
-          Available Arduinos: {this.state.arduinos.length}
-        </h2>
-        {this.state.arduinos.map((arduino, key) => (
-          <Arduino key={key} arduino={arduino} />
-        ))}
+      <div className='main'>
+        { this.state.arduinos.length === 0 &&
+          <Searching />
+        }
+        { this.state.arduinos.length > 0 &&
+          <ArduinoList arduinos={this.state.arduinos} />
+        }
       </div>
     )
   }

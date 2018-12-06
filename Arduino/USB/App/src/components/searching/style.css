@@ -1,0 +1,35 @@
+.searching {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Animated Arduino */
+svg.animated-arduino {
+  width: 100px;
+  margin-bottom: 20px;
+}
+svg.animated-arduino .minus,
+svg.animated-arduino .plus {
+  fill: rgba(255, 255, 255, 0.06);
+}
+svg.animated-arduino .infinity {
+	fill: none;
+	stroke: rgba(255, 255, 255, 0.06);
+  stroke-width: 60px;
+}
+svg.animated-arduino .infinity-overlay {
+  fill: none;
+  stroke: rgb(67, 135, 255);
+  stroke-width: 60px;
+  stroke-linecap: round;
+  stroke-dasharray: 450 1427;
+  stroke-dashoffset: 1877;
+  animation: arduino-dash 1.5s linear infinite;
+}
+@keyframes arduino-dash { 
+  to { stroke-dashoffset: 0px } 
+}

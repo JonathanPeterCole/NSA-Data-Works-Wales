@@ -8,7 +8,7 @@ function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
     width: 800,
-    height: 500,
+    height: 475,
     backgroundColor: '#191919'
   })
   win.setMenu(null)
@@ -17,7 +17,7 @@ function createWindow () {
   win.loadFile('./index.html')
 
   // Open the DevTools.
-  win.webContents.openDevTools()
+  win.webContents.openDevTools({ mode: 'undocked' })
 
   // Emitted when the window is closed.
   win.on('closed', () => {

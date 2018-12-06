@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import SerialPort from 'serialport'
 import Readline from '@serialport/parser-readline'
 
+import './style.css'
+
 export default class Arduino extends React.Component {
   constructor (props) {
     super(props)
@@ -33,7 +35,7 @@ export default class Arduino extends React.Component {
   render () {
     return (
       <p>
-        Arduino with serial number { this.props.arduino.serialNumber }:<br />
+        Arduino on { this.props.arduino.comName } with serial number { this.props.arduino.serialNumber }:<br />
         { this.state.reading }
       </p>
     )
