@@ -5,6 +5,7 @@
   position: relative;
   height: 29px;
   padding: 0;
+  flex-shrink: 0;
   -webkit-app-region: drag;
 }
 .titlebar-icon {

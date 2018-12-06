@@ -1,0 +1,30 @@
+.arduino-list {
+  position: relative;
+  flex-grow: 1;
+  margin-top: 10px;
+}
+.scroll-fader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: linear-gradient(to bottom, rgb(25, 25, 25) 0%,rgba(25, 25, 25,0) 100%);
+  opacity: 0;
+  transition: opacity 100ms;
+  pointer-events: none;
+}
+.scroll-fader.show {
+  opacity: 1;
+}
+.scroll-area {
+  height: 100%;
+  overflow-y: overlay;
+  flex-wrap: wrap;
+}
+.arduino-container {
+  padding: 15px 50px 45px 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

@@ -42,7 +42,7 @@ export default class Arduino extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className='arduino'>
         Arduino on { this.props.arduino.comName } with serial number { this.props.arduino.serialNumber }:<br />
         <StatusIndicator status={this.state.status} />
         <StatusText status={this.state.status} />
