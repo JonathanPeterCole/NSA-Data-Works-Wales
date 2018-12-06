@@ -11,12 +11,10 @@ let temp = 3
       socket.connect()
     } else {
       temp += Math.floor(Math.random() * 3)
-      console.log('Socket connected, sending: ' + temp)
       socket.emit('sensorReadings', {
         _id: '5c01821deaed443ee82b751a',
         name: 'Fridge',
         colour: 'blue',
-        online: true,
         sensors: [
           {
             type: 'temp',
@@ -34,7 +32,7 @@ let temp = 3
 
   // { INITIAL PAYLOAD - ONLY NEEDS TO BE SENT IF NO OTHER PAYLOAD HAS EVER BEEN SENT BEFORE
   //   "id": 0, /
-  //   "name": "Fridge", / 
+  //   "namew": "Fridge", / 
   //   "colour": "blue",
   //   "online": false, 
   //   "lastConnection": 1543363200000, / 

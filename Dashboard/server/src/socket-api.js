@@ -18,7 +18,7 @@ class socketApi {
         this.broadcastAll('sensorReadings', this.lastReadings(), this.sensors)
       }
     }, 1500)
-    setInterval(() => this.checkDisconnected(), 1000)
+    setInterval(() => this.checkDisconnected(), 3000)
   }
 
   
@@ -27,6 +27,7 @@ class socketApi {
     if (this.data.length !== 0) {
       this.broadcastTo(socket, 'sensorReadings', this.lastReadings(), this.sensors)
     }
+    this.checkDisconnected()
     // socket.on('setType', (data) => {
     //   socket.type = data.type
     // })
@@ -48,17 +49,17 @@ class socketApi {
     })
   }
   addSensorData (data){
-    this.arduinos.forEach(arduino => {
+    this.arduinos.forEach(arduino => { // loop through each arduino
         if(arduino._id == data._id){
-          arduino.sensors.forEach(sensor => {
-            data.sensors.forEach(sensorReading => {
+          arduino.sensors.forEach(sensor => { // loop through each of its sensors
+            data.sensors.forEach(sensorReading => { // loop through each of the sensors sent in the newdata
               if(sensorReading.id == sensor.id){
-                sensor.lastUpdate = Math.floor(new Date() / 1000)
+                sensor.lastUpdate = +new Date()
                 if(sensor.newdata){
-                  sensor.newdata.push({reading: sensorReading.data, time: Math.floor(new Date() / 1000)})
+                  sensor.newdata.push({reading: sensorReading.data, time: +new Date()})
                 } else {
-                  sensor.newdata = [{reading: sensorReading.data, time: Math.floor(new Date() / 1000)}]
-                }
+                  sensor.newdata = [{reading: sensorReading.data, time: +new Date()}]
+                } 
               }
             })
           })
@@ -73,7 +74,7 @@ class socketApi {
     if(!socket.aid){
       socket.aid = data.arduino;
     }
-    socket.lastSent = new Date();
+    socket.lastSent = +new Date();
   }
 
   /*
@@ -92,22 +93,17 @@ class socketApi {
     Checks if a sensor is currently active
   */
   checkDisconnected () {
-    this.knownSensors.forEach(sensor => {
-      if (!sensor.active) {
-        return false
-      }
-      let curTime = sensor.lastUpdate
-      if (new Date() - new Date(curTime) > 5000 && sensor.active === true) {
-        this.saveSingleSensor(sensor)
-        sensor.active = false
-      }
+    this.arduinos.forEach(arduino => {
+      arduino.sensors.forEach(sensor => {
+        let curTime = sensor.lastUpdate
+        if (new Date() - new Date(curTime) > 5000 && sensor.online === true) {
+          // this.saveSingleSensor(sensor)
+          sensor.online = false
+        } else {
+          sensor.online = true;
+        }
+      })
     })
-    for (let i in this.unknownSensors) {
-      let curTime = this.unknownSensors[i].lastUpdate
-      if (new Date() - new Date(curTime) > 5000) {
-        this.unknownSensors.splice(i, 1)
-      }
-    }
     this.sensors.forEach((e, idx) => {
       if (e.connected === false) {
         this.sensors.splice(idx, 1)
@@ -136,17 +132,19 @@ class socketApi {
   }
 
   lastReadings () {
-    let readings = this.arduinos.map(arduino => {
-      arduino.sensors.forEach(sensor => {
+    let readings = JSON.stringify(this.arduinos);
+    readings = JSON.parse(readings)
+    readings.forEach(arduino => {
+      arduino.sensors.forEach((sensor, i) => {
         if (sensor.data) {
-          sensor.data.length <= 10
-            ? sensor.data.slice(0, sensor.data.length - 1)
-            : sensor.data.slice(sensor.data.length - 11, sensor.data.length - 1)
+          if(sensor.newdata){
+            let data = sensor.data.concat(sensor.newdata);
+            sensor.data = data.slice(-10, data.length-1)
+          }
         }
       })
-      return arduino
     });
-    console.log(readings)
+    console.log(readings[0].sensors[0])
     return readings;
   }
 
@@ -189,10 +187,10 @@ class socketApi {
               if(dbSensor.data){
                 dbSensor.data = sensor.new.concat(dbSensor.data);
                 dbSensor.data = dbSensor.data.length >= 500 ? dbSensor.data.splice(0, (500) - (dbSensor.data.length - 500)) : dbSensor.data
-                dbSensor.lastUpdate = Math.floor(new Date() / 1000)
+                dbSensor.lastUpdate = +new Date() 
               } else {
                 dbSensor.data = sensor.new;
-                dbSensor.lastUpdate = Math.floor(new Date() / 1000)
+                dbSensor.lastUpdate = +new Date()
               }
             }
           })

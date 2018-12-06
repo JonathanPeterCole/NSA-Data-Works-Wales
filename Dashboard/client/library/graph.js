@@ -1,4 +1,6 @@
 import CanvasLibrary from './canvasLibrary'
+let config = require('../../config/config.json')
+console.log(config)
 export default class graph {
   constructor (canvas, parent, options = {}) {
     this.canvas = canvas
@@ -11,12 +13,23 @@ export default class graph {
     this.data = []
     this.padding = this.options.padding
     this.datapoints = []
+    this.images = [];
     this.setSize()
     this.features()
+    this.ready=false;
+    this.images = config.image;
     this.canvas.addEventListener('mousemove', (e) => {
       this.updateHoverLine(e)
     })
+    this.loadImages().then(() => {this.ready=true});
   }
+//   {
+//     "IP" : "localhost",
+//     "imagedir": "Dashboard/cient/components/pages/arduinos/arduino/reading/img",
+//     "images": [
+//         {"type": "temp", "name": "temperature.svg"}
+//     ]
+// }
   features () {
     this.features = [
       { key: 'withShadow', cb: this.withShadow.bind(this) },
@@ -29,7 +42,8 @@ export default class graph {
       { key: 'withSideShade', cb: this.withSideShade.bind(this) },
       { key: 'withHoverLine', cb: this.withHoverLine.bind(this) },
       { key: 'withLastUpdated', cb: this.withLastUpdated.bind(this) },
-      { key: 'withActive', cb: this.withActive.bind(this) }
+      { key: 'withActive', cb: this.withActive.bind(this) },
+      { key: 'withImage', cb: this.withImage.bind(this) }
     ]
   }
   updateHoverLine (e) {
@@ -49,15 +63,11 @@ export default class graph {
     if(this.data.length > 20){
       this.data.splice(0, 10);
     }
-    console.log(reading)
     this.update()
     this.draw()
   }
   setData (data) {
-    console.log('ok')
-    console.log(data)
-    // this.data = data.map(e => {return({reading: e})})
-    console.log(this.data)
+    this.data = data;
     this.update()
     this.draw()
   }
@@ -171,7 +181,6 @@ export default class graph {
       // i* Math.round(this.drawableWidth / vertical) + this.padding.left
       this.datapoints.push({ reading: reading, x: (Math.round(this.drawableWidth / (data.length - 1) * d) + this.padding.left), y: Math.round((this.drawableHeight / diff) * (this.crest - parseInt(reading))) + this.padding.top })
     }
-    console.log('')
   }
   setActive (active) {
     this.options.active = active
@@ -181,8 +190,9 @@ export default class graph {
   }
   draw () {
     this.lib.clear()
-    if (this.datapoints.length === 0) {
-      return false
+    console.log(this.ready)
+    if (this.datapoints.length === 0 || !this.ready) {
+      return false;
     }
     for (let i in this.options.build) {
       this.runFeature(this.options.build[i])
@@ -192,6 +202,39 @@ export default class graph {
     this.lastUpdated = date
     this.update()
     this.draw()
+  }
+//   "image": {
+//     "dir": "Dashboard/cient/components/pages/arduinos/arduino/reading/img",
+//     "images": [{"type": "temp", "name": "temperature.svg"}]
+// }
+  loadImages(){
+    let p = [];
+    this.images.images.forEach(d => {
+      let img = new Image();
+      img.src = __dirname + this.images.dir + d.name;
+      console.log(d.name)
+      p.push(new Promise((res, rej) => {
+        console.log('ok')
+          img.onload = e => {
+            console.log('loaded');
+            console.log(img)
+            d.img = img;
+            res()
+          }
+      }))
+    });
+    return Promise.all(p);
+  }
+  getImage(){
+    for(let i in this.images.images){
+      if(this.images.images[i].type === this.options.type){
+        return this.images.images[i].img;
+      }
+    }
+  }
+  withImage(){
+    console.log(this.getImage());
+    this.lib.drawImage(this.getImage(), 13, 13, 15, 15);
   }
   withLastUpdated () {
     this.lib.setTextBaseline('top')
@@ -238,7 +281,7 @@ export default class graph {
 
     // Draw name of sensor
     this.lib.setFont(this.options.font, this.options.fontsize, 600)
-    this.lib.drawText(this.options.name, 15, 25)
+    this.lib.drawText(this.options.name, 35, 25)
 
     // Draw current reading of sensor
     this.lib.setFont(this.options.font, this.options.fontsize - 2, 400)
@@ -319,8 +362,6 @@ export default class graph {
     return this
   }
   withLine () {
-    console.log(this.datapoints)
-    console.log('huh')
     let data = this.datapoints
     this.lib.setLineWidth(this.options.aesthetics.line.width)
     this.lib.drawLines([{ x: this.padding.left, y: data[0].y }, ...data])

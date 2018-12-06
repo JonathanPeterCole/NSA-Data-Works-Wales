@@ -103,6 +103,9 @@ export default class CanvasLibrary {
       this.ctx.lineTo(c.x + 0.5, c.y)
     })
   }
+  drawImage (img, x, y, width, height) {
+    this.ctx.drawImage(img, x, y, width, height);
+  }
   fillRoundedRectangle (x, y, width, height, radius) {
     this.drawRoundedRectangle(x, y, width, height, radius)
     this.fill()

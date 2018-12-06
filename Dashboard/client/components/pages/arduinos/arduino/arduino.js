@@ -29,12 +29,15 @@ export default class Arduino extends React.Component {
             <StatusIndicator online={this.props.online} lastConnection={new Date(this.props.lastConnection)} />
           </div>
           <div className='arduino-readings'>
-            {this.props.sensors.map((sensor) => (
+            {this.props.sensors.map((sensor) => {
+              return (
               <Reading
+                lastUpdate={sensor.lastUpdate}
                 key={sensor.id}
                 type={sensor.type}
-                reading={sensor.newdata ? sensor.newdata[sensor.newdata.length-1].reading: sensor.data[sensor.data.length-1].reading} />
-            ))}
+                online={sensor.online}
+                readings={sensor.data} />
+            )})}
           </div>
         </div>
       </div>

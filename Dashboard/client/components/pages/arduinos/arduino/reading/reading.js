@@ -3,10 +3,6 @@ import PropTypes from 'prop-types'
 
 import './style.css'
 
-import LightIcon from './img/light.svg'
-import MoistureIcon from './img/moisture.svg'
-import TemperatureIcon from './img/temperature.svg'
-
 import Temperature from './types/Temperature'
 
 
@@ -14,15 +10,17 @@ export default class Reading extends React.Component {
   constructor (props) {
     super(props)
     // Bindings
-    console.log(props)
     this.getIcon = this.getIcon.bind(this)
     this.getName = this.getName.bind(this)
     this.getFormattedReading = this.getFormattedReading.bind(this)
     this.options = {
-      build: ['withBackground', 'withLine', 'withSideShade', 'withInfo', 'withActive'],
+      build: ['withBackground' ,'withLine', 'withSideShade' , 'withInfo', 'withActive', 'withImage'],
       padding: { top: 8, bottom: 8, right: 0, left: 0 },
       fontsize: 14,
-      active: true
+      active: true,
+      type: this.props.type,
+      aesthetics: {
+      }
     }
   }
   getIcon () {
@@ -54,21 +52,23 @@ export default class Reading extends React.Component {
     }
     return this.props.reading + unit
   }
+
   render () {
     return (
       <div className='arduino-reading'>
-        <div className='reading-type'>
-          <img className='reading-icon' src={this.getIcon()} />
-          <div className='reading-name'>
-            {this.getName()}
-          </div>
-        </div>
-        <div className='current-reading'>
-          {this.getFormattedReading()}
-        </div>
+        {/* <div className='reading-type'> */}
+          {/* <img className='reading-icon' src={this.getIcon()} /> */}
+          {/* <div className='reading-name'> */}
+            {/* {this.getName()} */}
+          {/* </div> */}
+        {/* </div> */}
+        {/* <div className='current-reading'> */}
+          {/* {this.getFormattedReading()} */}
+        {/* </div> */}
         <Temperature options={this.options}
             data={this.props}
-            onClick={this.onClick} />
+            onClick={this.onClick}
+            online={this.props.online} />
       </div>
     )
   }

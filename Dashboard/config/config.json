@@ -1,3 +1,7 @@
 {
-    "IP" : "localhost"
+    "IP" : "localhost",
+    "image": {
+        "dir": "",
+        "images": [{"type": "temp", "name": "temperature.svg"}]
+    }
 }

@@ -8,16 +8,15 @@ export default class Temperature extends React.Component {
   componentDidMount () {
     this.graph = new Graph(this.refs.graph, this.refs.parent, this.props.options)
     window.addEventListener('resize', e => this.graph.resize(e))
-    this.graph.setData([this.props.data.reading ])
+    this.graph.setData(this.props.data.readings)
     this.graph.setLastUpdated(this.props.data.lastUpdate)
-    this.graph.setActive(this.props.data.active)
+    this.graph.setActive(this.props.online)
   }
   componentDidUpdate () {
     // this.graph.setName(this.props.data.name ? this.props.data.name : this.props.options.name)
-    console.log(this.props.data.reading)
-    this.graph.addData(this.props.data.reading)
+    this.graph.setData(this.props.data.readings)
     this.graph.setLastUpdated(this.props.data.lastUpdate)
-    this.graph.setActive(this.props.data.active)
+    this.graph.setActive(this.props.online)
   }
   render () {
     return (
