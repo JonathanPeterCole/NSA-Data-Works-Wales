@@ -27,7 +27,7 @@ svg.animated-arduino .infinity-overlay {
   stroke-linecap: round;
   stroke-dasharray: 450 1427;
   stroke-dashoffset: 1877;
-  animation: arduino-dash 1.5s linear infinite;
+  animation: arduino-dash 2.5s linear infinite;
 }
 @keyframes arduino-dash { 
   to { stroke-dashoffset: 0px } 
