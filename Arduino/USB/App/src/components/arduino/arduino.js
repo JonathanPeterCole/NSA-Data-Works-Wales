@@ -50,13 +50,14 @@ export default class Arduino extends React.Component {
       }, 15000)
       // Setup parser
       let lineStream = this.serialPort.pipe(new Readline({ delimiter: '\r\n' }))
+      // Prepare the dataHandler function
       let dataHandler = (data) => {
-        // Parse the data from the Arduino
+        // Attempt to parse the data
         let parsedData
         try {
           parsedData = JSON.parse(data)
         } catch (error) {
-          // Catch the parsing error
+          // Catch parsing errors
           reject(error)
           return
         }

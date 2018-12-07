@@ -12,6 +12,10 @@ DataWorksUSB::DataWorksUSB()
 
 void DataWorksUSB::connect(String username, String password)
 {
+    // Wait for the serial to be ready
+    while (!Serial) {
+        ;
+    }
     // Store authentication details in a variable
     _auth = "\"auth\":{\"username\":\"" + username + "\", \"password\":\"" + password + "\"}";
     // Send authentication details to dataworks
