@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import './style.css'
+
 export default class StatusText extends React.Component {
   render () {
     return (
@@ -8,7 +10,7 @@ export default class StatusText extends React.Component {
         { this.props.status === 'connecting' && <span>Connecting</span> }
         { this.props.status === 'connected' && <span>Connected</span> }
         { this.props.status === 'disconnected' && <span>Disconnected</span> }
-        { this.props.status === 'error' && <span>Something Went Wrong</span> }
+        { this.props.status === 'error' && <span>Failed to Connect</span> }
       </div>
     )
   }

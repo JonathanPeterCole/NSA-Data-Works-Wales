@@ -29,6 +29,7 @@ export default class Arduino extends React.Component {
     let lineStream = this.serialPort.pipe(new Readline({ delimiter: '\r\n' }))
     // On new line
     lineStream.on('data', (data) => {
+      console.log(data)
       this.setState({
         status: 'connected',
         reading: data
@@ -43,10 +44,14 @@ export default class Arduino extends React.Component {
   render () {
     return (
       <div className='arduino'>
-        Arduino on { this.props.arduino.comName } with serial number { this.props.arduino.serialNumber }:<br />
         <StatusIndicator status={this.state.status} />
+        <div className='com-name'>
+          { this.props.arduino.comName }
+        </div>
         <StatusText status={this.state.status} />
-        { this.state.reading }
+        <div className='serial-number'>
+          { this.props.arduino.serialNumber }
+        </div>
       </div>
     )
   }

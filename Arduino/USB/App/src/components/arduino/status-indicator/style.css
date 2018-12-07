@@ -1,6 +1,11 @@
 .status-indicator {
   height: 50px;
+  width: 50px;
+  margin: 50px 72px;
 }
 .status-indicator img {
   height: 100%;
+}
+.status-indicator .searching-path {
+  stroke: rgb(67, 135, 255);
 }

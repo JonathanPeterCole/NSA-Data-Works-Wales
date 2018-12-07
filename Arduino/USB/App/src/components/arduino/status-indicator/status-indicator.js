@@ -14,7 +14,7 @@ export default class StatusIndicator extends React.Component {
     return (
       <div className='status-indicator'>
         { this.props.status === 'connecting' &&
-          <Spinner />
+          <Spinner pathClass='searching-path' />
         }
         { this.props.status === 'connected' &&
           <img src={ConnectedIcon} />
