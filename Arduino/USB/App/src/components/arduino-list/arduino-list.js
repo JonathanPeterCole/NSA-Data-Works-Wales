@@ -34,7 +34,7 @@ export default class ArduinoList extends React.Component {
                 timeout={300}
                 classNames='arduino-transition'
                 unmountOnExit>
-                <Arduino key={key} arduino={arduino} />
+                <Arduino key={key} arduino={arduino} disconnected={this.props.disconnected} />
               </CSSTransition>
             ))}
           </TransitionGroup>
@@ -45,5 +45,6 @@ export default class ArduinoList extends React.Component {
 }
 
 ArduinoList.propTypes = {
-  arduinos: PropTypes.array
+  arduinos: PropTypes.array,
+  disconnected: PropTypes.func
 }

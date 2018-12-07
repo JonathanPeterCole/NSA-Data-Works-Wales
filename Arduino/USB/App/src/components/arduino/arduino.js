@@ -30,6 +30,7 @@ export default class Arduino extends React.Component {
       })
       // Handle disconnects
       serialPort.on('close', () => {
+        this.props.disconnected()
         this.setState({ status: 'disconnected' })
       })
     }, (error) => {
@@ -119,5 +120,6 @@ export default class Arduino extends React.Component {
 }
 
 Arduino.propTypes = {
-  arduino: PropTypes.object
+  arduino: PropTypes.object,
+  disconnected: PropTypes.func
 }
