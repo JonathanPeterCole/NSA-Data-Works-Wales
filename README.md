@@ -11,6 +11,9 @@ This project consists of multiple parts, including a web dashboard, Arduino libr
 * **Data Works USB Link App**  
   Connects Arduino's using the USB libary to Data Works.  
   [**Files**](./Arduino/USB/App) - [**Readme**](./Arduino/USB/App/README.md)
+* **Data Works USB Library**  
+  Connects to the Data Works USB Link app to send sensor readings.  
+  [**Files**](./Arduino/USB/Library) - [**Readme**](./Arduino/USB/Library/README.md)
 
 ## Linting
 
