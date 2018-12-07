@@ -50,7 +50,7 @@ export default class App extends React.Component {
           <CSSTransition
             in={this.state.arduinos.length > 0}
             classNames='transition-fade'
-            timeout={{ enter: 150, exit: 0 }}
+            timeout={{ enter: 300, exit: 0 }}
             unmountOnExit>
             <ArduinoList arduinos={this.state.arduinos} />
           </CSSTransition>

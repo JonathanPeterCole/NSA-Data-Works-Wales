@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 import Arduino from '../arduino/arduino'
 
@@ -26,11 +27,17 @@ export default class ArduinoList extends React.Component {
       <div className='arduino-list'>
         <div className={this.state.showFader ? 'scroll-fader show' : 'scroll-fader'} />
         <div className='scroll-area' onScroll={this.onScroll}>
-          <div className='arduino-container'>
+          <TransitionGroup className='arduino-container'>
             {this.props.arduinos.map((arduino, key) => (
-              <Arduino key={key} arduino={arduino} />
+              <CSSTransition
+                key={key}
+                timeout={300}
+                classNames='arduino-transition'
+                unmountOnExit>
+                <Arduino key={key} arduino={arduino} />
+              </CSSTransition>
             ))}
-          </div>
+          </TransitionGroup>
         </div>
       </div>
     )
