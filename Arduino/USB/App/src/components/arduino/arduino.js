@@ -19,10 +19,18 @@ export default class Arduino extends React.Component {
     // Bindings
     this.connect = this.connect.bind(this)
     // Connect
-    this.connect().then((lineStream) => {
+    this.connect().then((serialPort) => {
+      // Set the state to connected
       this.setState({ status: 'connected' })
+      // Setup parser
+      let lineStream = serialPort.pipe(new Readline({ delimiter: '\r\n' }))
+      // Handle new data
       lineStream.on('data', (data) => {
-        // console.log(data)
+        this.handleData(data)
+      })
+      // Handle disconnects
+      serialPort.on('close', () => {
+        this.setState({ status: 'disconnected' })
       })
     }, (error) => {
       console.log(error)
@@ -33,7 +41,7 @@ export default class Arduino extends React.Component {
   connect () {
     return new Promise((resolve, reject) => {
       // Setup the port
-      this.serialPort = new SerialPort(
+      let serialPort = new SerialPort(
         this.props.arduino.comName, { baudRate: 9600 }, (error) => {
           // If the Serial port cannot be opened, throw an error
           if (error) {
@@ -45,11 +53,11 @@ export default class Arduino extends React.Component {
       // Prepare a timeout
       let timeout = setTimeout(() => {
         // If the connection times out, close the port and throw an error
-        this.serialPort.close()
+        serialPort.close()
         reject(new Error('Timeout'))
       }, 15000)
       // Setup parser
-      let lineStream = this.serialPort.pipe(new Readline({ delimiter: '\r\n' }))
+      let lineStream = serialPort.pipe(new Readline({ delimiter: '\r\n' }))
       // Prepare the dataHandler function
       let dataHandler = (data) => {
         // Attempt to parse the data
@@ -67,14 +75,31 @@ export default class Arduino extends React.Component {
           // Remove the listener
           lineStream.removeListener('data', dataHandler)
           // Send an 'okay' message to the arduino
-          this.serialPort.write('okay')
+          serialPort.write('okay')
           // Resolve and return the lineStream
-          resolve(lineStream)
+          resolve(serialPort)
         }
       }
       // Wait to recieve data
       lineStream.on('data', dataHandler)
     })
+  }
+
+  handleData (data) {
+    // Attempt to parse the data
+    let parsedData
+    try {
+      parsedData = JSON.parse(data)
+    } catch (error) {
+      // Catch parsing errors
+      this.setState({ status: 'error' })
+      return
+    }
+    // Attempt to get the reading
+    if (parsedData.dataworks.sensorReading) {
+      // Handle sensor readings
+      console.log(parsedData.dataworks.sensorReading)
+    }
   }
 
   render () {
