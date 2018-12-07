@@ -28,10 +28,6 @@ body {
   opacity: 0.01;
   transform: scale(0.8);
 }
-.transition-fade-enter {
-  opacity: 0.01;
-  transform: scale(0.8);
-}
 .transition-fade-enter-active {
   opacity: 1;
   transform: scale(1);

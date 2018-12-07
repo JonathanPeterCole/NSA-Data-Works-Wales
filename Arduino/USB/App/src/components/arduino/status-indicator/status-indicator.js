@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { CSSTransition } from 'react-transition-group'
 
 import Spinner from '../../spinner/spinner'
 
@@ -13,18 +14,34 @@ export default class StatusIndicator extends React.Component {
   render () {
     return (
       <div className='status-indicator'>
-        { this.props.status === 'connecting' &&
+        <CSSTransition
+          in={this.props.status === 'connecting'}
+          classNames='status-transition'
+          timeout={{ enter: 200, exit: 0 }}
+          unmountOnExit>
           <Spinner pathClass='searching-path' />
-        }
-        { this.props.status === 'connected' &&
+        </CSSTransition>
+        <CSSTransition
+          in={this.props.status === 'connected'}
+          classNames='status-transition'
+          timeout={{ enter: 200, exit: 0 }}
+          unmountOnExit>
           <img src={ConnectedIcon} />
-        }
-        { this.props.status === 'disconnected' &&
+        </CSSTransition>
+        <CSSTransition
+          in={this.props.status === 'disconnected'}
+          classNames='status-transition'
+          timeout={{ enter: 200, exit: 0 }}
+          unmountOnExit>
           <img src={DisconnectedIcon} />
-        }
-        { this.props.status === 'error' &&
+        </CSSTransition>
+        <CSSTransition
+          in={this.props.status === 'error'}
+          classNames='status-transition'
+          timeout={{ enter: 200, exit: 0 }}
+          unmountOnExit>
           <img src={ErrorIcon} />
-        }
+        </CSSTransition>
       </div>
     )
   }
