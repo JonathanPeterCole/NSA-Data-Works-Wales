@@ -22,6 +22,21 @@ body {
   display: flex;
   flex-grow: 1;
 }
+/* Transition Fade In */
+/* Overlay Animation */
+.transition-fade-enter {
+  opacity: 0.01;
+}
+.transition-fade-enter {
+  opacity: 0.01;
+}
+.transition-fade-enter-active {
+  opacity: 1;
+  transition: all 300ms;
+}
+.transition-fade-exit {
+  display: none;
+}
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;

@@ -1,6 +1,6 @@
 import React from 'react'
-
 import SerialPort from 'serialport'
+import { CSSTransition } from 'react-transition-group'
 
 import Titlebar from './titlebar/titlebar'
 import Searching from './searching/searching'
@@ -40,12 +40,20 @@ export default class App extends React.Component {
       <div className='main'>
         <Titlebar title='Data Works USB Link' icon={AppIcon} />
         <div className='container'>
-          { this.state.arduinos.length === 0 &&
+          <CSSTransition
+            in={this.state.arduinos.length === 0}
+            classNames='transition-fade'
+            timeout={{ enter: 300, exit: 0 }}
+            unmountOnExit>
             <Searching />
-          }
-          { this.state.arduinos.length > 0 &&
+          </CSSTransition>
+          <CSSTransition
+            in={this.state.arduinos.length > 0}
+            classNames='transition-fade'
+            timeout={{ enter: 150, exit: 0 }}
+            unmountOnExit>
             <ArduinoList arduinos={this.state.arduinos} />
-          }
+          </CSSTransition>
         </div>
       </div>
     )
