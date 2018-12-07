@@ -15,7 +15,7 @@ void DataWorksUSB::connect(String username, String password)
     // Store authentication details in a variable
     _auth = "\"auth\":{\"username\":\"" + username + "\", \"password\":\"" + password + "\"}";
     // Send authentication details to dataworks
-    Serial.println("{\"dataworks\":{\"connect\":true, " + _auth + "}");
+    Serial.println("{\"dataworks\":{\"connect\":true, " + _auth + "}}");
     // Wait to recieve 'okay' from Data Works USB Link
     bool connected = false;
     while(!connected){

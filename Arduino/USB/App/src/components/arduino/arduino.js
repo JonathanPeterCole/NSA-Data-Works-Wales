@@ -16,28 +16,63 @@ export default class Arduino extends React.Component {
       status: 'connecting',
       reading: ''
     }
-    // Setup the port
-    this.serialPort = new SerialPort(
-      this.props.arduino.comName, { baudRate: 9600 }, (error) => {
-        if (error) {
-          console.log(error)
-          this.setState({ status: 'error' })
+    // Bindings
+    this.connect = this.connect.bind(this)
+    // Connect
+    this.connect().then((lineStream) => {
+      this.setState({ status: 'connected' })
+      lineStream.on('data', (data) => {
+        // console.log(data)
+      })
+    }, (error) => {
+      console.log(error)
+      this.setState({ status: 'error' })
+    })
+  }
+
+  connect () {
+    return new Promise((resolve, reject) => {
+      // Setup the port
+      this.serialPort = new SerialPort(
+        this.props.arduino.comName, { baudRate: 9600 }, (error) => {
+          // If the Serial port cannot be opened, throw an error
+          if (error) {
+            console.log(error)
+            reject(error)
+          }
+        }
+      )
+      // Prepare a timeout
+      let timeout = setTimeout(() => {
+        // If the connection times out, close the port and throw an error
+        this.serialPort.close()
+        reject(new Error('Timeout'))
+      }, 15000)
+      // Setup parser
+      let lineStream = this.serialPort.pipe(new Readline({ delimiter: '\r\n' }))
+      let dataHandler = (data) => {
+        // Parse the data from the Arduino
+        let parsedData
+        try {
+          parsedData = JSON.parse(data)
+        } catch (error) {
+          // Catch the parsing error
+          reject(error)
+          return
+        }
+        if (parsedData.dataworks.connect) {
+          // Clear the timeout
+          clearTimeout(timeout)
+          // Remove the listener
+          lineStream.removeListener('data', dataHandler)
+          // Send an 'okay' message to the arduino
+          this.serialPort.write('okay')
+          // Resolve and return the lineStream
+          resolve(lineStream)
         }
       }
-    )
-    // Setup parser
-    let lineStream = this.serialPort.pipe(new Readline({ delimiter: '\r\n' }))
-    // On new line
-    lineStream.on('data', (data) => {
-      console.log(data)
-      this.setState({
-        status: 'connected',
-        reading: data
-      })
-    })
-    // On disconnect
-    this.serialPort.on('close', () => {
-      this.setState({ status: 'disconnected' })
+      // Wait to recieve data
+      lineStream.on('data', dataHandler)
     })
   }
 

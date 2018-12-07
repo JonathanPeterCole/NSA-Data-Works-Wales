@@ -10,7 +10,7 @@ export default class StatusText extends React.Component {
         { this.props.status === 'connecting' && <span>Connecting</span> }
         { this.props.status === 'connected' && <span>Connected</span> }
         { this.props.status === 'disconnected' && <span>Disconnected</span> }
-        { this.props.status === 'error' && <span>Failed to Connect</span> }
+        { this.props.status === 'error' && <span>Connection Failed</span> }
       </div>
     )
   }
