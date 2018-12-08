@@ -59,30 +59,28 @@ export default class Arduino extends React.Component {
       }, 15000)
       // Setup parser
       let lineStream = serialPort.pipe(new Readline({ delimiter: '\r\n' }))
-      // Prepare the dataHandler function
-      let dataHandler = (data) => {
-        // Attempt to parse the data
-        let parsedData
+      // Wait to recieve data
+      lineStream.once('data', (data) => {
         try {
-          parsedData = JSON.parse(data)
+          // Parse the data and check if it includes a dataworks object with connect:true
+          if (JSON.parse(data).dataworks.connect) {
+            // Clear the timeout
+            clearTimeout(timeout)
+            // Resolve and return the serialPort
+            resolve(serialPort)
+            // Send an 'okay' message to the arduino
+            serialPort.write('okay')
+          } else {
+            // Reject with error if the JSON isn't valid
+            reject(new Error('Device was not recognised. Make sure the USB library is setup correctly.'))
+          }
         } catch (error) {
-          // Catch parsing errors
-          reject(error)
-          return
-        }
-        if (parsedData.dataworks.connect) {
           // Clear the timeout
           clearTimeout(timeout)
-          // Remove the listener
-          lineStream.removeListener('data', dataHandler)
-          // Send an 'okay' message to the arduino
-          serialPort.write('okay')
-          // Resolve and return the lineStream
-          resolve(serialPort)
+          // Reject with the error
+          reject(error)
         }
-      }
-      // Wait to recieve data
-      lineStream.on('data', dataHandler)
+      })
     })
   }
 
