@@ -5,32 +5,32 @@ import EventEmitter from 'events'
 export default class ArduinoConnect extends EventEmitter {
   connect (comName) {
     this.connectDevice(comName)
-      .then(serialPort => this.connectLibrary(serialPort))
-      .then((serialPort) => {
-        // Store the serialPort
-        this.serialPort = serialPort
+      .then(() => this.connectLibrary())
+      .then(() => {
         // Set the state to connected
         this.emit('connected')
-        // Setup parser
-        let lineStream = serialPort.pipe(new Readline({ delimiter: '\r\n' }))
         // Handle new data
-        lineStream.on('data', (data) => {
+        this.lineStream.on('data', (data) => {
           this.handleData(data)
-        })
-        // Handle disconnects
-        serialPort.on('close', () => {
-          this.emit('disconnected')
         })
       })
       .catch((error) => {
         this.emit('error', error)
+      })
+      .finally(() => {
+        if (this.serialPort) {
+          // Handle disconnects
+          this.serialPort.on('close', () => {
+            this.emit('disconnected')
+          })
+        }
       })
   }
 
   connectDevice (comName) {
     return new Promise((resolve, reject) => {
       // Setup the port
-      let serialPort = new SerialPort(
+      this.serialPort = new SerialPort(
         comName, { baudRate: 9600 }, (error) => {
           // If the Serial port cannot be opened, throw an error
           if (error) {
@@ -38,7 +38,7 @@ export default class ArduinoConnect extends EventEmitter {
           }
         }
       )
-      resolve(serialPort)
+      resolve()
     })
   }
 
@@ -47,27 +47,27 @@ export default class ArduinoConnect extends EventEmitter {
       // Prepare a timeout
       let timeout = setTimeout(() => {
         // If the connection times out, close the port and throw an error
-        serialPort.close()
+        this.serialPort.close()
         reject(new Error('Timeout'))
       }, 15000)
       // Setup parser
-      let lineStream = serialPort.pipe(new Readline({ delimiter: '\r\n' }))
+      this.lineStream = this.serialPort.pipe(new Readline({ delimiter: '\r\n' }))
       // Wait to recieve data
-      lineStream.on('data', (data) => {
+      this.lineStream.on('data', (data) => {
         try {
           // Parse the data and check if it includes a dataworks object with connect:true
           if (JSON.parse(data).dataworks.connect) {
             // Stop listening for data
-            lineStream.removeAllListeners('data')
+            this.lineStream.removeAllListeners('data')
             // Clear the timeout
             clearTimeout(timeout)
             // Resolve and return the serialPort
-            resolve(serialPort)
+            resolve()
             // Send an 'okay' message to the arduino
-            serialPort.write('okay')
+            this.serialPort.write('okay')
           } else {
             // Stop listening for data
-            lineStream.removeAllListeners('data')
+            this.lineStream.removeAllListeners('data')
             // Reject with error if the JSON isn't valid
             reject(new Error('Device was not recognised. Make sure the USB library is setup correctly.'))
           }
