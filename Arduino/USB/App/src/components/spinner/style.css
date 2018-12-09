@@ -1,24 +1,20 @@
 /* Loading Spinner */
 /*Based on Modern Google Loader in Pure CSS by jczimm
 https://codepen.io/jczimm/pen/vEBpoL */
-.spinner {
-  width: 50px;
-  height: 50px;
-}
-.spinner svg.circle {
-  animation: spinner-rotate 2s linear infinite;
-  transform-origin: center center;
+
+svg.spinner.circle {
   height: 100%;
   width: 100%;
+  animation: spinner-rotate 2s linear infinite;
+  transform-origin: center center;
 }
-.spinner svg.circle .path {
+svg.spinner.circle .path {
   stroke-width: 5;
   stroke-miterlimit: 10;
   stroke-dasharray: 1, 200;
   stroke-dashoffset: 0;
   animation: spinner-dash 1.5s ease-in-out infinite;
   stroke-linecap: round;
-  stroke: rgb(67, 135, 255);
 }
 @keyframes spinner-rotate {
   0% {

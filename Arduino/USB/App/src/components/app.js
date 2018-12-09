@@ -5,6 +5,7 @@ import { CSSTransition } from 'react-transition-group'
 import Titlebar from './titlebar/titlebar'
 import Searching from './searching/searching'
 import ArduinoList from './arduino-list/arduino-list'
+import NetworkStatus from './network-status/network-status'
 
 import './style.css'
 import 'typeface-quicksand'
@@ -14,11 +15,14 @@ export default class App extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      arduinos: []
+      arduinos: [],
+      netStatusConnected: false,
+      netStatusShow: true
     }
     // Bindings
     this.searchDevices = this.searchDevices.bind(this)
     this.deviceDisconnected = this.deviceDisconnected.bind(this)
+    this.setNetworkStatus = this.setNetworkStatus.bind(this)
     // Search for a new device every 2 seconds
     this.searchInterval = setInterval(this.searchDevices, 2000)
   }
@@ -45,6 +49,21 @@ export default class App extends React.Component {
     this.searchInterval = setInterval(this.searchDevices, 2000)
   }
 
+  setNetworkStatus (connected) {
+    if (connected) {
+      this.setState({ netStatusConnected: true })
+      // Wait 2 seconds before hiding the network status
+      setTimeout(() => {
+        // Check that the app is still connected
+        if (this.state.netStatusConnected) {
+          this.setState({ netStatusShow: false })
+        }
+      }, 2000)
+    } else {
+      this.setState({ netStatusConnected: false, netStatusShow: true })
+    }
+  }
+
   render () {
     return (
       <div className='main'>
@@ -65,6 +84,7 @@ export default class App extends React.Component {
             <ArduinoList arduinos={this.state.arduinos} disconnected={this.deviceDisconnected} />
           </CSSTransition>
         </div>
+        <NetworkStatus show={this.state.netStatusShow} connected={this.state.netStatusConnected} />
       </div>
     )
   }

@@ -19,7 +19,7 @@ export default class StatusIndicator extends React.Component {
           classNames='status-transition'
           timeout={{ enter: 200, exit: 0 }}
           unmountOnExit>
-          <Spinner pathClass='searching-path' />
+          <Spinner className='searching-spinner' colour='#4387ff' />
         </CSSTransition>
         <CSSTransition
           in={this.props.status === 'connected'}

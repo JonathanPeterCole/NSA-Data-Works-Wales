@@ -1,0 +1,35 @@
+.network-status {
+  height: 35px;
+  background: #23262B;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), background 200ms;
+  transform: translateY(35px);
+}
+.network-status.show {
+  transform: translateY(0px);
+}
+.network-status.online {
+  background: #3871d0;
+}
+.network-status.offline {
+  background: #d03838;
+}
+.status {
+  display: flex;
+  align-items: center;
+}
+.status-icon {
+  width: 19px;
+  height: 19px;
+  margin-left: 8px;
+}
+.status-message {
+  margin-left: 8px;
+  font-size: 12px;
+  font-weight: 500;
+}
