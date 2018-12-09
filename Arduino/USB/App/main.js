@@ -13,7 +13,8 @@ function createWindow () {
       width: 800,
       height: 475,
       backgroundColor: '#191919',
-      frame: false
+      frame: false,
+      show: false
     })
   } else {
     // On other OS's, change the titlebar style
@@ -21,7 +22,8 @@ function createWindow () {
       width: 800,
       height: 475,
       backgroundColor: '#191919',
-      titleBarStyle: 'hiddenInset'
+      titleBarStyle: 'hiddenInset',
+      show: false
     })
   }
 
@@ -33,8 +35,11 @@ function createWindow () {
   // Open the DevTools.
   win.webContents.openDevTools({ mode: 'undocked' })
 
+  // Wait until the window is fully loaded before showing
+  win.once('ready-to-show', () => win.show())
+
   // Emitted when the window is closed.
-  win.on('closed', () => {
+  win.once('closed', () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -45,10 +50,10 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.once('ready', createWindow)
 
 // Quit when all windows are closed.
-app.on('window-all-closed', () => {
+app.once('window-all-closed', () => {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
