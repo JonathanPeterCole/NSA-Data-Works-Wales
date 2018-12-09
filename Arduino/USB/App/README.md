@@ -31,7 +31,7 @@ This app connects to an Arduino using the USB library to send readings to the Da
   `npm run buildDev` 
 
 * **Build Run**  
-  Builds and starts the application.
+  Builds and starts the application.  
   `npm run buildRun` 
 
 * **Package**  
@@ -45,3 +45,7 @@ This app connects to an Arduino using the USB library to send readings to the Da
 * **Linting Fix**  
   Runs ESLint with --fix to lint the code and attempt to automatically apply fixes.  
   `npm run lintFix`
+
+### Configuration
+
+To connect to Data Works, this app needs to know the servers network location. This location is defined in `config/server.json`.

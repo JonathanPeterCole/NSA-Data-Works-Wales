@@ -1,6 +1,7 @@
 import React from 'react'
 import SerialPort from 'serialport'
 import { CSSTransition } from 'react-transition-group'
+import DataWorksAPI from '../api/data-works-api'
 
 import Titlebar from './titlebar/titlebar'
 import Searching from './searching/searching'
@@ -19,6 +20,10 @@ export default class App extends React.Component {
       netStatusConnected: false,
       netStatusShow: true
     }
+    // Prepare the API
+    this.api = new DataWorksAPI()
+    this.api.on('connected', () => this.setNetworkStatus(true))
+    this.api.on('disconnected', () => this.setNetworkStatus(false))
     // Bindings
     this.searchDevices = this.searchDevices.bind(this)
     this.deviceDisconnected = this.deviceDisconnected.bind(this)
