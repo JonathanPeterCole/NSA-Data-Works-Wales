@@ -91,6 +91,8 @@ export default class ArduinoConnect extends EventEmitter {
     // Attempt to get the reading
     if (parsedData.dataworks.sensorReading) {
       this.emit('data', parsedData.dataworks.sensorReading)
+    } else {
+      this.emit('error', new Error('Invalid data recieved'))
     }
   }
 }

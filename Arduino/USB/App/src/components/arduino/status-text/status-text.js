@@ -4,13 +4,23 @@ import PropTypes from 'prop-types'
 import './style.css'
 
 export default class StatusText extends React.Component {
+  getText (status) {
+    switch (status) {
+      case 'connecting':
+        return 'Connecting'
+      case 'connected':
+        return 'Connected'
+      case 'disconnected':
+        return 'Disconnected'
+      case 'error':
+        return 'Connection Error'
+    }
+  }
+
   render () {
     return (
       <div className='status-text'>
-        { this.props.status === 'connecting' && <span>Connecting</span> }
-        { this.props.status === 'connected' && <span>Connected</span> }
-        { this.props.status === 'disconnected' && <span>Disconnected</span> }
-        { this.props.status === 'error' && <span>Connection Failed</span> }
+        { this.getText(this.props.status) }
       </div>
     )
   }

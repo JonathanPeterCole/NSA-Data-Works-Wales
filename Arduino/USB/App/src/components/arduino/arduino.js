@@ -36,12 +36,14 @@ export default class Arduino extends React.Component {
     return (
       <div className='arduino'>
         <StatusIndicator status={this.state.status} />
-        <div className='com-name'>
-          { this.props.arduino.comName }
-        </div>
-        <StatusText status={this.state.status} />
-        <div className='serial-number'>
-          { this.props.arduino.serialNumber }
+        <div className='details'>
+          <div className='com-name'>
+            { this.props.arduino.comName }
+          </div>
+          <StatusText status={this.state.status} />
+          <div className='serial-number'>
+            { this.props.arduino.serialNumber }
+          </div>
         </div>
       </div>
     )
