@@ -15,7 +15,6 @@ export default class ArduinoList extends React.Component {
     this.onScroll = this.onScroll.bind(this)
   }
   onScroll (event) {
-    console.log(event.target.scrollTop)
     if (event.target.scrollTop === 0) {
       this.setState({ showFader: false })
     } else {

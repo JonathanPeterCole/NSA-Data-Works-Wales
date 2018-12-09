@@ -12,11 +12,11 @@ export default class NetworkStatus extends React.Component {
       <div className={this.props.show ? 'network-status show' : 'network-status'}>
         <div className='status offline'>
           <Spinner className='status-icon' />
-          <div className='status-message'>Attempting to connect...</div>
+          <div className='status-message'>Connecting to Data Works...</div>
         </div>
         <div className={this.props.connected ? 'status online show' : 'status online'}>
           <img className='status-icon' src={ConnectedIcon} />
-          <div className='status-message'>Connected to Data Works</div>
+          <div className='status-message'>Connected</div>
         </div>
       </div>
     )

@@ -57,13 +57,13 @@ export default class App extends React.Component {
   setNetworkStatus (connected) {
     if (connected) {
       this.setState({ netStatusConnected: true })
-      // Wait 2 seconds before hiding the network status
+      // Wait 3 seconds before hiding the network status
       setTimeout(() => {
         // Check that the app is still connected
         if (this.state.netStatusConnected) {
           this.setState({ netStatusShow: false })
         }
-      }, 2000)
+      }, 3000)
     } else {
       this.setState({ netStatusConnected: false, netStatusShow: true })
     }
