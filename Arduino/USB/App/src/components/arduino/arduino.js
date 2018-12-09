@@ -17,29 +17,33 @@ export default class Arduino extends React.Component {
       reading: ''
     }
     // Bindings
-    this.connect = this.connect.bind(this)
+    this.connectDevice = this.connectDevice.bind(this)
+    this.connectLibrary = this.connectLibrary.bind(this)
     // Connect
-    this.connect().then((serialPort) => {
-      // Set the state to connected
-      this.setState({ status: 'connected' })
-      // Setup parser
-      let lineStream = serialPort.pipe(new Readline({ delimiter: '\r\n' }))
-      // Handle new data
-      lineStream.on('data', (data) => {
-        this.handleData(data)
+    this.connectDevice()
+      .then(serialPort => this.connectLibrary(serialPort))
+      .then((serialPort) => {
+        // Set the state to connected
+        this.setState({ status: 'connected' })
+        // Setup parser
+        let lineStream = serialPort.pipe(new Readline({ delimiter: '\r\n' }))
+        // Handle new data
+        lineStream.on('data', (data) => {
+          this.handleData(data)
+        })
+        // Handle disconnects
+        serialPort.on('close', () => {
+          this.props.disconnected()
+          this.setState({ status: 'disconnected' })
+        })
       })
-      // Handle disconnects
-      serialPort.on('close', () => {
-        this.props.disconnected()
-        this.setState({ status: 'disconnected' })
+      .catch((error) => {
+        console.log(error)
+        this.setState({ status: 'error' })
       })
-    }, (error) => {
-      console.log(error)
-      this.setState({ status: 'error' })
-    })
   }
 
-  connect () {
+  connectDevice () {
     return new Promise((resolve, reject) => {
       // Setup the port
       let serialPort = new SerialPort(
@@ -51,6 +55,12 @@ export default class Arduino extends React.Component {
           }
         }
       )
+      resolve(serialPort)
+    })
+  }
+
+  connectLibrary (serialPort) {
+    return new Promise((resolve, reject) => {
       // Prepare a timeout
       let timeout = setTimeout(() => {
         // If the connection times out, close the port and throw an error
