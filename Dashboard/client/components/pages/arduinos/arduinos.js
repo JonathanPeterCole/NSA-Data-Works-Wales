@@ -20,6 +20,7 @@ export default class Arduinos extends React.Component {
     // Bindings
     this.showModal = this.showModal.bind(this)
     this.hideModal = this.hideModal.bind(this)
+    // Socket IO
     this.socket = io('/websocket')
     this.socket.emit('setUser', JSON.stringify({ jwt: localStorage.getItem('jwt') }))
     this.socket.on('sensorReadings', (data) => {
@@ -62,8 +63,8 @@ export default class Arduinos extends React.Component {
       <div className='arduinos'>
         <h1>Your Arduino's</h1>
         <div className='arduinos-container'>
-          {this.state.loaded
-            ? this.state.arduinos.map((arduino, i) => {
+          {this.state.loaded &&
+            this.state.arduinos.map((arduino, i) => {
               return (
                 <Arduino
                   key={i}
@@ -75,12 +76,11 @@ export default class Arduinos extends React.Component {
                   onClick={() => this.showModal(i)} />
               )
             })
-            : null
           }
         </div>
-        {this.state.showModal
-          ? <ArduinoDetailsModal data={this.state.arduinos[this.state.currentArduino]} show={this.state.showModal} close={this.hideModal} />
-          : null }
+        {this.state.showModal &&
+          <ArduinoDetailsModal data={this.state.arduinos[this.state.currentArduino]} show={this.state.showModal} close={this.hideModal} />
+        }
       </div>
     )
   }

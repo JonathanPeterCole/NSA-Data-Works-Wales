@@ -33,7 +33,7 @@ export default class App extends React.Component {
   render () {
     return (
       <div>
-        {this.state.showHeader ? <Header /> : null}
+        {this.state.showHeader && <Header />}
         <div className='content container'>
           <Route render={({ location }) => (
             <TransitionGroup>
