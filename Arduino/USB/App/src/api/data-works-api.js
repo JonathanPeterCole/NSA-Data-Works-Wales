@@ -8,6 +8,7 @@ export default class DataWorksAPI extends EventEmitter {
     super()
     // Prepare the socket
     this.socket = io(ServerConfig.location)
+    console.log(this.socket)
     // Setup event listeners
     this.socket.on('connect', () => {
       this.emit('connected')
@@ -18,5 +19,11 @@ export default class DataWorksAPI extends EventEmitter {
     this.socket.on('disconnect', () => {
       this.emit('disconnected')
     })
+  }
+
+  sendReading (data) {
+    console.log('Sending data:')
+    console.log(data)
+    this.socket.emit('sensorReadings', data)
   }
 }

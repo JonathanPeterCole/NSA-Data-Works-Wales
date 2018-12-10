@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import ArduinoConnect from '../../library/arduino-connect/arduino-connect'
+import DataWorksAPI from '../../api/data-works-api'
 
 import StatusIndicator from './status-indicator/status-indicator'
 import StatusText from './status-text/status-text'
@@ -27,7 +28,12 @@ export default class Arduino extends React.Component {
       this.props.disconnected()
     })
     this.connection.on('error', () => this.setState({ status: 'error' }))
-    this.connection.on('data', (data) => console.log(data))
+    this.connection.on('data', (data) => {
+      // Add a Unique Device ID - In this case, the serial number
+      data.udid = this.props.arduino.serialNumber
+      // Send the data
+      this.props.api.sendReading(data)
+    })
     // Initialise the connection
     this.connection.connect(this.props.arduino.comName)
   }
@@ -52,5 +58,6 @@ export default class Arduino extends React.Component {
 
 Arduino.propTypes = {
   arduino: PropTypes.object,
-  disconnected: PropTypes.func
+  disconnected: PropTypes.func,
+  api: PropTypes.instanceOf(DataWorksAPI)
 }

@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
+import DataWorksAPI from '../../api/data-works-api'
+
 import Arduino from '../arduino/arduino'
 
 import './style.css'
@@ -33,7 +35,11 @@ export default class ArduinoList extends React.Component {
                 timeout={300}
                 classNames='arduino-transition'
                 unmountOnExit>
-                <Arduino key={key} arduino={arduino} disconnected={this.props.disconnected} />
+                <Arduino
+                  key={key}
+                  arduino={arduino}
+                  disconnected={this.props.disconnected}
+                  api={this.props.api} />
               </CSSTransition>
             ))}
           </TransitionGroup>
@@ -45,5 +51,6 @@ export default class ArduinoList extends React.Component {
 
 ArduinoList.propTypes = {
   arduinos: PropTypes.array,
-  disconnected: PropTypes.func
+  disconnected: PropTypes.func,
+  api: PropTypes.instanceOf(DataWorksAPI)
 }

@@ -5,6 +5,9 @@
   justify-content: center;
   align-items: center;
 }
+.searching.text {
+  margin-bottom: 10px;
+}
 
 /* Animated Arduino */
 svg.animated-arduino {

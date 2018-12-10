@@ -86,7 +86,10 @@ export default class App extends React.Component {
             classNames='transition-fade'
             timeout={{ enter: 300, exit: 0 }}
             unmountOnExit>
-            <ArduinoList arduinos={this.state.arduinos} disconnected={this.deviceDisconnected} />
+            <ArduinoList
+              arduinos={this.state.arduinos}
+              disconnected={this.deviceDisconnected}
+              api={this.api} />
           </CSSTransition>
         </div>
         <NetworkStatus show={this.state.netStatusShow} connected={this.state.netStatusConnected} />
