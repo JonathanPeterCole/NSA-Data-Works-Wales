@@ -7,7 +7,7 @@ import IconButton from '../buttons/icon-button/icon-button'
 import SettingsModal from '../modals/settings-modal/settings-modal'
 
 import BellIcon from './img/bell.svg'
-import NotificationsFeed from './notification-feed/notification-feed'
+import { NotificationsFeed } from './notification-feed/notification-feed-container'
 
 import './style.css'
 
@@ -26,6 +26,7 @@ export default class Header extends React.Component {
     this.toggleNotificationsFeed = this.toggleNotificationsFeed.bind(this)
     this.showSettings = this.showSettings.bind(this)
     this.hideSettings = this.hideSettings.bind(this)
+    this.hideNotificationFeed = this.hideNotificationFeed.bind(this)
   }
 
   toggleNotificationsFeed () {
@@ -44,6 +45,11 @@ export default class Header extends React.Component {
     })
   }
 
+  hideNotificationFeed () {
+    this.setState({
+      showNotifications: false
+    })
+  }
 
   render () {
     return (
@@ -56,7 +62,10 @@ export default class Header extends React.Component {
             <div className='actions'>
               <IconButton image={BellIcon} hover='bell' onClick={this.toggleNotificationsFeed} />
               <IconButton image={SettingsIcon} hover='rotate' onClick={this.showSettings} />
-              <NotificationsFeed shouldShow={this.state.showNotifications} />
+              {
+                this.state.showNotifications ? <NotificationsFeed close={this.hideNotificationFeed} /> : null
+              }
+
             </div>
           </div>
           <div className='row bottom'>
