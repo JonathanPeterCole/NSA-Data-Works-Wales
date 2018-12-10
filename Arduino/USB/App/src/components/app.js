@@ -18,7 +18,7 @@ export default class App extends React.Component {
     this.state = {
       arduinos: [],
       netStatusConnected: false,
-      netStatusShow: true
+      netStatusShow: false
     }
     // Prepare the API
     this.api = new DataWorksAPI()
@@ -30,6 +30,12 @@ export default class App extends React.Component {
     this.setNetworkStatus = this.setNetworkStatus.bind(this)
     // Search for a new device every 2 seconds
     this.searchInterval = setInterval(this.searchDevices, 2000)
+    // If the app is not connected after 3 seconds, display the network status
+    setInterval(() => {
+      if (!this.state.netStatusConnected) {
+        this.setState({ netStatusShow: true })
+      }
+    }, 3000)
   }
 
   searchDevices () {
