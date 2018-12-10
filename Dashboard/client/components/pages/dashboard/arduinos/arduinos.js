@@ -1,6 +1,5 @@
 import React from 'react'
 import io from 'socket.io-client'
-import PropTypes from 'prop-types'
 import axios from 'axios'
 
 import Arduino from './arduino/arduino'
