@@ -5,7 +5,8 @@ module.exports = {
   entry: './client/index',
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, '../public')
+    path: path.resolve(__dirname, '../public'),
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -21,14 +22,7 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif|ico|svg)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              'name': '[path][name].[ext]'
-            }
-          }
-        ]
+        use: ['file-loader']
       }
     ]
   },

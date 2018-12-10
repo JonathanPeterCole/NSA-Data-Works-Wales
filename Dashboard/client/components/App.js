@@ -1,25 +1,10 @@
 import React from 'react'
 import { Route, Redirect, Switch } from 'react-router-dom'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
-import Arduinos from './pages/arduinos/arduinos'
-import Learn from './pages/learn/learn'
+import Dashboard from './pages/dashboard/dashboard'
 import Login from './pages/login/login'
-import Header from './header/header'
-
-import './style.css'
 
 export default class App extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      showHeader: true
-    }
-    this.showHeader = this.showHeader.bind(this)
-  }
-  updateReadings () {
-
-  }
   loggedIn () {
     if (localStorage.getItem('jwt')) {
       return true
@@ -27,33 +12,19 @@ export default class App extends React.Component {
       return false
     }
   }
-  showHeader (show = true) {
-    this.setState({ showHeader: show })
-  }
   render () {
     return (
       <div>
-        {this.state.showHeader && <Header />}
-        <div className='content container'>
-          <Route render={({ location }) => (
-            <TransitionGroup>
-              <CSSTransition
-                key={location.key}
-                classNames='router-animation'
-                timeout={{ enter: 150, exit: 0 }}>
-                <Switch location={location}>
-                  {this.loggedIn()
-                    ? <Redirect exact from='/' to='/arduinos' />
-                    : <Redirect exact from='/' to='/login' />
-                  }
-                  <Route path='/arduinos' exact render={(p) => <Arduinos {...p} showHeader={this.showHeader} />} /> {/* must be a better wa to do this but cba */}
-                  <Route path='/login' exact render={(p) => <Login {...p} showHeader={this.showHeader} />} />
-                  <Route path='/learn' exact component={Learn} />
-                </Switch>
-              </CSSTransition>
-            </TransitionGroup>
-          )} />
-        </div>
+        <Route render={({ location }) => (
+          <Switch location={location}>
+            {this.loggedIn()
+              ? <Redirect exact from='/' to='/dashboard/arduinos' />
+              : <Redirect exact from='/' to='/login' />
+            }
+            <Route path='/login' component={Login} />
+            <Route path='/dashboard' component={Dashboard} />
+          </Switch>
+        )} />
       </div>
     )
   }

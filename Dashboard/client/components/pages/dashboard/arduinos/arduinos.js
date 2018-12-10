@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 
 import Arduino from './arduino/arduino'
-import ArduinoDetailsModal from '../../modals/arduino-details-modal/arduino-details-modal'
+import ArduinoDetailsModal from '../../../modals/arduino-details-modal/arduino-details-modal'
 
 import './style.css'
 
@@ -16,7 +16,6 @@ export default class Arduinos extends React.Component {
       showModal: false,
       modalData: null
     }
-    this.props.showHeader(true)
     // Bindings
     this.showModal = this.showModal.bind(this)
     this.hideModal = this.hideModal.bind(this)
@@ -84,8 +83,4 @@ export default class Arduinos extends React.Component {
       </div>
     )
   }
-}
-
-Arduinos.propTypes = {
-  showHeader: PropTypes.func
 }
