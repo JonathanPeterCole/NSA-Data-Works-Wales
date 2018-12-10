@@ -5,4 +5,4 @@ const mapStateToProps = state => ({
   sensors: state.sensors
 })
 
-export const arduinos = connect(mapStateToProps, mapDispatchToProps)(arduinosComponent)
+export const arduinos = connect(mapStateToProps, {})(arduinosComponent)

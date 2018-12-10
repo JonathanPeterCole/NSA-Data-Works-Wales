@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Graph from '../../../../../../library/graph'
+import Graph from '../../library/graph'
 
 import './style.css'
 
@@ -8,13 +8,12 @@ export default class Temperature extends React.Component {
   componentDidMount () {
     this.graph = new Graph(this.refs.graph, this.refs.parent, this.props.options)
     window.addEventListener('resize', e => this.graph.resize(e))
-    this.graph.setData(this.props.data.readings)
+    this.graph.setData(this.props.data.slice(-10, this.props.data.length - 1))
     this.graph.setLastUpdated(this.props.data.lastUpdate)
     this.graph.setActive(this.props.online)
   }
   componentDidUpdate () {
-    // this.graph.setName(this.props.data.name ? this.props.data.name : this.props.options.name)
-    this.graph.setData(this.props.data.readings)
+    this.graph.setData(this.props.data.slice(-10, this.props.data.length - 1))
     this.graph.setLastUpdated(this.props.data.lastUpdate)
     this.graph.setActive(this.props.online)
   }
@@ -28,7 +27,8 @@ export default class Temperature extends React.Component {
 }
 
 Temperature.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.array,
   onClick: PropTypes.func,
+  online: PropTypes.bool,
   options: PropTypes.object
 }

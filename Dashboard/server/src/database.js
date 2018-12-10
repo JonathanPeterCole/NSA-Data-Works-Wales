@@ -1,16 +1,16 @@
 const mongo = require('mongodb').MongoClient
-const objectID = require('mongodb').ObjectID
+const ObjectID = require('mongodb').ObjectID
 const MongoNetworkError = require('mongodb').MongoNetworkError
 
 class database {
-  constructor (url, dbname) {
+  static setup (url, dbname) {
     this.url = url
     this.collection = null
     this.mongo = null
     this.db = null
     this.dbname = dbname
   }
-  connect () {
+  static connect () {
     return new Promise((resolve, reject) => {
       mongo.connect(this.url, { useNewUrlParser: true })
         .then((client) => {
@@ -28,30 +28,33 @@ class database {
         })
     })
   }
-  setCollection (collection) {
+  static setCollection (collection) {
     this.collection = collection
   }
-  update (key, match, replacement) {
+  static update (key, match, replacement) {
     this.db.collection(this.collection).updateOne({ [key]: match }, { $set: { ...replacement } })
   }
-  insert (data) {
+  static insert (data) {
     console.log(data)
     this.db.collection(this.collection).insertOne(data, (err) => {
       console.log(err)
     })
   }
-  insertMany (data) {
+  static insertMany (data) {
     this.db.collection(this.collection).insertMany(data, (err) => {
       console.log(err)
     })
   }
-  async findDocument (key, name) {
+  static async findDocument (key, name) {
     return this.db.collection(this.collection).findOne({ [key]: name })
   }
-  async findAll () {
+  static async findRaw (filter) {
+    return this.db.collection(this.collection).findOne(filter)
+  }
+  static async findAll () {
     return this.db.collection(this.collection).find({}).toArray()
   }
-  async lookup (from, local, foreign, asData){
+  static async lookup (from, local, foreign, asData) {
     console.log(this.collection)
     return this.db.collection(this.collection).aggregate([
       { $lookup:
@@ -63,10 +66,10 @@ class database {
         }
       }]).toArray()
   }
-  async lookupSingle (from, local, foreign, asData, key, match){
-    console.log(" key " + key + " - " + match)
+  static async lookupSingle (from, local, foreign, asData, key, match) {
+    console.log(' key ' + key + ' - ' + match)
     return this.db.collection(this.collection).aggregate([
-      { $match: { [key]: match}},
+      { $match: { [key]: match } },
       { $lookup:
         {
           from: from,
@@ -77,11 +80,15 @@ class database {
       }
     ]).toArray()
   }
-  async raw(cb){
-    return await cb(this.db, this.collection);
+  static async raw (cb) {
+    return cb(this.db, this.collection)
   }
-  getObjectID(id){
-    return new objectID(id);
+  static getObjectID (id) {
+    try {
+      return new ObjectID(id)
+    } catch (e) {
+      return 'Error: ID Supplied must be a 12 byte string or 24 hex characters'
+    }
   }
   // async test(){
   //   return this.db.collection(this.collection).findOne({ [key]: name }).aggregate([

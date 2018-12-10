@@ -1,5 +1,6 @@
 import CanvasLibrary from './canvasLibrary'
 let config = require('../../config/config.json')
+let path = require('path')
 console.log(config)
 export default class graph {
   constructor (canvas, parent, options = {}) {
@@ -13,23 +14,23 @@ export default class graph {
     this.data = []
     this.padding = this.options.padding
     this.datapoints = []
-    this.images = [];
+    this.images = []
     this.setSize()
     this.features()
-    this.ready=false;
-    this.images = config.image;
+    this.ready = false
+    this.images = config.image
     this.canvas.addEventListener('mousemove', (e) => {
       this.updateHoverLine(e)
     })
-    this.loadImages().then(() => {this.ready=true});
+    this.loadImages().then(() => { this.ready = true })
   }
-//   {
-//     "IP" : "localhost",
-//     "imagedir": "Dashboard/cient/components/pages/arduinos/arduino/reading/img",
-//     "images": [
-//         {"type": "temp", "name": "temperature.svg"}
-//     ]
-// }
+  //   {
+  //     "IP" : "localhost",
+  //     "imagedir": "Dashboard/cient/components/pages/arduinos/arduino/reading/img",
+  //     "images": [
+  //         {"type": "temp", "name": "temperature.svg"}
+  //     ]
+  // }
   features () {
     this.features = [
       { key: 'withShadow', cb: this.withShadow.bind(this) },
@@ -59,15 +60,15 @@ export default class graph {
     }
   }
   addData (reading) {
-    this.data.push({reading: reading})
-    if(this.data.length > 20){
-      this.data.splice(0, 10);
+    this.data.push({ reading: reading })
+    if (this.data.length > 20) {
+      this.data.splice(0, 10)
     }
     this.update()
     this.draw()
   }
   setData (data) {
-    this.data = data;
+    this.data = data
     this.update()
     this.draw()
   }
@@ -190,9 +191,9 @@ export default class graph {
   }
   draw () {
     this.lib.clear()
-    console.log(this.ready)
     if (this.datapoints.length === 0 || !this.ready) {
-      return false;
+      setInterval(this.draw.bind(this), 150)
+      return false
     }
     for (let i in this.options.build) {
       this.runFeature(this.options.build[i])
@@ -203,38 +204,33 @@ export default class graph {
     this.update()
     this.draw()
   }
-//   "image": {
-//     "dir": "Dashboard/cient/components/pages/arduinos/arduino/reading/img",
-//     "images": [{"type": "temp", "name": "temperature.svg"}]
-// }
-  loadImages(){
-    let p = [];
+  //   "image": {
+  //     "dir": "Dashboard/cient/components/pages/arduinos/arduino/reading/img",
+  //     "images": [{"type": "temp", "name": "temperature.svg"}]
+  // }
+  loadImages () {
+    let p = []
     this.images.images.forEach(d => {
-      let img = new Image();
-      img.src = __dirname + this.images.dir + d.name;
-      console.log(d.name)
-      p.push(new Promise((res, rej) => {
-        console.log('ok')
-          img.onload = e => {
-            console.log('loaded');
-            console.log(img)
-            d.img = img;
-            res()
-          }
+      let img = new Image()
+      img.src = path.join(__dirname, this.images.dir, d.name)
+      p.push(new Promise((resolve, reject) => {
+        img.onload = e => {
+          d.img = img
+          resolve()
+        }
       }))
-    });
-    return Promise.all(p);
+    })
+    return Promise.all(p)
   }
-  getImage(){
-    for(let i in this.images.images){
-      if(this.images.images[i].type === this.options.type){
-        return this.images.images[i].img;
+  getImage () {
+    for (let i in this.images.images) {
+      if (this.images.images[i].type === this.options.type) {
+        return this.images.images[i].img
       }
     }
   }
-  withImage(){
-    console.log(this.getImage());
-    this.lib.drawImage(this.getImage(), 13, 13, 15, 15);
+  withImage () {
+    this.lib.drawImage(this.getImage(), 13, 13, 15, 15)
   }
   withLastUpdated () {
     this.lib.setTextBaseline('top')

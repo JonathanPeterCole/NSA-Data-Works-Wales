@@ -104,7 +104,13 @@ export default class CanvasLibrary {
     })
   }
   drawImage (img, x, y, width, height) {
-    this.ctx.drawImage(img, x, y, width, height);
+    try {
+      this.ctx.drawImage(img, x, y, width, height)
+    } catch (e) {
+      if (e.name === TypeError) {
+        console.log('Type error, invalid image supplied, check that it exists and has loaded!')
+      }
+    }
   }
   fillRoundedRectangle (x, y, width, height, radius) {
     this.drawRoundedRectangle(x, y, width, height, radius)

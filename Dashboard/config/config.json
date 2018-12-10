@@ -2,6 +2,9 @@
     "IP" : "localhost",
     "image": {
         "dir": "",
-        "images": [{"type": "temp", "name": "temperature.svg"}]
+        "images": [
+            {"type": "temp", "name": "temperature.svg"},
+            {"type": "light", "name": "light.svg"},
+            {"type": "moisture", "name": "moisture.svg"}]
     }
 }
