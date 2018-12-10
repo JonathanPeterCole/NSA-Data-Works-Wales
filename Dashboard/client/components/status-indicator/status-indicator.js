@@ -10,6 +10,9 @@ export default class StatusIndicator extends React.Component {
     this.state = {
       statusText: this.getStatusText()
     }
+
+    console.log(props)
+
     // Bindings
     this.getStatusText = this.getStatusText.bind(this)
     this.getStatusLightClass = this.getStatusLightClass.bind(this)
@@ -41,7 +44,7 @@ export default class StatusIndicator extends React.Component {
     if (this.props.online) {
       return 'Online'
     } else {
-      return 'Last online ' + timeago().format(this.props.lastConnection)
+      return 'Last online ' + timeago().format(new Date(this.props.lastConnection))
     }
   }
   getStatusLightClass () {
@@ -64,5 +67,5 @@ export default class StatusIndicator extends React.Component {
 
 StatusIndicator.propTypes = {
   online: PropTypes.bool,
-  lastConnection: PropTypes.instanceOf(Date)
+  lastConnection: PropTypes.number
 }

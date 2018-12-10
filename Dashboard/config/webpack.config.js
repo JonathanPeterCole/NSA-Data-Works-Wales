@@ -21,7 +21,14 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif|ico|svg)$/i,
-        use: ['file-loader']
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              'name': '[path][name].[ext]'
+            }
+          }
+        ]
       }
     ]
   },
@@ -29,6 +36,11 @@ module.exports = {
     new CopyWebpackPlugin([
       {
         from: './client/favicon',
+        to: '',
+        toType: 'dir'
+      },
+      {
+        from: './client/images',
         to: '',
         toType: 'dir'
       }
