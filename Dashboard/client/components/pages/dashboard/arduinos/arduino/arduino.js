@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Reading from './reading/reading'
-import StatusIndicator from '../../../status-indicator/status-indicator'
+import StatusIndicator from '../../../../status-indicator/status-indicator'
 
 import './style.css'
 
@@ -15,6 +15,9 @@ export default class Arduino extends React.Component {
   getBoxClassName () {
     return 'box ' + this.props.colour
   }
+  componentDidUpdate () {
+
+  }
   render () {
     return (
       <div className='arduino'>
@@ -23,15 +26,19 @@ export default class Arduino extends React.Component {
             <div className='title'>
               {this.props.name}
             </div>
-            <StatusIndicator online={this.props.online} lastConnection={new Date(this.props.lastConnection)} />
+            <StatusIndicator online={this.props.online} lastConnection={this.props.lastConnection} />
           </div>
           <div className='arduino-readings'>
-            {this.props.sensors.map((sensor) => (
-              <Reading
-                key={sensor.id}
-                type={sensor.type}
-                reading={sensor.reading} />
-            ))}
+            {this.props.sensors.map((sensor) => {
+              return (
+                <Reading
+                  lastUpdate={sensor.lastUpdate}
+                  key={sensor.id}
+                  type={sensor.type}
+                  online={sensor.online}
+                  readings={sensor.data} />
+              )
+            })}
           </div>
         </div>
       </div>

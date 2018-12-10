@@ -6,7 +6,8 @@ module.exports = {
   entry: './client/index',
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, '../public')
+    path: path.resolve(__dirname, '../public'),
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -30,6 +31,11 @@ module.exports = {
     new CopyWebpackPlugin([
       {
         from: './client/favicon',
+        to: '',
+        toType: 'dir'
+      },
+      {
+        from: './client/images',
         to: '',
         toType: 'dir'
       }

@@ -15,7 +15,7 @@ export default class SettingsModal extends React.Component {
           <h1>Settings</h1>
         </ModalHeader>
         <ModalContent>
-          Settings will go here.
+          <div>Settings will go here.</div>
         </ModalContent>
       </Modal>
     )
@@ -24,5 +24,5 @@ export default class SettingsModal extends React.Component {
 
 SettingsModal.propTypes = {
   show: PropTypes.bool,
-  close: PropTypes.close
+  close: PropTypes.func
 }

@@ -3,8 +3,8 @@ class Sensors {
     this.db = db
   }
   async getSensor (id) {
-    this.db.setCollection('sensors')
-    let data = await this.db.findDocument('id', id)
+    this.db.setCollection('arduinos')
+    let data = await this.db.findDocument('_id', this.db.getObjectID(id))
     return data
   }
 }

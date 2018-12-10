@@ -7,19 +7,21 @@ import './style.css'
 // React Router
 import { Router } from 'react-router-dom'
 
-import history from './history'
+import History from './history'
 
 // Redux
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import sensors from './reducers/sensors'
+// import sensors from './reducers/sensors'
+import test from './reducers/test'
 
-const initialState = {
-  sensors: { known: [], unknown: [], active: { identify: false, popup: false } }
-}
+// Client socket API
+import API from './api.js'
 
-const store = createStore(sensors, initialState)
+const store = createStore(test)
 
+API.setSocket() // Initialise socket
+API.setDispatch(store.dispatch)
 // Saga
 
 // import setupSocket from './sockets'
@@ -28,7 +30,7 @@ const store = createStore(sensors, initialState)
 // Render
 render(
   <Provider store={store}>
-    <Router history={history}>
+    <Router history={History}>
       <App />
     </Router>
   </Provider>,

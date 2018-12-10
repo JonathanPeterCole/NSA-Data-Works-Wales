@@ -20,6 +20,7 @@
 .modal-content .scroll-area {
   height: 100%;
   overflow: scroll;
+  overflow-x: hidden;
 }
 .modal-content .modal-content-container {
   padding: 0 50px 50px 50px;

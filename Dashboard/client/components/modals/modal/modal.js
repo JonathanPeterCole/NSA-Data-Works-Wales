@@ -29,7 +29,7 @@ export default class Modal extends React.Component {
 
   render () {
     return (
-      <div className={this.getClassName}>
+      <div className={this.getClassName()}>
         <CSSTransition
           in={this.props.show}
           classNames='modal-animation'
@@ -50,5 +50,5 @@ Modal.propTypes = {
   className: PropTypes.string,
   show: PropTypes.bool,
   close: PropTypes.func,
-  children: PropTypes.element
+  children: PropTypes.node
 }

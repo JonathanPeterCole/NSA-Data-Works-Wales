@@ -3,7 +3,11 @@ import React from 'react'
 import SearchBar from './searchbar/searchbar'
 import NavBar from './navbar/navbar'
 import IconButton from '../buttons/icon-button/icon-button'
+
 import SettingsModal from '../modals/settings-modal/settings-modal'
+
+import BellIcon from './img/bell.svg'
+import { NotificationsFeed } from './notification-feed/notification-feed-container'
 
 import './style.css'
 
@@ -14,11 +18,21 @@ export default class Header extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      showNotifications: false,
       showSettings: false
     }
+
     // Bindings
+    this.toggleNotificationsFeed = this.toggleNotificationsFeed.bind(this)
     this.showSettings = this.showSettings.bind(this)
     this.hideSettings = this.hideSettings.bind(this)
+    this.hideNotificationFeed = this.hideNotificationFeed.bind(this)
+  }
+
+  toggleNotificationsFeed () {
+    this.setState({
+      showNotifications: !this.state.showNotifications
+    })
   }
   showSettings () {
     this.setState({
@@ -30,6 +44,13 @@ export default class Header extends React.Component {
       showSettings: false
     })
   }
+
+  hideNotificationFeed () {
+    this.setState({
+      showNotifications: false
+    })
+  }
+
   render () {
     return (
       <div className='header'>
@@ -39,7 +60,12 @@ export default class Header extends React.Component {
               <img src={Logo} />
             </a>
             <div className='actions'>
+              <IconButton image={BellIcon} hover='bell' onClick={this.toggleNotificationsFeed} />
               <IconButton image={SettingsIcon} hover='rotate' onClick={this.showSettings} />
+              {
+                this.state.showNotifications ? <NotificationsFeed close={this.hideNotificationFeed} /> : null
+              }
+
             </div>
           </div>
           <div className='row bottom'>

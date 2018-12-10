@@ -15,7 +15,7 @@ const apiRouter = require('./routes/api')
 const SocketApi = require('./src/socket-api')
 
 let socketApi
-let database = new Database('mongodb://localhost:27017', 'iot-app')
+Database.setup('mongodb://localhost:27017', 'iot-app')
 // Connect to database and create socket object
 
 // Create socket object
@@ -39,13 +39,13 @@ app.use(express.static(path.join(__dirname, '../public')))
 app.use('/api', apiRouter)
 app.use('/', indexRouter)
 
-database.connect().then((client) => {
-  socketApi = new SocketApi(client)
+Database.connect().then(() => {
+  socketApi = new SocketApi(Database)
   io.of('/websocket').on('connection', socketApi.connect.bind(socketApi))
+  server.listen(3000)
 })
 
 // Listen
-server.listen(3000)
 server.on('listening', () => console.log('Example app listening on port 3000'))
 server.on('error', (error) => {
   // Check if the error was a listening error
