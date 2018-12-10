@@ -60,7 +60,7 @@ export default class Arduinos extends React.Component {
   render () {
     return (
       <div className='arduinos'>
-        <h1>Your Arduino's</h1>
+        <h1>Your Projects</h1>
         <div className='arduinos-container'>
           {this.state.loaded
             ? this.state.arduinos.map((arduino, i) => {
