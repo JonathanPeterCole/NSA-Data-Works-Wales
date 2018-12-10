@@ -7,7 +7,7 @@ import './style.css'
 // React Router
 import { Router } from 'react-router-dom'
 
-import history from './history'
+import History from './history'
 
 // Redux
 import { Provider } from 'react-redux'
@@ -28,7 +28,7 @@ const store = createStore(sensors, initialState)
 // Render
 render(
   <Provider store={store}>
-    <Router history={history}>
+    <Router history={History}>
       <App />
     </Router>
   </Provider>,

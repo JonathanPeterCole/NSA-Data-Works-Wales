@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import './style.css'
 
-import history from '../../../History'
+import history from '../../../history'
 
 export default class Login extends React.Component {
   constructor (props) {
