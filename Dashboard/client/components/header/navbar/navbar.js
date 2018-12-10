@@ -10,11 +10,11 @@ export default class NavBar extends React.Component {
   render () {
     return (
       <div className='navbar'>
-        <NavLink to={'/arduinos'} className='btn arduinos'>
+        <NavLink to={'/dashboard/arduinos'} className='btn arduinos'>
           <img className='icon' src={ArduinosIcon} />
           <span className='label'>Your Arduino's</span>
         </NavLink>
-        <NavLink to={'/learn'} className='btn learn'>
+        <NavLink to={'/dashboard/learn'} className='btn learn'>
           <img className='icon' src={LearnIcon} />
           <span className='label'>Learn and Build</span>
         </NavLink>

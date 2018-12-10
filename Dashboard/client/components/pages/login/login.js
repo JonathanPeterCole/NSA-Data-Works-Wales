@@ -9,7 +9,6 @@ import history from '../../../history'
 export default class Login extends React.Component {
   constructor (props) {
     super(props)
-    this.props.showHeader(false)
     this.username = React.createRef()
     this.password = React.createRef()
     this.login = this.login.bind(this)
@@ -42,8 +41,4 @@ export default class Login extends React.Component {
       </div>
     )
   }
-}
-
-Login.propTypes = {
-  showHeader: PropTypes.func
 }

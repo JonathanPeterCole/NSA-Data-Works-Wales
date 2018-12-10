@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import './style.css'
 
-import Temperature from '../../../../formats/Temperature'
+import Temperature from '../../../../../formats/Temperature'
 
 export default class Reading extends React.Component {
   constructor (props) {

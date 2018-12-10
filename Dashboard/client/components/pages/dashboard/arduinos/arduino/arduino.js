@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Reading from './reading/reading'
-import StatusIndicator from '../../../status-indicator/status-indicator'
+import StatusIndicator from '../../../../status-indicator/status-indicator'
 
 import './style.css'
 
