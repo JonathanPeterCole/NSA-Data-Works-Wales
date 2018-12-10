@@ -5,6 +5,22 @@ class Users {
   constructor (db) {
     this.db = db
   }
+  async createUser (username, password) {
+    this.db.setCollection('users')
+    let hash = await bcrypt.hash(password, 10)
+    if (hash) {
+      this.db.insert({ username, password: hash })
+      return JSON.stringify({
+        status: 'Success',
+        message: 'User created.'
+      })
+    } else {
+      return JSON.stringify({
+        status: 'Failure',
+        message: 'User could not be created.'
+      })
+    }
+  }
   async checkUsername (username, password) {
     this.db.setCollection('users')
     let user = await this.db.findRaw({ 'username': username })

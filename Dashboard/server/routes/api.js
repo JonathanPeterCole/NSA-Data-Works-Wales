@@ -15,6 +15,12 @@ router.post('/login', (req, res, next) => {
     res.send(r)
   })
 })
+router.post('/register', (req, res, next) => {
+  res.setHeader('Content-Type', 'application/json')
+  userController.createUser(req.body.username, req.body.password).then(r => {
+    res.send(r)
+  })
+})
 
 router.use(async (req, res, next) => {
   if (!req.headers.authorization) {
