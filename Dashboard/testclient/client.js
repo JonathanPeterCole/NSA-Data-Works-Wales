@@ -4,17 +4,46 @@ const socket = socketio('ws://localhost:3000/websocket', {
   reconnectionDelay: 1000 })
 
 let temp = 3
-let id = '0312030'
 
 setInterval(() => {
   if (socket.connected === false) {
     socket.connect()
   } else {
     temp += Math.floor(Math.random() * 3)
-    console.log('Socket connected, sending: ' + temp)
-    socket.emit('sensorReadings', { data: temp, id })
+    socket.emit('sensorReadings', {
+      _id: '5c01821deaed443ee82b751a',
+      name: 'Fridge',
+      colour: 'blue',
+      sensors: [
+        {
+          type: 'temp',
+          data: temp,
+          id: '92087b146516598'
+        }
+      ]
+    })
     if (temp > 30) {
       temp = 10
     }
   }
 }, 1500)
+
+// { INITIAL PAYLOAD - ONLY NEEDS TO BE SENT IF NO OTHER PAYLOAD HAS EVER BEEN SENT BEFORE
+//   "id": 0, /
+//   "namew": "Fridge", /
+//   "colour": "blue",
+//   "online": false,
+//   "lastConnection": 1543363200000, /
+//   "sensors": [
+//     {
+//       "id": 0,
+//       "type": "temperature",
+//       "reading": 4
+//     },
+//     {
+//       "id": 1,
+//       "type": "light",
+//       "reading": 100
+//     }
+//   ]
+// },

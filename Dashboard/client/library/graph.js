@@ -1,4 +1,7 @@
 import CanvasLibrary from './canvasLibrary'
+let config = require('../../config/config.json')
+let path = require('path')
+console.log(config)
 export default class graph {
   constructor (canvas, parent, options = {}) {
     this.canvas = canvas
@@ -11,12 +14,23 @@ export default class graph {
     this.data = []
     this.padding = this.options.padding
     this.datapoints = []
-    this.setWidth()
+    this.images = []
+    this.setSize()
     this.features()
+    this.ready = false
+    this.images = config.image
     this.canvas.addEventListener('mousemove', (e) => {
       this.updateHoverLine(e)
     })
+    this.loadImages().then(() => { this.ready = true })
   }
+  //   {
+  //     "IP" : "localhost",
+  //     "imagedir": "Dashboard/cient/components/pages/arduinos/arduino/reading/img",
+  //     "images": [
+  //         {"type": "temp", "name": "temperature.svg"}
+  //     ]
+  // }
   features () {
     this.features = [
       { key: 'withShadow', cb: this.withShadow.bind(this) },
@@ -29,7 +43,8 @@ export default class graph {
       { key: 'withSideShade', cb: this.withSideShade.bind(this) },
       { key: 'withHoverLine', cb: this.withHoverLine.bind(this) },
       { key: 'withLastUpdated', cb: this.withLastUpdated.bind(this) },
-      { key: 'withActive', cb: this.withActive.bind(this) }
+      { key: 'withActive', cb: this.withActive.bind(this) },
+      { key: 'withImage', cb: this.withImage.bind(this) }
     ]
   }
   updateHoverLine (e) {
@@ -45,7 +60,10 @@ export default class graph {
     }
   }
   addData (reading) {
-    this.data.push(reading)
+    this.data.push({ reading: reading })
+    if (this.data.length > 20) {
+      this.data.splice(0, 10)
+    }
     this.update()
     this.draw()
   }
@@ -56,7 +74,7 @@ export default class graph {
   }
   resize (e) {
     // this.height = this.parent.getBoundingClientRect().height
-    this.setWidth()
+    this.setSize()
     this.draw()
   }
   defaultSettings (options) {
@@ -98,19 +116,27 @@ export default class graph {
       aesthetics: aesthetics
     }
   }
+
+  withFunctions () {
+
+  }
   keyExists (obj, key) {
     if (typeof obj[key] !== 'undefined') {
       return true
     }
     return false
   }
-  setWidth () {
+  setSize () {
     let left = parseInt(window.getComputedStyle(this.parent).getPropertyValue('padding-right').replace(' px', ''))
     let right = parseInt(window.getComputedStyle(this.parent).getPropertyValue('padding-left').replace(' px', ''))
+    let top = parseInt(window.getComputedStyle(this.parent).getPropertyValue('padding-top').replace(' px', ''))
+    let bottom = parseInt(window.getComputedStyle(this.parent).getPropertyValue('padding-bottom').replace(' px', ''))
     this.width = (this.parent.offsetWidth - left - right)
+    this.height = (this.parent.offsetHeight - top - bottom)
     this.drawableWidth = this.width - (this.padding.left + this.padding.right)
     this.drawableHeight = this.height - (this.padding.top + this.padding.bottom)
     this.canvas.width = this.width
+    this.canvas.height = this.height
     this.lib.scaleCanvas(this.canvas, this.ctx, this.width, this.height)
   }
 
@@ -165,7 +191,8 @@ export default class graph {
   }
   draw () {
     this.lib.clear()
-    if (this.datapoints.length === 0) {
+    if (this.datapoints.length === 0 || !this.ready) {
+      setInterval(this.draw.bind(this), 150)
       return false
     }
     for (let i in this.options.build) {
@@ -176,6 +203,34 @@ export default class graph {
     this.lastUpdated = date
     this.update()
     this.draw()
+  }
+  //   "image": {
+  //     "dir": "Dashboard/cient/components/pages/arduinos/arduino/reading/img",
+  //     "images": [{"type": "temp", "name": "temperature.svg"}]
+  // }
+  loadImages () {
+    let p = []
+    this.images.images.forEach(d => {
+      let img = new Image()
+      img.src = path.join(__dirname, this.images.dir, d.name)
+      p.push(new Promise((resolve, reject) => {
+        img.onload = e => {
+          d.img = img
+          resolve()
+        }
+      }))
+    })
+    return Promise.all(p)
+  }
+  getImage () {
+    for (let i in this.images.images) {
+      if (this.images.images[i].type === this.options.type) {
+        return this.images.images[i].img
+      }
+    }
+  }
+  withImage () {
+    this.lib.drawImage(this.getImage(), 13, 13, 15, 15)
   }
   withLastUpdated () {
     this.lib.setTextBaseline('top')
@@ -222,7 +277,7 @@ export default class graph {
 
     // Draw name of sensor
     this.lib.setFont(this.options.font, this.options.fontsize, 600)
-    this.lib.drawText(this.options.name, 15, 25)
+    this.lib.drawText(this.options.name, 35, 25)
 
     // Draw current reading of sensor
     this.lib.setFont(this.options.font, this.options.fontsize - 2, 400)

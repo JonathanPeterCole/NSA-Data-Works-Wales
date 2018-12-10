@@ -1,10 +1,13 @@
 .arduino-reading {
   width: 215px;
   margin: 10px;
+  height: 70px;
   padding: 0 15px;
   border-radius: 8px;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0);
+  overflow: hidden;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.35);
+  position: relative;
 }
 .arduino-reading .reading-type {
   height: 25px;
@@ -25,4 +28,13 @@
   padding-bottom: 12px;
   font-size: 24px;
   font-weight: 300;
+}
+
+.arduino-reading > .content {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 0;
 }
