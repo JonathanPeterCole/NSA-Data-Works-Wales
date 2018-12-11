@@ -11,10 +11,9 @@ export default class Reading extends React.Component {
     // Bindings
     this.options = {
       build: ['withBackground', 'withLine', 'withSideShade', 'withInfo', 'withActive', 'withImage'],
-      outerPadding: { top: 8, bottom: 8, left: 0, right:0 },
+      outerPadding: { top: 8, bottom: 8, left: 0, right: 0 },
       innerPadding: { top: 0, bottom: 0, left: 0, right: 0 },
       fontsize: 14,
-      active: true,
       type: props.type,
       name: props.name,
       active: props.online,
@@ -22,12 +21,12 @@ export default class Reading extends React.Component {
       }
     }
   }
-  componentDidUpdate(){
+  componentDidUpdate () {
     this.options = {
       ...this.options,
       type: this.props.type,
       name: this.props.name,
-      active: this.props.online,
+      active: this.props.online
     }
   }
   render () {
@@ -43,6 +42,7 @@ export default class Reading extends React.Component {
 }
 
 Reading.propTypes = {
+  name: PropTypes.string,
   type: PropTypes.string,
   online: PropTypes.bool,
   readings: PropTypes.array

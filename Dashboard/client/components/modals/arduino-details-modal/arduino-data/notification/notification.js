@@ -1,22 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import './style.css'
 
-export default class Notification  extends React.Component {
-  constructor (props) {
-    super(props)
-    
-    }
+export default class Notification extends React.Component {
   render () {
     return (
-      <div>
-
-      </div>
+      <div />
     )
   }
-}
-
-Notification.propTypes = {
-  sensor: PropTypes.object
 }

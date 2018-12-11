@@ -57,11 +57,11 @@ export default class CanvasLibrary {
     this.ctx.closePath()
   }
   drawRectangle (x, y, width, height) {
-    //autistic 0.5px fix on canvas drawing if its blurry
-    x += (this.ctx.lineWidth/2)
-    y += (this.ctx.lineWidth/2)
-    width -= ((this.ctx.lineWidth/2) * 2)
-    height -= ((this.ctx.lineWidth/2) * 2)
+    // autistic 0.5px fix on canvas drawing if its blurry
+    x += (this.ctx.lineWidth / 2)
+    y += (this.ctx.lineWidth / 2)
+    width -= ((this.ctx.lineWidth / 2) * 2)
+    height -= ((this.ctx.lineWidth / 2) * 2)
 
     this.ctx.beginPath()
     this.ctx.moveTo(x, y)
@@ -71,7 +71,7 @@ export default class CanvasLibrary {
     this.ctx.lineTo(x, y)
     this.ctx.closePath()
   }
-  
+
   drawText (text, x, y) {
     this.ctx.fillText(text, x, y)
   }

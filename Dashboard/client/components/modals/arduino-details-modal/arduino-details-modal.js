@@ -36,8 +36,8 @@ export default class ArduinoDetailsModal extends React.Component {
   changeSensor (sensor) {
     this.setState({ currentSensor: sensor })
   }
-  refresh(){
-    this.setState({refresh: !this.state.refresh})
+  refresh () {
+    this.setState({ refresh: !this.state.refresh })
     console.log(this.state.refresh)
   }
   render () {

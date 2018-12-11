@@ -61,9 +61,8 @@ export default class graph {
     this.update()
     this.draw()
   }
-  setOptions(options){
+  setOptions (options) {
     this.options = this.defaultSettings(options)
-    
   }
   setData (data) {
     this.data = data
@@ -132,10 +131,10 @@ export default class graph {
     let bottom = parseInt(window.getComputedStyle(this.parent).getPropertyValue('padding-bottom').replace(' px', ''))
     this.width = (this.parent.offsetWidth - left - right)
     this.height = (this.parent.offsetHeight - top - bottom)
-    this.drawableWidth = this.width - (this.outerPadding.left + this.outerPadding.right + this.innerPadding.left+  this.innerPadding.right)
+    this.drawableWidth = this.width - (this.outerPadding.left + this.outerPadding.right + this.innerPadding.left + this.innerPadding.right)
     this.drawableHeight = this.height - (this.outerPadding.top + this.outerPadding.bottom + this.innerPadding.bottom + this.innerPadding.top)
-    this.outerWidth = this.width - (this.outerPadding.left + this.outerPadding.right )
-    this.outerHeight = this.height - (this.outerPadding.top + this.outerPadding.bottom )
+    this.outerWidth = this.width - (this.outerPadding.left + this.outerPadding.right)
+    this.outerHeight = this.height - (this.outerPadding.top + this.outerPadding.bottom)
     this.canvas.width = this.width
     this.canvas.height = this.height
     this.lib.scaleCanvas(this.canvas, this.ctx, this.width, this.height)
@@ -181,8 +180,9 @@ export default class graph {
     for (let d in data) {
       let reading = data[d].reading
       this.datapoints.push(
-        { reading: reading, x: (Math.round(this.drawableWidth / (data.length - 1) * d) + this.innerPadding.left + this.outerPadding.left),
-           y: Math.round((this.drawableHeight / diff) * (this.crest - parseInt(reading))) + this.innerPadding.top + this.outerPadding.top })
+        { reading: reading,
+          x: (Math.round(this.drawableWidth / (data.length - 1) * d) + this.innerPadding.left + this.outerPadding.left),
+          y: Math.round((this.drawableHeight / diff) * (this.crest - parseInt(reading))) + this.innerPadding.top + this.outerPadding.top })
     }
   }
   setActive (active) {
@@ -234,35 +234,35 @@ export default class graph {
     this.lib.setTextBaseline('top')
     this.lib.setFont(this.options.font, this.options.aesthetics.lastUpdated.fontsize, 600)
     this.lib.drawText('Last updated: ' + this.lastUpdated, this.options.innerPadding.left + this.options.outerPadding.left,
-               this.drawableHeight + this.innerPadding.top + this.outerPadding.top)
+      this.drawableHeight + this.innerPadding.top + this.outerPadding.top)
   }
   withHoverLine () {
     let split = (this.drawableWidth / (this.datapoints.length)) / 2
     let paddingTotal = (this.outerPadding.left + this.outerPadding.right + this.innerPadding.left + this.innerPadding.right)
     let options = this.options.aesthetics.hoverLine
     for (let i in this.datapoints) {
-      if ((Math.abs(this.hoverLine - this.datapoints[i].x)-paddingTotal) < split) {
+      if ((Math.abs(this.hoverLine - this.datapoints[i].x) - paddingTotal) < split) {
         let x = this.datapoints[i].x
         let y = this.datapoints[i].y
 
         // Hover line
         this.lib.setLineWidth(options.width)
         this.lib.setStrokeStyle(options.lineColour)
-        this.lib.drawLine(x, this.outerPadding.top , x, this.outerPadding.top + this.outerHeight)
+        this.lib.drawLine(x, this.outerPadding.top, x, this.outerPadding.top + this.outerHeight)
         this.lib.stroke()
 
         // Make sure X and Y bounds dont go above or minus 0/height and left/right
-        if(x + options.boxWidth > this.width){
-          x-= options.boxWidth;
+        if (x + options.boxWidth > this.width) {
+          x -= options.boxWidth
         }
-        if(y + options.boxHeight > this.height){
-          y-= options.boxHeight;
+        if (y + options.boxHeight > this.height) {
+          y -= options.boxHeight
         }
-        if(y - options.boxHeight < 0){
-          y+= options.boxHeight;
+        if (y - options.boxHeight < 0) {
+          y += options.boxHeight
         }
-        if(x - options.boxWidth < 0){
-          x += options.boxWidth;
+        if (x - options.boxWidth < 0) {
+          x += options.boxWidth
         }
 
         // Hover line text box
@@ -332,26 +332,26 @@ export default class graph {
     return this
   }
   withGridLines () {
-    let horizontal = this.options.lines.horizontal 
+    let horizontal = this.options.lines.horizontal
     let vertical = this.options.lines.vertical
     this.lib.setLineWidth(this.options.aesthetics.gridLines.width)
     this.lib.setStrokeStyle(this.options.aesthetics.gridLines.colour)
 
-    if(this.options.aesthetics.gridLines.border){
-      this.lib.drawRectangle(this.outerPadding.left, this.outerPadding.top,this.outerWidth, this.outerHeight)
-      this.lib.stroke();
-    }
-
-    for (let i = 1; i <= vertical ; i++) {
-      let v = vertical + 1
-      this.lib.drawLine(Math.round(this.outerWidth / v * i) + this.outerPadding.left, this.outerPadding.top,
-        Math.round(this.outerWidth / v * i)+ this.outerPadding.left, this.outerHeight + this.outerPadding.top)
+    if (this.options.aesthetics.gridLines.border) {
+      this.lib.drawRectangle(this.outerPadding.left, this.outerPadding.top, this.outerWidth, this.outerHeight)
       this.lib.stroke()
     }
-    for (let i = 1; i <= horizontal ; i++) {
+
+    for (let i = 1; i <= vertical; i++) {
+      let v = vertical + 1
+      this.lib.drawLine(Math.round(this.outerWidth / v * i) + this.outerPadding.left, this.outerPadding.top,
+        Math.round(this.outerWidth / v * i) + this.outerPadding.left, this.outerHeight + this.outerPadding.top)
+      this.lib.stroke()
+    }
+    for (let i = 1; i <= horizontal; i++) {
       let h = horizontal + 1
-      this.lib.drawLine(this.outerPadding.left, this.outerPadding.top+ (Math.round(this.outerHeight / h) * i),
-        this.outerPadding.left + this.outerWidth  , this.outerPadding.top+ (Math.round(this.outerHeight / h) * i))
+      this.lib.drawLine(this.outerPadding.left, this.outerPadding.top + (Math.round(this.outerHeight / h) * i),
+        this.outerPadding.left + this.outerWidth, this.outerPadding.top + (Math.round(this.outerHeight / h) * i))
       this.lib.stroke()
     }
     return this

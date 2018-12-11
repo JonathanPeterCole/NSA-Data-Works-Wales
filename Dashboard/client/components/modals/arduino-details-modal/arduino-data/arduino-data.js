@@ -13,7 +13,7 @@ export default class ArduinoData extends React.Component {
   constructor (props) {
     super(props)
     this.options = {
-      build: ['withBackground', 'withGridLines', 'withLine', 'withHoverLine', 'withInfo','withImage' , 'withActive'],
+      build: ['withBackground', 'withGridLines', 'withLine', 'withHoverLine', 'withInfo', 'withImage', 'withActive'],
       outerPadding: { top: 0, bottom: 0, left: 0, right: 0 },
       innerPadding: { top: 8, bottom: 8, left: 0, right: 0 },
       fontsize: 14,
@@ -21,16 +21,16 @@ export default class ArduinoData extends React.Component {
       name: props.sensor.name,
       active: props.sensor.online,
       aesthetics: {
-        gridLines: { border: false, width: 1}
+        gridLines: { border: false, width: 1 }
       }
     }
   }
-  componentDidUpdate(){
+  componentDidUpdate () {
     this.options = {
       ...this.options,
       type: this.props.sensor.type,
       name: this.props.sensor.name,
-      active: this.props.sensor.online,
+      active: this.props.sensor.online
     }
   }
   getImage (name) {

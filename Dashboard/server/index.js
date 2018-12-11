@@ -17,7 +17,7 @@ const apiRouter = require('./routes/api')
 const SocketApi = require('./src/socket-api')
 
 let socketApi
-Email.setup();
+Email.setup()
 Database.setup('mongodb://localhost:27017', 'iot-app')
 
 // Prepare express

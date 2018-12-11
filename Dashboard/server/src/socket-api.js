@@ -19,6 +19,7 @@ class socketApi {
     this.unknownSensors = []
     this.db = db
     this.populateKnownSensors()
+    this.subscribeNotifications()
     this.checkDisconnected()
 
     setInterval(this.sendData.bind(this), 1500)
@@ -50,13 +51,11 @@ class socketApi {
         let userprojects = this.arduinos.filter(arduino => {
           for (let i in projects) {
             if (String(projects[i]._id) === String(arduino._id)) {
-              arduino.notifications = projects[i].notifications;
+              arduino.notifications = projects[i].notifications
               return arduino
             }
           }
         })
-        let index = this.users.push({ socket, userprojects }) -1
-        this.subscribeNotifications(this.users[index])
         socket.emit('sensorReadings', userprojects)
       }
     })
@@ -92,7 +91,7 @@ class socketApi {
               } else {
                 sensor.newdata = [{ reading: sensorReading.data, time: +new Date() }]
               }
-              notificationController.triggerEvents("reading", sensor);
+              notificationController.triggerEvents('reading', sensor)
             }
           })
         })
@@ -112,14 +111,22 @@ class socketApi {
   /*
   Handles notifications
   */
- subscribeNotifications (user){
-    user.userprojects.forEach(project => {
-      project.notifications.forEach(notification => {
-        console.log(notification)
-        notificationController.subscribeWith(notification);
+  subscribeNotifications () {
+    this.db.setCollection('users')
+    this.db.findAll().then((result) => {
+      result.forEach(user => {
+        user.projects.forEach((project) => {
+          if (!project.notifications) {
+            console.log('notifications not set in projects for users!!')
+            return false
+          }
+          project.notifications.forEach(notification => {
+            notificationController.subscribeWith(notification)
+          })
+        })
       })
     })
- }
+  }
   /*
   Generic function to find and return an index of a given array based off a key val.
   */
@@ -143,7 +150,7 @@ class socketApi {
           this.saveSingleSensor(sensor, arduino._id)
           sensor.online = false
           arduino.online = false
-          notificationController.triggerEvents('offline', sensor);
+          notificationController.triggerEvents('offline', sensor)
         }
       })
     })
@@ -196,7 +203,7 @@ class socketApi {
     this.db.findAll().then((arduinos) => {
       arduinos.forEach(arduino => {
         arduino.sensors.forEach(sensor => {
-          sensor.online = false;
+          sensor.online = false
           // sensor.data = sensor.data.splice(sensor.data.length-10 , 10)
         })
       })
