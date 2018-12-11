@@ -51,10 +51,12 @@ class socketApi {
           }
         })
         this.users.push({ socket, userprojects })
+        console.log(userprojects)
         socket.emit('sensorReadings', userprojects)
       }
     })
     socket.on('sensorReadings', (data) => {
+      console.log('data')
       this.setSocketAsSensor(data, socket)
       this.saveReadings()
       if (!this.socketExists(socket, this.sensors)) {
@@ -73,7 +75,7 @@ class socketApi {
   }
   addSensorData (data) {
     this.arduinos.forEach(arduino => { // loop through each arduino
-      if (arduino._id === data._id) {
+      if (String(arduino._id) === String(data._id)) {
         arduino.sensors.forEach(sensor => { // loop through each of its sensors
           data.sensors.forEach(sensorReading => { // loop through each of the sensors sent in the newdata
             if (sensorReading.id === sensor.id) {

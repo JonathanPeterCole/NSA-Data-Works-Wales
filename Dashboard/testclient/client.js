@@ -19,6 +19,11 @@ setInterval(() => {
           type: 'temp',
           data: temp,
           id: '92087b146516598'
+        },
+        {
+          type: 'moisture',
+          data: temp,
+          id: '0512951294012'
         }
       ]
     })

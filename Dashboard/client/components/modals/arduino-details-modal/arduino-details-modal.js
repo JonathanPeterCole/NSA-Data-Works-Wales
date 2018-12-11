@@ -7,29 +7,38 @@ import ModalContent from '../modal/modal-content/modal-content'
 import StatusIndicator from '../../status-indicator/status-indicator'
 import ArduinoData from './arduino-data/arduino-data'
 
-import Temperature from './img/temperature.svg'
+import TemperatureIcon from './img/temperature.svg'
+import MoistureIcon from './img/moisture.svg'
+import LightIcon from './img/light.svg'
 
 import './style.css'
 
 export default class ArduinoDetailsModal extends React.Component {
   constructor (props) {
     super(props)
-    console.log(props)
     this.state = {
-      currentSensor: props.data.sensors[0]
+      currentSensor: 1,
+      refresh: false
     }
   }
   getImage (name) {
     switch (name) {
       case 'temp':
-        return Temperature
+        return TemperatureIcon
+      case 'moisture':
+        return MoistureIcon
+      case 'light':
+        return LightIcon
     }
   }
   componentDidUpdate () {
-    console.log(this.props)
   }
   changeSensor (sensor) {
     this.setState({ currentSensor: sensor })
+  }
+  refresh(){
+    this.setState({refresh: !this.state.refresh})
+    console.log(this.state.refresh)
   }
   render () {
     return (
@@ -43,13 +52,14 @@ export default class ArduinoDetailsModal extends React.Component {
           <div className='sensor-bar'>
             {this.props.data.sensors.map((sensor, i) => {
               return (
-                <div className='btn' key={i} onClick={() => { this.changeSensor(sensor) }}>
+                <div className='btn' key={i} onClick={() => { this.changeSensor(i); this.refresh() }}>
                   <img className='icon' src={this.getImage(sensor.type)} /><span className='label'>{sensor.name}</span>
                 </div>)
             })}
           </div>
           <ArduinoData
-            sensor={this.state.currentSensor}
+            sensor={this.props.data.sensors[this.state.currentSensor]}
+            redraw={this.state.refresh} // TODO: figure out a way to redraw on sensor change
           />
         </ModalContent>
       </Modal>
