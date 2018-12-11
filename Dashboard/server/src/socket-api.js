@@ -1,6 +1,9 @@
 const Users = require('../controllers/users')
+const Notifications = require('../controllers/notifications')
 const Database = require('./database')
+const Email = require('./email')
 let userController = new Users(Database)
+let notificationController = new Notifications(Email)
 
 class socketApi {
   constructor (db) {
@@ -42,21 +45,22 @@ class socketApi {
       let json = JSON.parse(data)
       let jwt = await userController.checkJWT(json.jwt)
       if (jwt) {
-        let projects = await userController.getProjects(jwt)
+        let user = await userController.getProjects(jwt)
+        let projects = user.projects
         let userprojects = this.arduinos.filter(arduino => {
           for (let i in projects) {
-            if (String(projects[i]) === String(arduino._id)) {
+            if (String(projects[i]._id) === String(arduino._id)) {
+              arduino.notifications = projects[i].notifications;
               return arduino
             }
           }
         })
-        this.users.push({ socket, userprojects })
-        console.log(userprojects)
+        let index = this.users.push({ socket, userprojects }) -1
+        this.subscribeNotifications(this.users[index])
         socket.emit('sensorReadings', userprojects)
       }
     })
     socket.on('sensorReadings', (data) => {
-      console.log('data')
       this.setSocketAsSensor(data, socket)
       this.saveReadings()
       if (!this.socketExists(socket, this.sensors)) {
@@ -88,6 +92,7 @@ class socketApi {
               } else {
                 sensor.newdata = [{ reading: sensorReading.data, time: +new Date() }]
               }
+              notificationController.triggerEvents("reading", sensor);
             }
           })
         })
@@ -104,7 +109,17 @@ class socketApi {
     }
     socket.lastSent = +new Date()
   }
-
+  /*
+  Handles notifications
+  */
+ subscribeNotifications (user){
+    user.userprojects.forEach(project => {
+      project.notifications.forEach(notification => {
+        console.log(notification)
+        notificationController.subscribeWith(notification);
+      })
+    })
+ }
   /*
   Generic function to find and return an index of a given array based off a key val.
   */
@@ -128,6 +143,7 @@ class socketApi {
           this.saveSingleSensor(sensor, arduino._id)
           sensor.online = false
           arduino.online = false
+          notificationController.triggerEvents('offline', sensor);
         }
       })
     })
@@ -180,6 +196,7 @@ class socketApi {
     this.db.findAll().then((arduinos) => {
       arduinos.forEach(arduino => {
         arduino.sensors.forEach(sensor => {
+          sensor.online = false;
           // sensor.data = sensor.data.splice(sensor.data.length-10 , 10)
         })
       })

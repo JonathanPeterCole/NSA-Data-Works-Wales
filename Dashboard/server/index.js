@@ -5,7 +5,9 @@ const socketio = require('socket.io')
 const http = require('http')
 const path = require('path')
 const cookieParser = require('cookie-parser')
+
 const Database = require('./src/database')
+const Email = require('./src/email')
 
 // Routers
 const indexRouter = require('./routes/index')
@@ -15,10 +17,8 @@ const apiRouter = require('./routes/api')
 const SocketApi = require('./src/socket-api')
 
 let socketApi
+Email.setup();
 Database.setup('mongodb://localhost:27017', 'iot-app')
-// Connect to database and create socket object
-
-// Create socket object
 
 // Prepare express
 const app = express()

@@ -36,7 +36,8 @@ export default class Arduino extends React.Component {
                   key={sensor.id}
                   type={sensor.type}
                   online={sensor.online}
-                  readings={sensor.data} />
+                  readings={sensor.data} 
+                  name={sensor.name} />
               )
             })}
           </div>

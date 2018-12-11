@@ -62,7 +62,7 @@ class Users {
     try {
       this.db.setCollection('users')
       let user = await this.db.findDocument('_id', this.db.getObjectID(jwt.id))
-      return user.projects
+      return user
     } catch (e) {
       return false
     }

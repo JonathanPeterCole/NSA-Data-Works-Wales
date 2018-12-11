@@ -15,9 +15,19 @@ export default class Reading extends React.Component {
       innerPadding: { top: 0, bottom: 0, left: 0, right: 0 },
       fontsize: 14,
       active: true,
-      type: this.props.type,
+      type: props.type,
+      name: props.name,
+      active: props.online,
       aesthetics: {
       }
+    }
+  }
+  componentDidUpdate(){
+    this.options = {
+      ...this.options,
+      type: this.props.type,
+      name: this.props.name,
+      active: this.props.online,
     }
   }
   render () {
