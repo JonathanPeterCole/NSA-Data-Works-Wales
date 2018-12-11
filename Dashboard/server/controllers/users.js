@@ -7,12 +7,35 @@ class Users {
   }
   async createUser (username, password) {
     this.db.setCollection('users')
+
+    // Check if a user already exists with this name
+    let user = await this.db.findRaw({ 'username': username })
+    if (user) {
+      return JSON.stringify({
+        status: 'Failure',
+        message: 'User with this name already exists'
+      })
+    }
+
+    if (password.length < 5) {
+      return JSON.stringify({
+        status: 'Failure',
+        message: 'Password must be more than 5 characters long'
+      })
+    }
+    if (username.length < 4) {
+      return JSON.stringify({
+        status: 'Failure',
+        message: 'Username must be more than 4 characters long'
+      })
+    }
+
     let hash = await bcrypt.hash(password, 10)
     if (hash) {
       this.db.insert({ username, password: hash })
       return JSON.stringify({
         status: 'Success',
-        message: 'User created.'
+        message: 'User created, you can now login!'
       })
     } else {
       return JSON.stringify({
