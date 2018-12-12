@@ -6,7 +6,7 @@ void setup() {
   // Start a serial connection to the PC
   Serial.begin(9600);
   // Connect to Data Works USB Link
-  dataWorksUSB.connect("TestUsername", "TestPassword");
+  dataWorksUSB.connect("testUsername", "testPassword");
 }
 
 void loop() {

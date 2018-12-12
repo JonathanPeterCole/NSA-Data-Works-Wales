@@ -4,8 +4,8 @@ class ArduinosController {
     this.collection = 'arduinos'
   }
   async createArduino (udid) {
-    return this.db.insert({
-      name: 'Unnamed Arduino', udid: 'udid', colour: 'blue'
+    return this.db.insertPromise({
+      name: 'Unnamed Arduino', udid, colour: 'blue'
     }, this.collection)
   }
   async getArduino (id) {

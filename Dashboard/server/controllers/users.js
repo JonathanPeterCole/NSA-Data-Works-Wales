@@ -81,6 +81,14 @@ class UsersController {
       return false
     }
   }
+  async getArduinos (id) {
+    let user = await this.db.findDocument('_id', id, this.collection)
+    return user.arduinos
+  }
+  async addArduino (userId, arduinoId) {
+    let user = await this.db.findDocument('_id', this.db.getObjectID(userId), this.collection)
+    await this.db.arrayUpdate('_id', user._id, { arduinos: this.db.getObjectID(arduinoId) }, this.collection)
+  }
 }
 
 module.exports = UsersController

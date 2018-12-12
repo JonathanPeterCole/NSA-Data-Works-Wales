@@ -32,15 +32,27 @@ class Database {
   static update (key, match, replacement, collection) {
     this.db.collection(collection).updateOne({ [key]: match }, { $set: { ...replacement } })
   }
+  static arrayUpdate (key, match, newItem, collection) {
+    this.db.collection(collection).updateOne({ [key]: match }, { $push: newItem })
+  }
   // Insert
-  static async insert (data, collection) {
+  static insert (data, collection) {
     console.log(data)
-    this.db.collection(collection).insertOne(data, (err, result) => {
-      if (!err) {
-        return result.ops[0]
-      } else {
-        console.log(err)
-      }
+    this.db.collection(collection).insertOne(data, (err) => {
+      console.log(err)
+    })
+  }
+  static insertPromise (data, collection) {
+    return new Promise((resolve, reject) => {
+      console.log(data)
+      this.db.collection(collection).insertOne(data)
+        .then((result) => {
+          console.log(result.ops[0])
+          resolve(result.ops[0])
+        })
+        .catch((error) => {
+          reject(error)
+        })
     })
   }
   static insertMany (data, collection) {

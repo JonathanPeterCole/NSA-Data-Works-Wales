@@ -1,9 +1,9 @@
 const Users = require('../controllers/users')
-// const Arduinos = require('../controllers/arduinos')
+const Arduinos = require('../controllers/arduinos')
 const Database = require('./database')
 
-let userController = new Users(Database)
-// let arduinosController = new Arduinos(Database)
+let usersController = new Users(Database)
+let arduinosController = new Arduinos(Database)
 
 class ArduinoSocketAPI {
   constructor (db) {
@@ -12,19 +12,36 @@ class ArduinoSocketAPI {
 
   connect (socket) {
     socket.on('sensorReadings', async (data) => {
-      let user = await userController.authenticate(data.auth.username, data.auth.password)
+      console.log('on SensorReadings')
+      // Get the user
+      let user = await usersController.authenticate(data.auth.username, data.auth.password)
       if (user) {
+        // Get the Arduino
         let arduino = await this.getArduino(user, data.udid)
         if (arduino) {
-
+          console.log('Arduino found')
         }
       }
     })
   }
 
-  // async getArduino (user, udid) {
-
-  // }
+  async getArduino (user, udid) {
+    let usersArduinos = await usersController.getArduinos(user._id)
+    // If the user has arduinos, check if there's one with a matching UDID
+    if (usersArduinos) {
+      for (let arduinoID of usersArduinos) {
+        let arduino = await arduinosController.getArduino(arduinoID)
+        // If the Arduino has a matching UDID, return it
+        if (arduino.udid === udid) {
+          return arduino
+        }
+      }
+    }
+    // If the user has no matching Arduinos, create one and add it to the user
+    let newArduino = await arduinosController.createArduino(udid)
+    usersController.addArduino(user._id, newArduino._id)
+    return newArduino
+  }
 
   // constructor (db) {
   //   this.clients = []
