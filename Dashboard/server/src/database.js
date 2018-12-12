@@ -2,14 +2,14 @@ const mongo = require('mongodb').MongoClient
 const ObjectID = require('mongodb').ObjectID
 const MongoNetworkError = require('mongodb').MongoNetworkError
 
-class database {
+class Database {
   static setup (url, dbname) {
     this.url = url
-    this.collection = null
     this.mongo = null
     this.db = null
     this.dbname = dbname
   }
+  // Connect
   static connect () {
     return new Promise((resolve, reject) => {
       mongo.connect(this.url, { useNewUrlParser: true })
@@ -28,35 +28,39 @@ class database {
         })
     })
   }
-  static setCollection (collection) {
-    this.collection = collection
+  // Update
+  static update (key, match, replacement, collection) {
+    this.db.collection(collection).updateOne({ [key]: match }, { $set: { ...replacement } })
   }
-  static update (key, match, replacement) {
-    this.db.collection(this.collection).updateOne({ [key]: match }, { $set: { ...replacement } })
-  }
-  static insert (data) {
+  // Insert
+  static async insert (data, collection) {
     console.log(data)
-    this.db.collection(this.collection).insertOne(data, (err) => {
+    this.db.collection(collection).insertOne(data, (err, result) => {
+      if (!err) {
+        return result.ops[0]
+      } else {
+        console.log(err)
+      }
+    })
+  }
+  static insertMany (data, collection) {
+    this.db.collection(collection).insertMany(data, (err) => {
       console.log(err)
     })
   }
-  static insertMany (data) {
-    this.db.collection(this.collection).insertMany(data, (err) => {
-      console.log(err)
-    })
+  // Find
+  static async findDocument (key, name, collection) {
+    return this.db.collection(collection).findOne({ [key]: name })
   }
-  static async findDocument (key, name) {
-    return this.db.collection(this.collection).findOne({ [key]: name })
+  static async findRaw (filter, collection) {
+    return this.db.collection(collection).findOne(filter)
   }
-  static async findRaw (filter) {
-    return this.db.collection(this.collection).findOne(filter)
+  static async findAll (collection) {
+    return this.db.collection(collection).find({}).toArray()
   }
-  static async findAll () {
-    return this.db.collection(this.collection).find({}).toArray()
-  }
-  static async lookup (from, local, foreign, asData) {
-    console.log(this.collection)
-    return this.db.collection(this.collection).aggregate([
+  static async lookup (from, local, foreign, asData, collection) {
+    console.log(collection)
+    return this.db.collection(collection).aggregate([
       { $lookup:
         {
           from: from,
@@ -66,9 +70,9 @@ class database {
         }
       }]).toArray()
   }
-  static async lookupSingle (from, local, foreign, asData, key, match) {
+  static async lookupSingle (from, local, foreign, asData, key, match, collection) {
     console.log(' key ' + key + ' - ' + match)
-    return this.db.collection(this.collection).aggregate([
+    return this.db.collection(collection).aggregate([
       { $match: { [key]: match } },
       { $lookup:
         {
@@ -90,16 +94,5 @@ class database {
       return 'Error: ID Supplied must be a 12 byte string or 24 hex characters'
     }
   }
-  // async test(){
-  //   return this.db.collection(this.collection).findOne({ [key]: name }).aggregate([
-  //     { $lookup:
-  //       {
-  //         from: from,
-  //         localField: local,
-  //         foreignField: foreign,
-  //         as: asData
-  //       }
-  //     }]).toArray()
-  // }
 }
-module.exports = database
+module.exports = Database

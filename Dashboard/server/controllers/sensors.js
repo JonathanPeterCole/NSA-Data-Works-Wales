@@ -1,12 +1,11 @@
-class Sensors {
+class SensorsController {
   constructor (db) {
     this.db = db
+    this.collection = 'arduinos'
   }
   async getSensor (id) {
-    this.db.setCollection('arduinos')
-    let data = await this.db.findDocument('_id', this.db.getObjectID(id))
-    return data
+    return this.db.findDocument('_id', this.db.getObjectID(id), this.collection)
   }
 }
 
-module.exports = Sensors
+module.exports = SensorsController

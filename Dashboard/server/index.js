@@ -12,13 +12,15 @@ const indexRouter = require('./routes/index')
 const apiRouter = require('./routes/api')
 
 // Sockets
-const SocketApi = require('./src/socket-api')
+const DashboardSocketAPI = require('./src/dashboard-socket-api')
+const ArduinoSocketAPI = require('./src/arduino-socket-api')
 
-let socketApi
+// Prepare variables to hold the socket API's
+let dashboardSocketAPI
+let arduinoSocketAPI
+
+// Set the database config
 Database.setup('mongodb://localhost:27017', 'iot-app')
-// Connect to database and create socket object
-
-// Create socket object
 
 // Prepare express
 const app = express()
@@ -40,8 +42,10 @@ app.use('/api', apiRouter)
 app.use('/', indexRouter)
 
 Database.connect().then(() => {
-  socketApi = new SocketApi(Database)
-  io.of('/websocket').on('connection', socketApi.connect.bind(socketApi))
+  dashboardSocketAPI = new DashboardSocketAPI(Database)
+  arduinoSocketAPI = new ArduinoSocketAPI(Database)
+  io.of('/websocket/dashboard').on('connection', dashboardSocketAPI.connect.bind(dashboardSocketAPI))
+  io.of('/websocket/arduino').on('connection', arduinoSocketAPI.connect.bind(arduinoSocketAPI))
   server.listen(3000)
 })
 

@@ -1,15 +1,15 @@
 var bcrypt = require('bcryptjs')
 var jsonwebtoken = require('jsonwebtoken')
 
-class Users {
+class UsersController {
   constructor (db) {
     this.db = db
+    this.collection = 'users'
   }
   async createUser (username, password) {
-    this.db.setCollection('users')
     let hash = await bcrypt.hash(password, 10)
     if (hash) {
-      this.db.insert({ username, password: hash })
+      this.db.insert({ username, password: hash }, this.collection)
       return JSON.stringify({
         status: 'Success',
         message: 'User created.'
@@ -21,9 +21,24 @@ class Users {
       })
     }
   }
+  async authenticate (username, password) {
+    // Find the user in the database
+    let user = await this.db.findRaw({ username }, this.collection)
+    // Check if the user exists
+    if (!user) {
+      return null
+    } else {
+      // Check if the password matches
+      let match = await bcrypt.compare(password, user.password)
+      if (match) {
+        return user
+      } else {
+        return null
+      }
+    }
+  }
   async checkUsername (username, password) {
-    this.db.setCollection('users')
-    let user = await this.db.findRaw({ 'username': username })
+    let user = await this.db.findRaw({ 'username': username }, this.collection)
     let message
     if (!user) {
       message = {
@@ -60,8 +75,7 @@ class Users {
   }
   async getProjects (jwt) {
     try {
-      this.db.setCollection('users')
-      let user = await this.db.findDocument('_id', this.db.getObjectID(jwt.id))
+      let user = await this.db.findDocument('_id', this.db.getObjectID(jwt.id), this.collection)
       return user.projects
     } catch (e) {
       return false
@@ -69,4 +83,4 @@ class Users {
   }
 }
 
-module.exports = Users
+module.exports = UsersController
