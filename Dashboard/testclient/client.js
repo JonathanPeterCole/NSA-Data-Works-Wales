@@ -19,10 +19,15 @@ setInterval(() => {
           type: 'temp',
           data: temp,
           id: '92087b146516598'
+        },
+        {
+          type: 'moisture',
+          data: temp,
+          id: '92087b1465aw0d92'
         }
       ]
     })
-    if (temp > 30) {
+    if (temp > 34) {
       temp = 10
     }
   }

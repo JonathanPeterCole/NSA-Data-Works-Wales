@@ -6,6 +6,7 @@ const http = require('http')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const Database = require('./src/database')
+const Email = require('./src/email')
 
 // Routers
 const indexRouter = require('./routes/index')
@@ -18,6 +19,9 @@ const ArduinoSocketAPI = require('./src/arduino-socket-api')
 // Prepare variables to hold the socket API's
 let dashboardSocketAPI
 let arduinoSocketAPI
+
+// Setup the emails class
+Email.setup()
 
 // Set the database config
 Database.setup('mongodb://localhost:27017', 'iot-app')

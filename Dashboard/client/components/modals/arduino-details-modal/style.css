@@ -20,7 +20,6 @@
 .sensor-bar{
   display: flex;
   flex-direction: row;
-  margin-left: -9px;
 }
 .sensor-bar > .btn {
   height: 40px;
@@ -35,7 +34,7 @@
   font-weight: 600;
   font-size: 14px;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0);
+  background: rgba(255, 255, 255, 0.1);
   opacity: 0.5;
   transition: background 200ms, opacity 200ms;
 }
@@ -45,7 +44,7 @@
 }
 .sensor-bar > .btn:hover {
   opacity: 1;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
 }
 .sensor-bar > .btn .icon {
   height: 100%;

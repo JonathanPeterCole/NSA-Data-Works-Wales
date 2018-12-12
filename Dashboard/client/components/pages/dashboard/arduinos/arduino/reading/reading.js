@@ -9,31 +9,29 @@ export default class Reading extends React.Component {
   constructor (props) {
     super(props)
     // Bindings
-    this.getIcon = this.getIcon.bind(this)
-    this.getName = this.getName.bind(this)
-    this.getFormattedReading = this.getFormattedReading.bind(this)
     this.options = {
       build: ['withBackground', 'withLine', 'withSideShade', 'withInfo', 'withActive', 'withImage'],
-      padding: { top: 8, bottom: 8, right: 0, left: 0 },
+      outerPadding: { top: 8, bottom: 8, left: 0, right: 0 },
+      innerPadding: { top: 0, bottom: 0, left: 0, right: 0 },
       fontsize: 14,
-      active: true,
-      type: this.props.type,
+      type: props.type,
+      name: props.name,
+      active: props.online,
       aesthetics: {
       }
+    }
+  }
+  componentDidUpdate () {
+    this.options = {
+      ...this.options,
+      type: this.props.type,
+      name: this.props.name,
+      active: this.props.online
     }
   }
   render () {
     return (
       <div className='arduino-reading'>
-        {/* <div className='reading-type'> */}
-        {/* <img className='reading-icon' src={this.getIcon()} /> */}
-        {/* <div className='reading-name'> */}
-        {/* {this.getName()} */}
-        {/* </div> */}
-        {/* </div> */}
-        {/* <div className='current-reading'> */}
-        {/* {this.getFormattedReading()} */}
-        {/* </div> */}
         <Temperature options={this.options}
           data={this.props.readings}
           onClick={this.onClick}
@@ -44,6 +42,7 @@ export default class Reading extends React.Component {
 }
 
 Reading.propTypes = {
+  name: PropTypes.string,
   type: PropTypes.string,
   online: PropTypes.bool,
   readings: PropTypes.array

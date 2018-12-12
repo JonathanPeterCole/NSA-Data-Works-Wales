@@ -22,7 +22,6 @@ export default class Arduinos extends React.Component {
     this.socket = io('/websocket')
     this.socket.emit('setUser', JSON.stringify({ jwt: localStorage.getItem('jwt') }))
     this.socket.on('sensorReadings', (data) => {
-      console.log(this.state.currentArduino)
       if (!this.state.loaded) {
         this.setState({
           loaded: true,

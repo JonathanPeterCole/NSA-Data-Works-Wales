@@ -2,58 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7cce8847-e39e-42b1-9212-8d140f7c01b9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Dashboard/client/components/formats/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/arduino-details-modal/arduino-data/arduino-data.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/arduino-details-modal/arduino-data/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/arduino-details-modal/img/light.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/arduino-details-modal/img/moisture.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/arduino-details-modal/img/temperature.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dashboard/client/components/pages/arduinos/arduinosContainer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dashboard/client/components/pages/login/img/logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dashboard/client/components/pages/login/login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dashboard/client/components/pages/login/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dashboard/client/images/light.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dashboard/client/images/moisture.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dashboard/client/images/temperature.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dashboard/server/controllers/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/.eslintignore" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/.eslintignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/modals/arduino-details-modal/arduino-details-modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/arduino-details-modal/arduino-details-modal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/modals/arduino-details-modal/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/arduino-details-modal/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/modals/article-modal/article-modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/article-modal/article-modal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/modals/modal/modal-content/modal-content.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/modal/modal-content/modal-content.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/modals/modal/modal-content/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/modal/modal-content/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/modals/modal/modal-header/modal-header.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/modal/modal-header/modal-header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/modals/modal/modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/modal/modal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/modals/modal/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/modal/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/modals/settings-modal/settings-modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/settings-modal/settings-modal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/pages/arduinos/arduino/arduino.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/pages/arduinos/arduino/arduino.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/pages/arduinos/arduino/reading/img/light.svg" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/arduino-details-modal/arduino-data/img/light.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/pages/arduinos/arduino/reading/img/moisture.svg" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/arduino-details-modal/arduino-data/img/moisture.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/pages/arduinos/arduino/reading/img/temperature.svg" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/modals/arduino-details-modal/arduino-data/img/temperature.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/pages/arduinos/arduino/reading/reading.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/pages/arduinos/arduino/reading/reading.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/pages/arduinos/arduino/reading/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/pages/arduinos/arduino/reading/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/pages/arduinos/arduinos.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/pages/arduinos/arduinos.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/sensor/formats/Temperature.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/formats/Temperature.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/status-indicator/status-indicator.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/status-indicator/status-indicator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/library/canvasLibrary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/library/canvasLibrary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/client/library/graph.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/library/graph.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dashboard/client/components/header/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/components/header/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dashboard/client/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/client/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/config/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/config/webpack.config.dev.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/config/webpack.config.dev.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/config/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/config/webpack.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/server/controllers/sensors.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/server/controllers/sensors.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/server/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/server/routes/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/server/routes/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/server/src/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/server/src/database.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/server/src/socket-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/server/src/socket-api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dashboard/testclient/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/Dashboard/testclient/client.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -74,7 +24,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="css" value="5" />
+          <entry key="css" value="8" />
           <entry key="js" value="40" />
           <entry key="json" value="1" />
           <entry key="svg" value="1" />
@@ -82,7 +32,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CSS" value="5" />
+          <entry key="CSS" value="8" />
           <entry key="JSON" value="1" />
           <entry key="JavaScript" value="40" />
           <entry key="SVG" value="1" />
@@ -90,13 +40,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="css" value="257" />
+          <entry key="css" value="323" />
           <entry key="js" value="5223" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="CSS" value="257" />
+          <entry key="CSS" value="323" />
           <entry key="JavaScript" value="5223" />
         </counts>
       </usages-collector>
@@ -110,8 +60,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Dashboard/client/components/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="759">
-              <caret line="55" column="14" selection-start-line="55" selection-start-column="14" selection-end-line="55" selection-end-column="14" />
+            <state relative-caret-position="598">
+              <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -134,15 +84,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Dashboard/client/components/pages/arduinos/arduinos.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1048">
-              <caret line="62" column="25" selection-start-line="62" selection-start-column="25" selection-end-line="62" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Dashboard/client/api.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="161">
@@ -155,19 +96,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Dashboard/client/reducers/test.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Dashboard/client/components/header/notification-feed/notification-feed.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="82">
-              <caret line="92" column="68" selection-start-line="92" selection-start-column="68" selection-end-line="92" selection-end-column="68" />
+            <state relative-caret-position="312">
+              <caret line="102" column="14" selection-start-line="102" selection-start-column="14" selection-end-line="102" selection-end-column="14" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -176,10 +108,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Dashboard/client/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="519">
+              <caret line="48" column="1" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Dashboard/client/components/header/notification-feed/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1045" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Dashboard/client/components/header/style.css">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Dashboard/testclient/client.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="322">
-              <caret line="14" column="21" lean-forward="true" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+              <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -191,18 +144,6 @@
               <caret line="65" column="67" selection-start-line="65" selection-start-column="67" selection-end-line="65" selection-end-column="67" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Dashboard/client/components/header/notification-feed/notification-feed-container.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="3" selection-start-line="3" selection-end-line="3" />
-              <folding>
-                <element signature="e#1#38#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -225,7 +166,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Dashboard/client/components/buttons/icon-button/style.css" />
-        <option value="$PROJECT_DIR$/Dashboard/client/components/header/style.css" />
         <option value="$PROJECT_DIR$/Dashboard/server/src/database.js" />
         <option value="$PROJECT_DIR$/Dashboard/client/actions/index.js" />
         <option value="$PROJECT_DIR$/Dashboard/client/constants/actionTypes.js" />
@@ -239,6 +179,8 @@
         <option value="$PROJECT_DIR$/Dashboard/client/components/header/notification-feed/notification-feed.js" />
         <option value="$PROJECT_DIR$/Dashboard/server/src/socket-api.js" />
         <option value="$PROJECT_DIR$/Dashboard/testclient/client.js" />
+        <option value="$PROJECT_DIR$/Dashboard/client/components/header/style.css" />
+        <option value="$PROJECT_DIR$/Dashboard/client/style.css" />
       </list>
     </option>
   </component>
@@ -296,6 +238,30 @@
               <item name="Dashboard" type="462c0819:PsiDirectoryNode" />
               <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="actions" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="notificationFeed" type="b2602c69:ProjectViewProjectNode" />
+              <item name="notificationFeed" type="462c0819:PsiDirectoryNode" />
+              <item name="Dashboard" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="notificationFeed" type="b2602c69:ProjectViewProjectNode" />
+              <item name="notificationFeed" type="462c0819:PsiDirectoryNode" />
+              <item name="Dashboard" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="header" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="notificationFeed" type="b2602c69:ProjectViewProjectNode" />
+              <item name="notificationFeed" type="462c0819:PsiDirectoryNode" />
+              <item name="Dashboard" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="header" type="462c0819:PsiDirectoryNode" />
+              <item name="notification-feed" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="notificationFeed" type="b2602c69:ProjectViewProjectNode" />
@@ -438,19 +404,15 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30781000" />
+    <option name="totallyTimeSpent" value="31106000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Favorites" sideWeight="0.2780083" side_tool="true" visible="true" weight="0.12434141" />
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.7219917" visible="true" weight="0.12434141" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" weight="0.32929516" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" sideWeight="0.2780083" side_tool="true" weight="0.12434141" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.20374449" />
@@ -458,6 +420,10 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32929516" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -489,13 +455,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="828">
           <caret line="36" column="29" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Dashboard/client/components/header/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="497">
-          <caret line="48" column="1" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -590,9 +549,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Dashboard/client/components/header/notification-feed/style.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/Dashboard/client/reducers/test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
@@ -620,17 +576,11 @@
     <entry file="file://$PROJECT_DIR$/Dashboard/client/components/Loading.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Dashboard/client/components/pages/arduinos/arduinos.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1048">
-          <caret line="62" column="25" selection-start-line="62" selection-start-column="25" selection-end-line="62" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Dashboard/client/components/pages/arduinos/arduinos.js" />
     <entry file="file://$PROJECT_DIR$/Dashboard/client/components/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="759">
-          <caret line="55" column="14" selection-start-line="55" selection-start-column="14" selection-end-line="55" selection-end-column="14" />
+        <state relative-caret-position="598">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
@@ -666,8 +616,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Dashboard/client/components/header/notification-feed/notification-feed.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="82">
-          <caret line="92" column="68" selection-start-line="92" selection-start-column="68" selection-end-line="92" selection-end-column="68" />
+        <state relative-caret-position="312">
+          <caret line="102" column="14" selection-start-line="102" selection-start-column="14" selection-end-line="102" selection-end-column="14" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
@@ -677,7 +627,22 @@
     <entry file="file://$PROJECT_DIR$/Dashboard/testclient/client.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="322">
-          <caret line="14" column="21" lean-forward="true" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+          <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dashboard/client/components/header/notification-feed/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1045" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dashboard/client/components/header/style.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dashboard/client/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="48" column="1" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
         </state>
       </provider>
     </entry>

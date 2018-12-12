@@ -13,11 +13,24 @@ export default class ArduinoData extends React.Component {
   constructor (props) {
     super(props)
     this.options = {
-      build: ['withBackground', 'withGridLines', 'withLine', 'withHoverLine', 'withInfo', 'withActive'],
-      padding: { top: 0, bottom: 0, right: 0, left: 0 },
+      build: ['withBackground', 'withGridLines', 'withLine', 'withHoverLine', 'withInfo', 'withImage', 'withActive'],
+      outerPadding: { top: 0, bottom: 0, left: 0, right: 0 },
+      innerPadding: { top: 8, bottom: 8, left: 0, right: 0 },
       fontsize: 14,
+      type: props.sensor.type,
+      name: props.sensor.name,
+      active: props.sensor.online,
+      aesthetics: {
+        gridLines: { border: false, width: 1 }
+      }
+    }
+  }
+  componentDidUpdate () {
+    this.options = {
+      ...this.options,
+      type: this.props.sensor.type,
       name: this.props.sensor.name,
-      active: true
+      active: this.props.sensor.online
     }
   }
   getImage (name) {
@@ -31,7 +44,6 @@ export default class ArduinoData extends React.Component {
     }
   }
   render () {
-    console.log(this.props.sensor)
     return (
       <div className='arduinoData'>
         <div className='graph'>
@@ -39,9 +51,9 @@ export default class ArduinoData extends React.Component {
             options={this.options}
             data={this.props.sensor.data}
             lastUpdate={this.props.sensor.lastUpdate}
+            online={this.props.sensor.online}
           />
         </div>
-
       </div>
     )
   }
