@@ -44,10 +44,8 @@ class Database {
   }
   static insertPromise (data, collection) {
     return new Promise((resolve, reject) => {
-      console.log(data)
       this.db.collection(collection).insertOne(data)
         .then((result) => {
-          console.log(result.ops[0])
           resolve(result.ops[0])
         })
         .catch((error) => {

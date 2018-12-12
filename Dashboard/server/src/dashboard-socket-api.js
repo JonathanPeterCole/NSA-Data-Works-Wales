@@ -15,7 +15,7 @@ class DashboardSocketAPI {
     this.knownArduinos = []
     this.unknownSensors = []
     this.db = db
-    this.populateKnownSensors()
+    // this.populateKnownSensors()
     // this.checkDisconnected()
 
     setInterval(this.sendData.bind(this), 1500)
@@ -167,16 +167,16 @@ class DashboardSocketAPI {
     return readings
   }
 
-  populateKnownSensors () {
-    this.db.findAll('arduinos').then((arduinos) => {
-      arduinos.forEach(arduino => {
-        arduino.sensors.forEach(sensor => {
-          // sensor.data = sensor.data.splice(sensor.data.length-10 , 10)
-        })
-      })
-      this.arduinos = arduinos
-    })
-  }
+  // populateKnownSensors () {
+  //   this.db.findAll('arduinos').then((arduinos) => {
+  //     arduinos.forEach(arduino => {
+  //       arduino.sensors.forEach(sensor => {
+  //         // sensor.data = sensor.data.splice(sensor.data.length-10 , 10)
+  //       })
+  //     })
+  //     this.arduinos = arduinos
+  //   })
+  // }
 
   // saveSingleSensor (sensor, arduinoID) {
   //   if (!sensor.newdata) {
