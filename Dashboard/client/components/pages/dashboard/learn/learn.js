@@ -10,12 +10,12 @@ import './style.css'
 
 export default class Learn extends React.Component {
   constructor (props) {
-    super(props);
+    super(props)
 
     this.state = {
       modalTitle: null,
       showModal: false
-    };
+    }
 
     // Bindings
     this.showModal = this.showModal.bind(this)
@@ -28,7 +28,7 @@ export default class Learn extends React.Component {
       .then((r) => r.text())
       .then(text => {
         this.setState({ modalMarkdown: text })
-      });
+      })
 
     return 'Loading guide...'
   }
@@ -57,7 +57,7 @@ export default class Learn extends React.Component {
                   key={i}
                   title={guideData.title}
                   body={guideData.description}
-                  image={"/guides/" + guideData.imgURL}
+                  image={'/guides/' + guideData.imgURL}
                   markdownURL={guideData.url}
                   clickFunc={this.showModal} />
               )
@@ -74,7 +74,7 @@ export default class Learn extends React.Component {
                   key={i}
                   title={guideData.title}
                   body={guideData.description}
-                  image={"/guides/" + guideData.imgURL}
+                  image={'/guides/' + guideData.imgURL}
                   markdownURL={guideData.url}
                   clickFunc={this.showModal} />
               )

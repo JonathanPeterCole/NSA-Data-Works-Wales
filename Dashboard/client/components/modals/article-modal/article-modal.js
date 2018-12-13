@@ -17,7 +17,7 @@ export default class ArticleModal extends React.Component {
           <h1>{this.props.title}:</h1>
         </ModalHeader>
         <ModalContent>
-          <ReactMarkdown className="ArticleMarkdownContainer" source={this.props.markdown} />
+          <ReactMarkdown className='ArticleMarkdownContainer' source={this.props.markdown} />
         </ModalContent>
       </Modal>
     )

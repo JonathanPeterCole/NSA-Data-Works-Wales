@@ -87,6 +87,7 @@
     "parser": "babel-eslint",
     "globals": {
       "localStorage": true,
+      "fetch": true,
       "Image": true
     }
   },
