@@ -6,7 +6,7 @@ import './style.css'
 export default class ModalContent extends React.Component {
   constructor (props) {
     super(props)
-    console.log(props)
+
     this.state = {
       showFader: false
     }

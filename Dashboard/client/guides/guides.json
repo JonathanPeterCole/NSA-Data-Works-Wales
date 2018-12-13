@@ -1,0 +1,42 @@
+{
+  "top-guides": [
+    {
+      "title": "Building Your First Arduino",
+      "description": "Get started with this quick and easy guide to setup an Arduino with a simple button.",
+      "imgURL": "images/default/building_your_first_arduino.png",
+      "url": "default/building_your_first_arduino.md"
+    },
+    {
+      "title": "Connecting an Arduino to Data Works",
+      "description": "Learn how to connect an Arduino to Data Works to see sensor readings live online.",
+      "imgURL": "images/default/connecting_arduino_to_dataworks.png",
+      "url": "default/connecting_arduino_to_dataworks.md"
+    }
+  ],
+  "guides": [
+    {
+      "title": "Setting up a Temperature Sensor",
+      "description": "Measure the temperature using an Arduino by setting up a temperature sensor.",
+      "imgURL": "images/default/setting_up_temperature_sensor.png",
+      "url": "default/setting_up_temperature_sensor.md"
+    },
+    {
+      "title": "Setting up a Moisture Sensor'",
+      "description": "Monitor how much moisture is in the air with a moisture sensor.",
+      "imgURL": "images/default/setting_up_moisture_sensor.png",
+      "url": "default/setting_up_moisture_sensor.md"
+    },
+    {
+      "title": "Setting up a Light Sensor'",
+      "description": "Follow this guide to setup a light sensor on an Arduino.",
+      "imgURL": "images/default/setting_up_light_sensor.png",
+      "url": "default/setting_up_light_sensor.md"
+    },
+    {
+      "title": "Create your own guides",
+      "description": "Discover how to make a guide for this learn and build page!",
+      "imgURL": "images/default/creating_guides.jpg",
+      "url": "default/creating_guides.md"
+    }
+  ]
+}
