@@ -68,3 +68,58 @@ On NSA laptops, MongoDB is already installed, but needs to be configured. To do 
 
 1. Check that the database is running  
   `mongo --shell`
+
+### Database Structure
+
+```
+{
+  "users": [
+    {
+      "_id": ObjectId("000000001"),
+      "username": "TestUsername",
+      "password": "HashedPassword",
+      "arduinos": [
+        ObjectId("123456789"),
+        ...
+      ],
+      "projects": [
+        ObjectId("987654321"),
+        ...
+      ]
+    }
+  ]
+  "arduinos": [
+    {
+      "_id": ObjectId("123456789"),
+      "udid": "abc123",
+      "name": "Unnamed Arduino",
+      "colour": "blue"
+      "sensors": [
+        {
+          "id": 0,
+          "type": "temperature",
+          "readings": [ 
+            {
+              "reading": 10,
+              "time": 123456789
+            }
+          ]
+        },
+        ...
+      ]
+    },
+    ...
+  ],
+  "projects": [
+    {
+      "_id": ObjectId("987654321"),
+      "name": "Unnamed Project",
+      "owner": ObjectId("000000001"),
+      "arduinos": [
+        ObjectId("123456789"),
+        ...
+      ]
+    }
+  ]
+}
+```
