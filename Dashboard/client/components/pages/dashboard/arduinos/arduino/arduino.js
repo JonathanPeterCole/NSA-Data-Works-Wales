@@ -19,6 +19,9 @@ export default class Arduino extends React.Component {
   componentDidUpdate () {
 
   }
+  getSensorName (id, type) {
+    return type.charAt(0).toUpperCase() + type.slice(1) + ' ' + id
+  }
   render () {
     return (
       <div className='arduino'>
@@ -38,7 +41,7 @@ export default class Arduino extends React.Component {
                   type={sensor.type}
                   online={sensor.online}
                   readings={sensor.readings}
-                  name={sensor.name} />
+                  name={this.getSensorName(sensor.id, sensor.type)} />
               )
             })}
           </div>

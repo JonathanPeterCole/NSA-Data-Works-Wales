@@ -11,7 +11,7 @@ import './style.css'
 
 export default class ArduinoData extends React.Component {
   constructor (props) {
-    super(props)    
+    super(props)
     console.log('Reading')
     console.log(props)
     this.options = {
@@ -20,7 +20,7 @@ export default class ArduinoData extends React.Component {
       innerPadding: { top: 8, bottom: 8, left: 0, right: 0 },
       fontsize: 14,
       type: props.sensor.type,
-      name: props.sensor.name,
+      name: this.getImage(props.sensor.id, props.sensor.type),
       active: props.sensor.online,
       aesthetics: {
         gridLines: { border: false, width: 1 }
@@ -31,9 +31,12 @@ export default class ArduinoData extends React.Component {
     this.options = {
       ...this.options,
       type: this.props.sensor.type,
-      name: this.props.sensor.name,
+      name: this.getName(this.props.sensor.id, this.props.sensor.type),
       active: this.props.sensor.online
     }
+  }
+  getName (id, type) {
+    return type.charAt(0).toUpperCase() + type.slice(1) + ' ' + id
   }
   getImage (name) {
     switch (name) {

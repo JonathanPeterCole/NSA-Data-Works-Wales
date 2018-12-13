@@ -73,6 +73,13 @@ class UsersController {
       return false
     }
   }
+  async getUserByJWT (jwt) {
+    try {
+      return this.db.findDocument('_id', this.db.getObjectID(jwt.id), this.collection)
+    } catch (e) {
+      return false
+    }
+  }
   async getProjects (jwt) {
     try {
       let user = await this.db.findDocument('_id', this.db.getObjectID(jwt.id), this.collection)
@@ -87,7 +94,7 @@ class UsersController {
   }
   async addArduino (userId, arduinoId) {
     let user = await this.db.findDocument('_id', this.db.getObjectID(userId), this.collection)
-    await this.db.arrayUpdate('_id', user._id, { projects: { _id:  this.db.getObjectID(arduinoId), notifications: []} }, this.collection)
+    await this.db.arrayUpdate('_id', user._id, { projects: { _id: this.db.getObjectID(arduinoId), notifications: [] } }, this.collection)
   }
 }
 

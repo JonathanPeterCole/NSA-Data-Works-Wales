@@ -23,9 +23,9 @@ export default class ArduinoDetailsModal extends React.Component {
       refresh: false
     }
   }
-  getImage (name) {
-    switch (name) {
-      case 'temp':
+  getImage (type) {
+    switch (type) {
+      case 'temperature':
         return TemperatureIcon
       case 'moisture':
         return MoistureIcon
@@ -33,7 +33,8 @@ export default class ArduinoDetailsModal extends React.Component {
         return LightIcon
     }
   }
-  componentDidUpdate () {
+  getName (id, type) {
+    return type.charAt(0).toUpperCase() + type.slice(1) + ' ' + id
   }
   changeSensor (sensor) {
     this.setState({ currentSensor: sensor })
@@ -55,7 +56,7 @@ export default class ArduinoDetailsModal extends React.Component {
             {this.props.data.sensors.map((sensor, i) => {
               return (
                 <div className='btn' key={i} onClick={() => { this.changeSensor(i); this.refresh() }}>
-                  <img className='icon' src={this.getImage(sensor.type)} /><span className='label'>{sensor.name}</span>
+                  <img className='icon' src={this.getImage(sensor.type)} /><span className='label'>{this.getName(sensor.id, sensor.type)}</span>
                 </div>)
             })}
           </div>

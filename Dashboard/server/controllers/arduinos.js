@@ -8,6 +8,12 @@ class ArduinosController {
       name: 'Unnamed Arduino', udid, colour: 'blue', sensors: []
     }, this.collection)
   }
+  async getProjectArduinos (projectsArray) {
+    let idsArray = projectsArray.map((arduino) => {
+      return this.db.getObjectID(arduino._id)
+    })
+    return this.db.findRawMultiple({ _id: { $in: idsArray } }, this.collection)
+  }
   async getArduino (id) {
     return this.db.findDocument('_id', this.db.getObjectID(id), this.collection)
   }

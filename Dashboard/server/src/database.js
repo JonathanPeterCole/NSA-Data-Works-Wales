@@ -65,6 +65,9 @@ class Database {
   static async findRaw (filter, collection) {
     return this.db.collection(collection).findOne(filter)
   }
+  static async findRawMultiple (filter, collection) {
+    return this.db.collection(collection).find(filter).toArray()
+  }
   static async findAll (collection) {
     return this.db.collection(collection).find({}).toArray()
   }

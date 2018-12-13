@@ -37,6 +37,7 @@
   background: rgba(255, 255, 255, 0.1);
   opacity: 0.5;
   transition: background 200ms, opacity 200ms;
+  cursor: pointer;
 }
 
 .sensor-bar > .btn.active {
