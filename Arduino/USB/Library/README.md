@@ -23,15 +23,37 @@ This library connects to the Data Works USB Link app to send sensor readings.
   }
   ```
 
-4. Send a reading in the loop
+4. Send a reading in the loop, passing in an ID for the sensor, and the reading from the sensor
   ```
   void loop() {
     // Send a reading
-    dataWorksUSB.sendTemperature(5, 12);
+    dataWorksUSB.sendTemperature(1, 12);
     delay(5000);
   }
   ```
 
+### Supported Sensors
+
+* **Button**  
+  `sendButtonReading(id, value)`
+
+* **Temperature**  
+  `sendTemperatureReading(id, value)`
+
+* **Light**  
+  `sendLightReading(id, value)`
+
+* **Noise**  
+  `sendNoiseReading(id, value)`
+
+* **Dial**  
+  `sendDialReading(id, value)`
+
+* **Moisture**  
+  `sendMoistureReading(id, value)`
+
+* **Other Sensors**  
+  `sendReading(id, sensorType, value)`
 
 ### How it Works
 

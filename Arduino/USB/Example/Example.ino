@@ -11,6 +11,6 @@ void setup() {
 
 void loop() {
   // Send a reading
-  dataWorksUSB.sendTemperature(5, 12);
+  dataWorksUSB.sendTemperatureReading(1, float(12.5));
   delay(5000);
 }

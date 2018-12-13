@@ -29,14 +29,44 @@ void DataWorksUSB::connect(String username, String password)
     }
 }
 
-void DataWorksUSB::sendTemperature(int sensorID, int reading)
+void DataWorksUSB::sendButtonReading(int sensorID, int reading)
 {
-    submitReading("temperature", sensorID, reading);
+    submitReading("button", sensorID, String(reading));
 }
 
-void DataWorksUSB::submitReading(String type, int sensorID, int reading)
+void DataWorksUSB::sendTemperatureReading(int sensorID, float reading)
 {
-    sendData("\"sensorReading\":{\"type\":\"" + type + "\", \"sensorID\":\"" + String(sensorID) + "\", \"reading\":\"" + String(reading) + "\"}");
+    submitReading("temperature", sensorID, String(reading));
+}
+
+void DataWorksUSB::sendLightReading(int sensorID, float reading)
+{
+    submitReading("light", sensorID, String(reading));
+}
+
+void DataWorksUSB::sendNoiseReading(int sensorID, float reading)
+{
+    submitReading("noise", sensorID, String(reading));
+}
+
+void DataWorksUSB::sendDialReading(int sensorID, float reading)
+{
+    submitReading("dial", sensorID, String(reading));
+}
+
+void DataWorksUSB::sendMoistureReading(int sensorID, float reading)
+{
+    submitReading("moisture", sensorID, String(reading));
+}
+
+void DataWorksUSB::sendReading(int sensorID, String sensorType, float reading)
+{
+    submitReading(sensorType, sensorID, String(reading));
+}
+
+void DataWorksUSB::submitReading(String type, int sensorID, String reading)
+{
+    sendData("\"sensorReading\":{\"type\":\"" + type + "\", \"sensorID\":\"" + String(sensorID) + "\", \"reading\":\"" + reading + "\"}");
 }
 
 void DataWorksUSB::sendData(String data)
