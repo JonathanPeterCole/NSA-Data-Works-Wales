@@ -37,6 +37,11 @@ module.exports = {
         from: './client/images',
         to: '',
         toType: 'dir'
+      },
+      {
+        from: './client/guides',
+        to: 'guides/',
+        toType: 'dir'
       }
     ])
   ],
