@@ -11,6 +11,7 @@ export default class Arduino extends React.Component {
     super(props)
     // Bindings
     this.getBoxClassName = this.getBoxClassName.bind(this)
+    console.log(props)
   }
   getBoxClassName () {
     return 'box ' + this.props.colour
@@ -36,7 +37,7 @@ export default class Arduino extends React.Component {
                   key={sensor.id}
                   type={sensor.type}
                   online={sensor.online}
-                  readings={sensor.data}
+                  readings={sensor.readings}
                   name={sensor.name} />
               )
             })}

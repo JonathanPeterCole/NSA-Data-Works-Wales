@@ -31,8 +31,8 @@ class ArduinoSocketAPI {
     let usersArduinos = await usersController.getArduinos(user._id)
     // If the user has arduinos, check if there's one with a matching UDID
     if (usersArduinos) {
-      for (let arduinoID of usersArduinos) {
-        let arduino = await arduinosController.getArduino(arduinoID)
+      for (let userArduino of usersArduinos) {
+        let arduino = await arduinosController.getArduino(userArduino._id)
         // If the Arduino has a matching UDID, return it
         if (arduino.udid === udid) {
           return arduino

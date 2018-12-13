@@ -24,7 +24,7 @@ export default class Arduinos extends React.Component {
       this.socket.emit('setUser', JSON.stringify({ jwt: localStorage.getItem('jwt') }));
     })
     this.socket.on('sensorReadings', (data) => {
-      console.log(data)
+      console.log(this.state.arduinos)
       if (!this.state.loaded) {
         this.setState({
           loaded: true,
@@ -41,6 +41,7 @@ export default class Arduinos extends React.Component {
     return axios.get('http://localhost:3000/api/history/' + arduinoid)
   }
   showModal (arduinoid) {
+    console.log(this.state.arduinos[arduinoid])
     this.setState({
       showModal: true,
       currentArduino: arduinoid

@@ -77,7 +77,9 @@ class DashboardSocketAPI {
     })
   }
   addSensorData (data) {
+    console.log('arduino')
     this.arduinos.forEach(arduino => { // loop through each arduino
+      console.log('arduino')
       if (arduino.udid === data.udid) {
         arduino.sensors.forEach(sensor => { // loop through each of its sensors
           console.log('sendsorid')

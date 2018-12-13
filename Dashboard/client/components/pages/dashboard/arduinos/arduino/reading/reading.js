@@ -8,6 +8,7 @@ import Temperature from '../../../../../formats/Temperature'
 export default class Reading extends React.Component {
   constructor (props) {
     super(props)
+
     // Bindings
     this.options = {
       build: ['withBackground', 'withLine', 'withSideShade', 'withInfo', 'withActive', 'withImage'],

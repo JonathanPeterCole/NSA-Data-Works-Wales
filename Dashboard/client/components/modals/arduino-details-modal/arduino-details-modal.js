@@ -16,8 +16,10 @@ import './style.css'
 export default class ArduinoDetailsModal extends React.Component {
   constructor (props) {
     super(props)
+    console.log('lol')
+    console.log(props)
     this.state = {
-      currentSensor: 1,
+      currentSensor: 0,
       refresh: false
     }
   }
