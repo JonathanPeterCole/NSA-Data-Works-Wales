@@ -83,11 +83,11 @@ class UsersController {
   }
   async getArduinos (id) {
     let user = await this.db.findDocument('_id', id, this.collection)
-    return user.arduinos
+    return user.projects
   }
   async addArduino (userId, arduinoId) {
     let user = await this.db.findDocument('_id', this.db.getObjectID(userId), this.collection)
-    await this.db.arrayUpdate('_id', user._id, { arduinos: this.db.getObjectID(arduinoId) }, this.collection)
+    await this.db.arrayUpdate('_id', user._id, { projects: { _id:  this.db.getObjectID(arduinoId), notifications: []} }, this.collection)
   }
 }
 

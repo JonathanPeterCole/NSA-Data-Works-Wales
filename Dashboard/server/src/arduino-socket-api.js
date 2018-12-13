@@ -14,9 +14,11 @@ class ArduinoSocketAPI {
     // On sensorReadings
     socket.on('sensorReadings', async (data) => {
       // Get the user
+      console.log('reading')
       let user = await usersController.authenticate(data.auth.username, data.auth.password)
       if (user) {
         // Get the Arduino
+        console.log('ok')
         let arduino = await this.getArduino(user, data.udid)
         let sensor = await this.getSensor(arduino, data.sensorReading.sensorID, data.sensorReading.type)
         sensor.readings.push({ reading: data.sensorReading.reading, time: new Date().getTime() })

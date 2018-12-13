@@ -5,8 +5,8 @@ let userController = new Users(Database)
 class DashboardSocketAPI {
   constructor (db) {
     this.clients = []
-    // this.sensors = []
-    // this.arduinos = []
+    this.sensors = []
+    this.arduinos = []
     this.projects = []
     this.users = []
 
@@ -15,16 +15,16 @@ class DashboardSocketAPI {
     this.knownArduinos = []
     this.unknownSensors = []
     this.db = db
-    // this.populateKnownSensors()
-    // this.checkDisconnected()
+    this.populateKnownSensors()
+    this.checkDisconnected()
 
     setInterval(this.sendData.bind(this), 1500)
-    // setInterval(() => this.checkDisconnected(), 3000)
+    setInterval(() => this.checkDisconnected(), 3000)
   }
   sendData () {
     if (this.users.length !== 0) {
       this.users.forEach(user => {
-        this.broadcastTo(user.socket, 'sensorReadings', this.lastReadings(user))
+          this.broadcastTo(user.socket, 'sensorReadings', this.lastReadings(user))
       })
     }
   }
@@ -36,17 +36,18 @@ class DashboardSocketAPI {
     this.clients.push(socket)
 
     // // Check if arduinos are online
-    // this.checkDisconnected()
+    this.checkDisconnected()
 
     // Set user
     socket.on('setUser', async (data) => {
       let json = JSON.parse(data)
       let jwt = await userController.checkJWT(json.jwt)
       if (jwt) {
+        console.log('set')
         let projects = await userController.getProjects(jwt)
         let userprojects = this.arduinos.filter(arduino => {
           for (let i in projects) {
-            if (String(projects[i]) === String(arduino._id)) {
+            if (String(projects[i]._id) === String(arduino._id)) {
               return arduino
             }
           }
@@ -55,6 +56,16 @@ class DashboardSocketAPI {
         socket.emit('sensorReadings', userprojects)
       }
     })
+    socket.on('sensorReadings', (data) => {
+      this.setSocketAsSensor(data, socket)
+      // this.saveReadings()
+      if (!this.socketExists(socket, this.sensors)) {
+        this.sensors.push(socket)
+      }
+      this.addSensorData(data)
+      // this.saveReadings()
+    })
+
     // Update settings
     socket.on('updateSettings', (data) => {
       this.saveSensor(data.id, data.name)
@@ -65,37 +76,40 @@ class DashboardSocketAPI {
       this.removeClient(socket.id)
     })
   }
-  // addSensorData (data) {
-  //   this.arduinos.forEach(arduino => { // loop through each arduino
-  //     if (arduino._id === data._id) {
-  //       arduino.sensors.forEach(sensor => { // loop through each of its sensors
-  //         data.sensors.forEach(sensorReading => { // loop through each of the sensors sent in the newdata
-  //           if (sensorReading.id === sensor.id) {
-  //             sensor.lastUpdate = +new Date()
-  //             arduino.lastUpdate = +new Date()
-  //             sensor.online = true
-  //             arduino.online = true
-  //             if (sensor.newdata) {
-  //               sensor.newdata.push({ reading: sensorReading.data, time: +new Date() })
-  //             } else {
-  //               sensor.newdata = [{ reading: sensorReading.data, time: +new Date() }]
-  //             }
-  //           }
-  //         })
-  //       })
-  //     }
-  //   })
-  // }
+  addSensorData (data) {
+    this.arduinos.forEach(arduino => { // loop through each arduino
+      if (arduino.udid === data.udid) {
+        arduino.sensors.forEach(sensor => { // loop through each of its sensors
+          console.log('sendsorid')
+          console.log(data.sensorReading.sensorID)
+          console.log('sensorid')
+          console.log(sensor)
+          if (data.sensorReading.sensorID  === sensor.id) {
+            console.log('ok')
+            sensor.lastUpdate = +new Date()
+            arduino.lastUpdate = +new Date()
+            sensor.online = true
+            arduino.online = true
+            if (sensor.newdata) {
+              sensor.newdata.push({ reading: data.sensorReading.reading, time: +new Date() })
+            } else {
+              sensor.newdata = [{ reading: data.sensorReading.reading, time: +new Date() }]
+            }
+          }
+        })
+      }
+    })
+  }
 
   // /*
   // Sets this socket as an arduino, and changes the last updated date since its being called from sensorreadings socket call
   // */
-  // setSocketAsSensor (data, socket) {
-  //   if (!socket.aid) {
-  //     socket.aid = data.arduino
-  //   }
-  //   socket.lastSent = +new Date()
-  // }
+  setSocketAsSensor (data, socket) {
+    if (!socket.aid) {
+      socket.aid = data.arduino
+    }
+    socket.lastSent = +new Date()
+  }
 
   /*
   Generic function to find and return an index of a given array based off a key val.
@@ -112,23 +126,23 @@ class DashboardSocketAPI {
   // /*
   //   Checks if a sensor is currently active
   // */
-  // checkDisconnected () {
-  //   this.arduinos.forEach(arduino => {
-  //     arduino.sensors.forEach(sensor => {
-  //       let curTime = sensor.lastUpdate
-  //       if (new Date() - new Date(curTime) > 5000 && sensor.online !== false) {
-  //         this.saveSingleSensor(sensor, arduino._id)
-  //         sensor.online = false
-  //         arduino.online = false
-  //       }
-  //     })
-  //   })
-  //   this.sensors.forEach((e, idx) => {
-  //     if (e.connected === false) {
-  //       this.sensors.splice(idx, 1)
-  //     }
-  //   })
-  // }
+  checkDisconnected () {
+    this.arduinos.forEach(arduino => {
+      arduino.sensors.forEach(sensor => {
+        let curTime = sensor.lastUpdate
+        if (new Date() - new Date(curTime) > 5000 && sensor.online !== false) {
+          // this.saveSingleSensor(sensor, arduino._id)
+          sensor.online = false
+          arduino.online = false
+        }
+      })
+    })
+    this.sensors.forEach((e, idx) => {
+      if (e.connected === false) {
+        this.sensors.splice(idx, 1)
+      }
+    })
+  }
   socketExists (socket, array) {
     for (let i in array) {
       if (array[i].id === socket.id) { return true }
@@ -151,8 +165,10 @@ class DashboardSocketAPI {
   }
 
   lastReadings (user) {
+    
     let readings = JSON.stringify(user.userprojects)
     readings = JSON.parse(readings)
+
     readings.forEach(arduino => {
       arduino.sensors.forEach((sensor, i) => {
         if (sensor.data) {
@@ -167,16 +183,16 @@ class DashboardSocketAPI {
     return readings
   }
 
-  // populateKnownSensors () {
-  //   this.db.findAll('arduinos').then((arduinos) => {
-  //     arduinos.forEach(arduino => {
-  //       arduino.sensors.forEach(sensor => {
-  //         // sensor.data = sensor.data.splice(sensor.data.length-10 , 10)
-  //       })
-  //     })
-  //     this.arduinos = arduinos
-  //   })
-  // }
+  populateKnownSensors () {
+    this.db.findAll('arduinos').then((arduinos) => {
+      arduinos.forEach(arduino => {
+        arduino.sensors.forEach(sensor => {
+          // sensor.data = sensor.data.splice(sensor.data.length-10 , 10)
+        })
+      })
+      this.arduinos = arduinos
+    })
+  }
 
   // saveSingleSensor (sensor, arduinoID) {
   //   if (!sensor.newdata) {

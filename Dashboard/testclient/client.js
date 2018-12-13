@@ -1,5 +1,5 @@
 const socketio = require('socket.io-client')
-const socket = socketio('ws://localhost:3000/websocket', {
+const socket = socketio('ws://localhost:3000/websocket/dashboard', {
   reconnection: true,
   reconnectionDelay: 1000 })
 
@@ -12,20 +12,12 @@ setInterval(() => {
     temp += Math.floor(Math.random() * 3)
     socket.emit('sensorReadings', {
       _id: '5c01821deaed443ee82b751a',
-      name: 'Fridge',
-      colour: 'blue',
-      sensors: [
-        {
-          type: 'temp',
-          data: temp,
-          id: '92087b146516598'
-        },
-        {
-          type: 'moisture',
-          data: temp,
-          id: '92087b1465aw0d92'
-        }
-      ]
+      udid: '30123091209312093',
+      sensorReading: {
+        type: 'temperature',
+        sensorID: '92087b146516598',
+        reading: temp
+      }
     })
     if (temp > 34) {
       temp = 10
