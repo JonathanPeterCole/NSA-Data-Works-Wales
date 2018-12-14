@@ -14,7 +14,7 @@ First, setup the circuit to match the following diagram to connect a push button
 1. Then in the setup function, set the pin as an INPUT:  
 `pinMode(buttonPin, INPUT);`
 
-1. Finally, get the reading from the button:
+1. Finally, get the reading from the button:  
 `int buttonReading = digitalRead(buttonPin);`
 
 1. Now you can follow the **'Connecting an Arduino to Data Works'** guide to connect the Arduino to Data Works.
