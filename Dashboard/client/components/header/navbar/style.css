@@ -1,0 +1,33 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    margin-left: -9px;
+}
+.navbar .btn {
+    height: 40px;
+    margin-right: 10px;
+    padding: 9px;
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0);
+    opacity: 0.5;
+    transition: background 200ms, opacity 200ms;
+}
+.navbar .btn.active {
+    opacity: 1;
+}
+.navbar .btn:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.1);
+}
+.navbar .btn .icon {
+    height: 100%;
+    margin-right: 10px;
+}

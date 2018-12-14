@@ -1,0 +1,53 @@
+.arduino-colour {
+  height: 5px;
+  background: #44464b;
+}
+
+/* Colours */
+.arduino-colour.blue {
+  background: linear-gradient(40deg, #3366ff 0%,#3399ff 100%);
+}
+.arduino-colour.green {
+  background: linear-gradient(40deg, #00CC66 0%,#66CC66 100%);
+}
+.arduino-colour.orange {
+  background: linear-gradient(40deg, #FF3300 0%,#FF6600 100%);
+}
+.arduino-colour.red {
+  background: linear-gradient(40deg, #FF0033 0%,#FF3333 100%);
+}
+
+.sensor-bar{
+  display: flex;
+  flex-direction: row;
+}
+.sensor-bar > .btn {
+  height: 40px;
+  margin-right: 10px;
+  padding: 9px;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0.5;
+  transition: background 200ms, opacity 200ms;
+  cursor: pointer;
+}
+
+.sensor-bar > .btn.active {
+  opacity: 1;
+}
+.sensor-bar > .btn:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.2);
+}
+.sensor-bar > .btn .icon {
+  height: 100%;
+  margin-right: 10px;
+}

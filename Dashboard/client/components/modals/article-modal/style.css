@@ -1,0 +1,94 @@
+/* Headers */
+.ArticleMarkdownContainer > h1:first-child {
+    margin-top: 0;
+}
+.ArticleMarkdownContainer > h1 {
+    border-bottom: 1px solid rgba(95, 101, 111, 0.45);
+    padding-bottom: 2px;
+
+    margin: 34px 0 8px;
+
+    font-size: 1.5em;
+}
+.ArticleMarkdownContainer > h2 {
+    text-decoration: none;
+
+    margin: 26px 0 6px;
+
+    font-size: 1.17em;
+    font-weight: bold;
+}
+.ArticleMarkdownContainer > h3 {
+    text-decoration: none;
+
+    font-weight: normal;
+    font-size: 1.17em;
+}
+
+
+/* Links */
+.ArticleMarkdownContainer a {
+    color: #6a90ff;
+}
+
+
+/* Splitters */
+.ArticleMarkdownContainer hr {
+    border-color: rgba(95, 101, 111, 0.45);
+}
+
+
+/* Tables */
+.ArticleMarkdownContainer table {
+    border-spacing: 0;
+}
+.ArticleMarkdownContainer tr {
+    border-top: 1px solid #c6cbd1;
+    background: #434850;
+}
+.ArticleMarkdownContainer th, .ArticleMarkdownContainer td {
+    padding: 6px 13px;
+    border: 1px solid #4f5765;
+}
+.ArticleMarkdownContainer table tr:first-child th {
+    border-bottom: 1px solid #989898;
+}
+.ArticleMarkdownContainer table tr:nth-child(2n) {
+    background: #353a42;
+}
+
+/* Images */
+.ArticleMarkdownContainer img {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+
+/* Code */
+.ArticleMarkdownContainer p code {
+    padding: 4px 6px;
+    border-radius: 5px;
+    font-size: 94%;
+    background: #383e48;
+    border-radius: 5px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+    margin-top: 10px;
+    display: inline-block;
+}
+
+/* Code blocks */
+.ArticleMarkdownContainer pre code {
+    font-size: initial;
+    padding: initial;
+    color: #eee;
+    background-color: initial;
+    border: none;
+    word-break: initial;
+}
+.ArticleMarkdownContainer pre {
+    background: #383e48;
+    padding: 25px 30px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+}

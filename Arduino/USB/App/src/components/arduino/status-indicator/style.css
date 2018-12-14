@@ -1,0 +1,26 @@
+.status-indicator {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+.status-indicator img {
+  height: 50px;
+}
+.status-indicator .searching-path {
+  stroke: rgb(67, 135, 255);
+}
+.searching-spinner {
+  width: 50px;
+  height: 50px;
+}
+/* Status Transition */
+.status-transition-enter {
+  opacity: 0.01;
+}
+.status-transition-enter-active {
+  opacity: 1;
+  transition: opacity 200ms ease-out;
+}
+.status-transition-exit {
+  display: none;
+}

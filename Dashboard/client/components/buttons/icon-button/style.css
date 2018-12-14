@@ -1,0 +1,46 @@
+.icon-button {
+  height: 40px;
+  width: 40px;
+  padding: 9px;
+  display: block;
+  box-sizing: border-box;
+  border-radius: 100%;
+  background: rgba(255, 255, 255, 0);
+  transition: background 200ms;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+.icon-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.icon-button img {
+  height: 100%;
+  transition: transform 200ms;
+}
+/* Hover Effects */
+.icon-button.rotate:hover img {
+  transform: rotate(90deg);
+}
+.icon-button.shrink:hover img {
+  transform: scale(0.9);
+}
+.icon-button.spin:hover img {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { 
+  100% { 
+    transform:rotate(360deg); 
+  } 
+}
+
+.icon-button.bell:hover img {
+  animation: bellRing 0.3s linear 1;
+}
+@keyframes bellRing {
+  0%   { transform:rotateZ(0deg) }
+  25%  { transform:rotateZ(-30deg) }
+  50%  { transform:rotateZ(0deg) }
+  75%  { transform:rotateZ(30deg) }
+  100% { transform:rotateZ(0deg) }
+}

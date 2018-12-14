@@ -1,0 +1,11 @@
+{
+    "IP" : "localhost",
+    "image": {
+        "dir": "",
+        "images": [
+            {"type": "temperature", "name": "temperature.svg"},
+            {"type": "light", "name": "light.svg"},
+            {"type": "moisture", "name": "moisture.svg"}]
+    },
+    "jwtCert": "abcd1234"
+}
