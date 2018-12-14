@@ -53,6 +53,13 @@ This web app recieves data from the Arduino's and displays the readings on a Das
   Runs ESLint with --fix to lint the code and attempt to automatically apply fixes.  
   `npm run lintFix`
 
+## Learn and build page - Creating guides
+1. Create a markdown file in `Dashboard\client\guides`
+2. Place an image inside `Dashboard\client\guides\images`
+3. Add an entry to the `guides.json` file with the corresponding guide and image paths
+
+[**Click here**](https://rexxars.github.io/react-markdown/) for a live easy to use markdown file editor
+
 ### Database
 
 To run this project, you will need a MongoDB server running on your machine. 

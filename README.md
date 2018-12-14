@@ -7,15 +7,6 @@ This project consists of multiple parts, including a web dashboard, Arduino libr
   Recieves data from the Arduino's and displays the readings on a Dashboard.  
   [**Files**](./Dashboard) - [**Readme**](./Dashboard/README.md)
 
-
-## Learn and build page - Creating guides
-1. Create a markdown file in `Dashboard\client\guides`
-2. Place an image inside `Dashboard\client\guides\images`
-3. Add an entry to the `guides.json` file with the corresponding guide and image paths
-
-[**Click here**](https://rexxars.github.io/react-markdown/) for a live easy to use markdown file editor
-
-
 ## Arduino USB
 * **Data Works USB Link App**  
   Connects Arduino's using the USB libary to Data Works.  

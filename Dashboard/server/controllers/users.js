@@ -1,5 +1,6 @@
 var bcrypt = require('bcryptjs')
 var jsonwebtoken = require('jsonwebtoken')
+var config = require('../../config/config.json')
 
 class UsersController {
   constructor (db) {
@@ -72,7 +73,7 @@ class UsersController {
         let token = jsonwebtoken.sign({
           exp: Math.floor(Date.now() / 1000) + (60 * 60),
           id: user._id
-        }, 'kekkles') // make a cert?
+        }, config.jwtCert)
         message = {
           status: 'Success',
           message: 'Username and password valid',
