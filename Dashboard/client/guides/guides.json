@@ -31,12 +31,6 @@
       "description": "Follow this guide to setup a light sensor on an Arduino.",
       "imgURL": "images/default/setting_up_light_sensor.png",
       "url": "default/setting_up_light_sensor.md"
-    },
-    {
-      "title": "Create your own guides",
-      "description": "Discover how to make a guide for this learn and build page!",
-      "imgURL": "images/default/creating_guides.jpg",
-      "url": "default/creating_guides.md"
     }
   ]
 }
