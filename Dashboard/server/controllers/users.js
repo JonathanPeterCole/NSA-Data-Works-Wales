@@ -1,15 +1,14 @@
 var bcrypt = require('bcryptjs')
 var jsonwebtoken = require('jsonwebtoken')
 
-class Users {
+class UsersController {
   constructor (db) {
     this.db = db
+    this.collection = 'users'
   }
   async createUser (username, password) {
-    this.db.setCollection('users')
-
     // Check if a user already exists with this name
-    let user = await this.db.findRaw({ 'username': username })
+    let user = await this.db.findRaw({ 'username': username }, this.collection)
     if (user) {
       return JSON.stringify({
         status: 'Failure',
@@ -29,10 +28,9 @@ class Users {
         message: 'Username must be more than 4 characters long'
       })
     }
-
     let hash = await bcrypt.hash(password, 10)
     if (hash) {
-      this.db.insert({ username, password: hash })
+      this.db.insert({ username, password: hash }, this.collection)
       return JSON.stringify({
         status: 'Success',
         message: 'User created, you can now login!'
@@ -44,9 +42,24 @@ class Users {
       })
     }
   }
+  async authenticate (username, password) {
+    // Find the user in the database
+    let user = await this.db.findRaw({ username }, this.collection)
+    // Check if the user exists
+    if (!user) {
+      return null
+    } else {
+      // Check if the password matches
+      let match = await bcrypt.compare(password, user.password)
+      if (match) {
+        return user
+      } else {
+        return null
+      }
+    }
+  }
   async checkUsername (username, password) {
-    this.db.setCollection('users')
-    let user = await this.db.findRaw({ 'username': username })
+    let user = await this.db.findRaw({ 'username': username }, this.collection)
     let message
     if (!user) {
       message = {
@@ -81,15 +94,29 @@ class Users {
       return false
     }
   }
+  async getUserByJWT (jwt) {
+    try {
+      return this.db.findDocument('_id', this.db.getObjectID(jwt.id), this.collection)
+    } catch (e) {
+      return false
+    }
+  }
   async getProjects (jwt) {
     try {
-      this.db.setCollection('users')
-      let user = await this.db.findDocument('_id', this.db.getObjectID(jwt.id))
+      let user = await this.db.findDocument('_id', this.db.getObjectID(jwt.id), this.collection)
       return user.projects
     } catch (e) {
       return false
     }
   }
+  async getArduinos (id) {
+    let user = await this.db.findDocument('_id', id, this.collection)
+    return user.projects
+  }
+  async addArduino (userId, arduinoId) {
+    let user = await this.db.findDocument('_id', this.db.getObjectID(userId), this.collection)
+    await this.db.arrayUpdate('_id', user._id, { projects: { _id: this.db.getObjectID(arduinoId), notifications: [] } }, this.collection)
+  }
 }
 
-module.exports = Users
+module.exports = UsersController

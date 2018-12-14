@@ -43,7 +43,7 @@ bower_components
 build/Release
 
 # Dependency directories
-Dashboard/node_modules/
+node_modules/
 jspm_packages/
 
 # Split node modules for users using two command prompts (using unix subsystem for general operations and windows msdos for committing)
@@ -80,3 +80,12 @@ Dashboard/public
 
 #config
 Dashboard/config/config.json
+
+# Electron Builder
+dist/
+
+# Babel
+out/
+
+# IntelliJ
+.idea/

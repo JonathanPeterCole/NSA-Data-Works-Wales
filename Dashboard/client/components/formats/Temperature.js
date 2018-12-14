@@ -13,6 +13,7 @@ export default class Temperature extends React.Component {
     this.graph.setActive(this.props.online)
   }
   componentDidUpdate () {
+    this.graph.setOptions(this.props.options)
     this.graph.setData(this.props.data.slice(-10, this.props.data.length - 1))
     this.graph.setLastUpdated(this.props.data.lastUpdate)
     this.graph.setActive(this.props.online)

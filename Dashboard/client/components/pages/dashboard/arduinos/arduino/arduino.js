@@ -11,12 +11,16 @@ export default class Arduino extends React.Component {
     super(props)
     // Bindings
     this.getBoxClassName = this.getBoxClassName.bind(this)
+    console.log(props)
   }
   getBoxClassName () {
     return 'box ' + this.props.colour
   }
   componentDidUpdate () {
 
+  }
+  getSensorName (id, type) {
+    return type.charAt(0).toUpperCase() + type.slice(1) + ' ' + id
   }
   render () {
     return (
@@ -29,14 +33,15 @@ export default class Arduino extends React.Component {
             <StatusIndicator online={this.props.online} lastConnection={this.props.lastConnection} />
           </div>
           <div className='arduino-readings'>
-            {this.props.sensors.map((sensor) => {
+            {this.props.sensors.map((sensor, i) => {
               return (
                 <Reading
                   lastUpdate={sensor.lastUpdate}
                   key={sensor.id}
                   type={sensor.type}
                   online={sensor.online}
-                  readings={sensor.data} />
+                  readings={sensor.readings}
+                  name={this.getSensorName(sensor.id, sensor.type)} />
               )
             })}
           </div>

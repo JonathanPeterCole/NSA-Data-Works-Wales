@@ -19,10 +19,12 @@ export default class Arduinos extends React.Component {
     this.showModal = this.showModal.bind(this)
     this.hideModal = this.hideModal.bind(this)
     // Socket IO
-    this.socket = io('/websocket')
-    this.socket.emit('setUser', JSON.stringify({ jwt: localStorage.getItem('jwt') }))
+    this.socket = io('/websocket/dashboard')
+    this.socket.on('connect', () => {
+      this.socket.emit('setUser', JSON.stringify({ jwt: localStorage.getItem('jwt') }))
+    })
     this.socket.on('sensorReadings', (data) => {
-      console.log(this.state.currentArduino)
+      console.log(data)
       if (!this.state.loaded) {
         this.setState({
           loaded: true,
@@ -39,6 +41,7 @@ export default class Arduinos extends React.Component {
     return axios.get('http://localhost:3000/api/history/' + arduinoid)
   }
   showModal (arduinoid) {
+    console.log(this.state.arduinos[arduinoid])
     this.setState({
       showModal: true,
       currentArduino: arduinoid

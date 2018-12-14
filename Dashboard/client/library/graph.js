@@ -12,7 +12,8 @@ export default class graph {
     this.crest = this.trough = 0
     this.parent = parent
     this.data = []
-    this.padding = this.options.padding
+    this.outerPadding = this.options.outerPadding
+    this.innerPadding = this.options.innerPadding
     this.datapoints = []
     this.images = []
     this.setSize()
@@ -24,13 +25,6 @@ export default class graph {
     })
     this.loadImages().then(() => { this.ready = true })
   }
-  //   {
-  //     "IP" : "localhost",
-  //     "imagedir": "Dashboard/cient/components/pages/arduinos/arduino/reading/img",
-  //     "images": [
-  //         {"type": "temp", "name": "temperature.svg"}
-  //     ]
-  // }
   features () {
     this.features = [
       { key: 'withShadow', cb: this.withShadow.bind(this) },
@@ -67,6 +61,9 @@ export default class graph {
     this.update()
     this.draw()
   }
+  setOptions (options) {
+    this.options = this.defaultSettings(options)
+  }
   setData (data) {
     this.data = data
     this.update()
@@ -91,7 +88,7 @@ export default class graph {
         { stop: 1, colour: 'rgba(0,0,0,0)' }
       ] },
       circles: { colour: '#fff' },
-      gridLines: { width: 2, colour: '#202020' },
+      gridLines: { width: 2, colour: '#202020', border: true },
       shadow: { gradient: [
         { stop: 0, colour: '#3498db' },
         { stop: 1, colour: 'rgba(255, 255, 255,0)' }
@@ -105,7 +102,8 @@ export default class graph {
       }
     }
     return {
-      padding: { top: 4, bottom: 4, left: 4, right: 4 },
+      outerPadding: { top: 4, bottom: 4, left: 4, right: 4 },
+      innerPadding: { top: 5, bottom: 5, left: 0, right: 0 },
       build: ['withBackground', 'withGridLines', 'withLine', 'withInfo'],
       fontsize: 14,
       font: 'Quicksand',
@@ -133,8 +131,10 @@ export default class graph {
     let bottom = parseInt(window.getComputedStyle(this.parent).getPropertyValue('padding-bottom').replace(' px', ''))
     this.width = (this.parent.offsetWidth - left - right)
     this.height = (this.parent.offsetHeight - top - bottom)
-    this.drawableWidth = this.width - (this.padding.left + this.padding.right)
-    this.drawableHeight = this.height - (this.padding.top + this.padding.bottom)
+    this.drawableWidth = this.width - (this.outerPadding.left + this.outerPadding.right + this.innerPadding.left + this.innerPadding.right)
+    this.drawableHeight = this.height - (this.outerPadding.top + this.outerPadding.bottom + this.innerPadding.bottom + this.innerPadding.top)
+    this.outerWidth = this.width - (this.outerPadding.left + this.outerPadding.right)
+    this.outerHeight = this.height - (this.outerPadding.top + this.outerPadding.bottom)
     this.canvas.width = this.width
     this.canvas.height = this.height
     this.lib.scaleCanvas(this.canvas, this.ctx, this.width, this.height)
@@ -165,8 +165,8 @@ export default class graph {
       this.crest += 3
       this.trough -= 3
     }
-    this.drawableTrough = trough - this.padding.bottom
-    this.drawableCrest = crest + this.padding.top
+    this.drawableTrough = trough - this.innerPadding.bottom - this.outerPadding.bottom
+    this.drawableCrest = crest + this.innerPadding.top + this.outerPadding.top
     this.updateDatapoints()
   }
 
@@ -179,8 +179,10 @@ export default class graph {
     }
     for (let d in data) {
       let reading = data[d].reading
-      // i* Math.round(this.drawableWidth / vertical) + this.padding.left
-      this.datapoints.push({ reading: reading, x: (Math.round(this.drawableWidth / (data.length - 1) * d) + this.padding.left), y: Math.round((this.drawableHeight / diff) * (this.crest - parseInt(reading))) + this.padding.top })
+      this.datapoints.push(
+        { reading: reading,
+          x: (Math.round(this.drawableWidth / (data.length - 1) * d) + this.innerPadding.left + this.outerPadding.left),
+          y: Math.round((this.drawableHeight / diff) * (this.crest - parseInt(reading))) + this.innerPadding.top + this.outerPadding.top })
     }
   }
   setActive (active) {
@@ -204,10 +206,6 @@ export default class graph {
     this.update()
     this.draw()
   }
-  //   "image": {
-  //     "dir": "Dashboard/cient/components/pages/arduinos/arduino/reading/img",
-  //     "images": [{"type": "temp", "name": "temperature.svg"}]
-  // }
   loadImages () {
     let p = []
     this.images.images.forEach(d => {
@@ -235,21 +233,37 @@ export default class graph {
   withLastUpdated () {
     this.lib.setTextBaseline('top')
     this.lib.setFont(this.options.font, this.options.aesthetics.lastUpdated.fontsize, 600)
-    this.lib.drawText('Last updated: ' + this.lastUpdated, this.options.padding.left, this.drawableHeight + this.padding.top)
+    this.lib.drawText('Last updated: ' + this.lastUpdated, this.options.innerPadding.left + this.options.outerPadding.left,
+      this.drawableHeight + this.innerPadding.top + this.outerPadding.top)
   }
   withHoverLine () {
-    let split = (this.drawableWidth / this.options.lines.vertical) / 2
+    let split = (this.drawableWidth / (this.datapoints.length)) / 2
+    let paddingTotal = (this.outerPadding.left + this.outerPadding.right + this.innerPadding.left + this.innerPadding.right)
     let options = this.options.aesthetics.hoverLine
     for (let i in this.datapoints) {
-      if (Math.abs(this.hoverLine - this.datapoints[i].x) < split) {
+      if ((Math.abs(this.hoverLine - this.datapoints[i].x) - paddingTotal) < split) {
         let x = this.datapoints[i].x
         let y = this.datapoints[i].y
 
         // Hover line
         this.lib.setLineWidth(options.width)
         this.lib.setStrokeStyle(options.lineColour)
-        this.lib.drawLine(x, this.options.padding.top, x, this.options.padding.top + this.drawableHeight)
+        this.lib.drawLine(x, this.outerPadding.top, x, this.outerPadding.top + this.outerHeight)
         this.lib.stroke()
+
+        // Make sure X and Y bounds dont go above or minus 0/height and left/right
+        if (x + options.boxWidth > this.width) {
+          x -= options.boxWidth
+        }
+        if (y + options.boxHeight > this.height) {
+          y -= options.boxHeight
+        }
+        if (y - options.boxHeight < 0) {
+          y += options.boxHeight
+        }
+        if (x - options.boxWidth < 0) {
+          x += options.boxWidth
+        }
 
         // Hover line text box
         this.lib.drawRoundedRectangle(x, y, options.boxWidth, options.boxHeight, options.radius)
@@ -323,19 +337,21 @@ export default class graph {
     this.lib.setLineWidth(this.options.aesthetics.gridLines.width)
     this.lib.setStrokeStyle(this.options.aesthetics.gridLines.colour)
 
-    for (let i = 0; i <= vertical; i++) {
-      this.lib.drawLine(Math.round(this.drawableWidth / vertical * i) + this.padding.left, this.padding.top,
-        Math.round(this.drawableWidth / vertical * i) + this.padding.left, this.height - this.padding.bottom)
+    if (this.options.aesthetics.gridLines.border) {
+      this.lib.drawRectangle(this.outerPadding.left, this.outerPadding.top, this.outerWidth, this.outerHeight)
       this.lib.stroke()
     }
-    for (let i = 0; i <= 1; i++) {
-      this.lib.drawLine(this.padding.left, this.padding.top + Math.round(i * this.drawableHeight),
-        this.padding.left + this.drawableWidth, this.padding.top + Math.round(i * this.drawableHeight))
+
+    for (let i = 1; i <= vertical; i++) {
+      let v = vertical + 1
+      this.lib.drawLine(Math.round(this.outerWidth / v * i) + this.outerPadding.left, this.outerPadding.top,
+        Math.round(this.outerWidth / v * i) + this.outerPadding.left, this.outerHeight + this.outerPadding.top)
       this.lib.stroke()
     }
-    for (let i = 0; i <= horizontal; i++) {
-      this.lib.drawLine(this.padding.left, this.padding.top + (Math.round(this.drawableHeight / horizontal) * i),
-        this.padding.left + this.drawableWidth - 1, this.padding.top + (Math.round(this.drawableHeight / horizontal) * i))
+    for (let i = 1; i <= horizontal; i++) {
+      let h = horizontal + 1
+      this.lib.drawLine(this.outerPadding.left, this.outerPadding.top + (Math.round(this.outerHeight / h) * i),
+        this.outerPadding.left + this.outerWidth, this.outerPadding.top + (Math.round(this.outerHeight / h) * i))
       this.lib.stroke()
     }
     return this
@@ -360,7 +376,7 @@ export default class graph {
   withLine () {
     let data = this.datapoints
     this.lib.setLineWidth(this.options.aesthetics.line.width)
-    this.lib.drawLines([{ x: this.padding.left, y: data[0].y }, ...data])
+    this.lib.drawLines([{ x: this.outerPadding.left + this.innerPadding.left, y: data[0].y }, ...data])
     this.lib.setStrokeStyle(this.options.aesthetics.line.colour)
     this.lib.stroke()
     return this
@@ -370,11 +386,11 @@ export default class graph {
     this.lib.setFont(this.options.aesthetics.font, this.options.aesthetics.labels.fontsize, 600)
     this.lib.setTextAlign('left')
     this.lib.setTextBaseline('middle')
-    this.lib.drawText(this.crest, this.padding.left + this.drawableWidth + 3, this.padding.top)
+    this.lib.drawText(this.crest, this.outerPadding.left + this.innerPadding.left + this.drawableWidth + 3, this.outerPadding.top + this.innerPadding.top)
 
     this.lib.setTextAlign('left')
     this.lib.setTextBaseline('middle')
-    this.lib.drawText(this.trough, this.padding.left + this.drawableWidth + 3, this.drawableHeight + this.padding.top)
+    this.lib.drawText(this.trough, this.outerPaddingng.left + this.innerPadding.left + this.drawableWidth + 3, this.drawableHeight + this.outerPadding.top + this.innerPadding.top)
     return this
   }
 }
