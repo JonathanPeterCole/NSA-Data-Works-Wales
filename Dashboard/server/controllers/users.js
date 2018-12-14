@@ -90,7 +90,7 @@ class UsersController {
   }
   async checkJWT (string) {
     try {
-      return await jsonwebtoken.verify(string, 'kekkles')
+      return await jsonwebtoken.verify(string, config.jwtCert)
     } catch (JsonWebTokenError) {
       return false
     }
