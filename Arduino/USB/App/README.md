@@ -34,6 +34,10 @@ This app connects to an Arduino using the USB library to send readings to the Da
   Builds and starts the application.  
   `npm run buildRun` 
 
+* **Test**  
+  Runs Jest to test the code.  
+  `npm run test`
+
 * **Package**  
   Packages the app for distribution.  
   `npm run pack`

@@ -42,7 +42,7 @@ export default class ArduinoConnect extends EventEmitter {
     })
   }
 
-  connectLibrary (serialPort) {
+  connectLibrary () {
     return new Promise((resolve, reject) => {
       // Prepare a timeout
       let timeout = setTimeout(() => {

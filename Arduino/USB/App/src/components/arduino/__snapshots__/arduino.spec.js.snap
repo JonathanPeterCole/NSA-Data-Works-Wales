@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Arduino Component Matches snapshot 1`] = `
+<div
+  className="arduino"
+>
+  <StatusIndicator
+    status="connecting"
+  />
+  <div
+    className="details"
+  >
+    <div
+      className="com-name"
+    >
+      COM1
+    </div>
+    <StatusText
+      status="connecting"
+    />
+    <div
+      className="serial-number"
+    >
+      0123456789
+    </div>
+  </div>
+</div>
+`;
