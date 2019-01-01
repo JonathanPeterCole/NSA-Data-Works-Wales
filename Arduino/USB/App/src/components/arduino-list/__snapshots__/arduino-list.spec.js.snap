@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Arduino List Component Matches snapshot 1`] = `
+<div
+  className="arduino-list"
+>
+  <div
+    className="scroll-fader"
+  />
+  <div
+    className="scroll-area"
+    onScroll={[Function]}
+  >
+    <TransitionGroup
+      childFactory={[Function]}
+      className="arduino-container"
+      component="div"
+    >
+      <CSSTransition
+        classNames="arduino-transition"
+        key="0"
+        timeout={300}
+        unmountOnExit={true}
+      >
+        <Arduino
+          api={null}
+          arduino={
+            Object {
+              "comName": "COM1",
+              "serialNumber": "0000000001",
+            }
+          }
+          disconnected={null}
+          key="0"
+        />
+      </CSSTransition>
+      <CSSTransition
+        classNames="arduino-transition"
+        key="1"
+        timeout={300}
+        unmountOnExit={true}
+      >
+        <Arduino
+          api={null}
+          arduino={
+            Object {
+              "comName": "COM2",
+              "serialNumber": "0000000002",
+            }
+          }
+          disconnected={null}
+          key="1"
+        />
+      </CSSTransition>
+      <CSSTransition
+        classNames="arduino-transition"
+        key="2"
+        timeout={300}
+        unmountOnExit={true}
+      >
+        <Arduino
+          api={null}
+          arduino={
+            Object {
+              "comName": "COM3",
+              "serialNumber": "0000000003",
+            }
+          }
+          disconnected={null}
+          key="2"
+        />
+      </CSSTransition>
+    </TransitionGroup>
+  </div>
+</div>
+`;

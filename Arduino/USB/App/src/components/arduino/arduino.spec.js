@@ -24,7 +24,7 @@ describe('Arduino Component', () => {
   })
 
   it('Renders without crashing', () => {
-    // Attempt to render the results component
+    // Attempt to render the Arduino component
     // Shallow render to ensure we are only testing the Arduino component
     shallow(<Arduino arduino={testArduino} />)
   })

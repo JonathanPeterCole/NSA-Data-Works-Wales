@@ -11,7 +11,7 @@
     "pack": "build",
     "lint": "eslint . --ext .js,.jsx",
     "lintFix": "eslint . --ext .js,.jsx --fix",
-    "test": "jest",
+    "test": "jest --verbose",
     "postinstall": "electron-builder install-app-deps"
   },
   "husky": {
