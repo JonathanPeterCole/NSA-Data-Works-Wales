@@ -1,7 +1,6 @@
 import CanvasLibrary from './canvasLibrary'
 let config = require('../../config/config.json')
 let path = require('path')
-console.log(config)
 export default class graph {
   constructor (canvas, parent, options = {}) {
     this.canvas = canvas

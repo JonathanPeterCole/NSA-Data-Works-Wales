@@ -13,7 +13,7 @@ import History from './history'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 // import sensors from './reducers/sensors'
-import test from './reducers/test'
+import test from './reducers/test-reducer'
 
 // Client socket API
 import API from './api.js'

@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Arduino Component Matches snapshot 1`] = `
+<div
+  className="arduino"
+>
+  <div
+    className="box blue"
+    onClick={[MockFunction]}
+  >
+    <div
+      className="arduino-header"
+    >
+      <div
+        className="title"
+      >
+        Test Arduino
+      </div>
+      <StatusIndicator
+        lastConnection={0}
+        online={true}
+      />
+    </div>
+    <div
+      className="arduino-readings"
+    >
+      <Reading
+        key="0"
+        name="Temperature 0"
+        online={true}
+        readings={Array []}
+        type="temperature"
+      />
+    </div>
+  </div>
+</div>
+`;
