@@ -90,7 +90,7 @@ class UsersController {
   }
   async checkJWT (string) {
     try {
-      return await jsonwebtoken.verify(string, 'kekkles')
+      return await jsonwebtoken.verify(string, config.jwtCert) // Bug fix on this line was Pushed to GitLab on 08/01/2019
     } catch (JsonWebTokenError) {
       return false
     }
