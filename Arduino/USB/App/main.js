@@ -33,7 +33,7 @@ function createWindow () {
   win.loadFile('./index.html')
 
   // Open the DevTools.
-  win.webContents.openDevTools({ mode: 'undocked' })
+  // win.webContents.openDevTools({ mode: 'undocked' })
 
   // Wait until the window is fully loaded before showing
   win.once('ready-to-show', () => win.show())
